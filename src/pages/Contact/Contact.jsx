@@ -64,9 +64,9 @@ export default function Contact() {
         </div>
       </section>
 
-      <section className="contact-cta">
+      {/* <section className="contact-cta">
         <div className="section-shell"><div><FaGraduationCap /><div><span>ADMISSIONS OPEN 2026</span><h2>Take the First Step Towards Your Bright Future</h2></div></div><a href="tel:+919876543210" className="primary-btn">Call Us Now <FiPhone /></a></div>
-      </section>
+      </section> */}
     </>
   );
 }

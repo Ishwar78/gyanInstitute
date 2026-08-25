@@ -89,7 +89,7 @@ export default function Blog() {
         </div>
       </section>
 
-      <section className="blog-cta">
+      {/* <section className="blog-cta">
         <div className="section-shell">
           <div>
             <span className="eyebrow">NEED GUIDANCE?</span>
@@ -98,7 +98,7 @@ export default function Blog() {
           </div>
           <Link to="/contact">Talk to an Expert <FiArrowRight /></Link>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }

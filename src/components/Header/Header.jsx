@@ -41,14 +41,13 @@ export default function Header() {
 
       <div className="navbar">
         <div className="navbar-inner">
-          <Link className="brand" to="/" onClick={closeMenu}>
-            <span className="brand-mark">G</span>
-            <span>
-              <strong>GYAN</strong>
-              <small>INSTITUTE</small>
-              <em>Learn | Grow | Succeed</em>
-            </span>
-          </Link>
+         <Link className="brand" to="/" onClick={closeMenu}>
+  <img
+    className="brand-logo"
+    src="/logo.png"
+    alt="Gyan Institute"
+  />
+</Link>
 
           <nav className={`main-nav ${open ? "open" : ""}`}>
             {navItems.map((item) => (

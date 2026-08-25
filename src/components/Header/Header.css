@@ -7,7 +7,7 @@
 .topbar {
   background: var(--navy);
   color: #fff;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
 }
 
@@ -73,7 +73,13 @@
   gap: 10px;
   min-width: 210px;
 }
-
+.brand-logo {
+  display: block;
+  width: 179px;
+  height: auto;
+  max-height: 73px;
+  object-fit: contain;
+}
 .brand-mark {
   width: 47px;
   height: 47px;

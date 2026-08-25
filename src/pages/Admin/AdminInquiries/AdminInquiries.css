@@ -1,1 +1,158 @@
-.inquiry-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:16px}.inquiry-stats>div{background:#fff;border:1px solid #e8edf3;border-radius:12px;padding:18px;display:flex;align-items:center;gap:10px}.inquiry-stats svg{color:var(--gold);font-size:21px}.inquiry-stats b{font-size:25px}.inquiry-stats span{color:#7b8797;font-size:12px}.inquiries-list{display:grid;gap:10px}.inquiry-card{background:#fff;border:1px solid #e8edf3;border-radius:13px;padding:17px;display:flex;align-items:center;gap:14px}.lead-avatar{width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800}.lead-main{flex:1}.lead-main>b,.lead-main>span{display:block}.lead-main>b{font-size:14px}.lead-main>span{font-size:11px;color:var(--gold);font-weight:800}.lead-main>div{display:flex;gap:15px;margin-top:6px}.lead-main small{display:flex;gap:5px;align-items:center;color:#7d8897;font-size:10px}.lead-time{text-align:right}.lead-time span{display:block;width:max-content;margin-left:auto;padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800}.lead-time .new{background:#fff4d8;color:#a66e00}.lead-time .contacted{background:#e8f2ff;color:#2c69a5}.lead-time .closed{background:#e8f7ed;color:#2c8550}.lead-time small{font-size:9px;color:#929cab}.inquiry-card>button{border:1px solid #dfe5ec;background:#fff;padding:8px 11px;border-radius:7px;display:flex;gap:5px;align-items:center;font-weight:700;font-size:11px}@media(max-width:700px){.inquiry-stats{grid-template-columns:1fr}.inquiry-card{align-items:flex-start}.lead-time{margin-left:auto}.inquiry-card>button{display:none}.lead-main>div{flex-direction:column;gap:3px}}
+.inquiry-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 16px
+}
+
+.inquiry-stats>div {
+    background: #fff;
+    border: 1px solid #e8edf3;
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.inquiry-stats svg {
+    color: var(--gold);
+    font-size: 21px
+}
+
+.inquiry-stats b {
+    font-size: 25px
+}
+
+.inquiry-stats span {
+    color: #7b8797;
+    font-size: 12px
+}
+
+.inquiries-list {
+    display: grid;
+    gap: 10px
+}
+
+.inquiry-card {
+    background: #fff;
+    border: 1px solid #e8edf3;
+    border-radius: 13px;
+    padding: 17px;
+    display: flex;
+    align-items: center;
+    gap: 14px
+}
+
+.lead-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-weight: 800
+}
+
+.lead-main {
+    flex: 1
+}
+
+.lead-main>b,
+.lead-main>span {
+    display: block
+}
+
+.lead-main>b {
+    font-size: 14px
+}
+
+.lead-main>span {
+    font-size: 14px;
+    color: var(--gold);
+    font-weight: 800
+}
+
+.lead-main>div {
+    display: flex;
+    gap: 15px;
+    margin-top: 6px
+}
+
+.lead-main small {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    color: #7d8897;
+    font-size: 14px
+}
+
+.lead-time {
+    text-align: right
+}
+
+.lead-time span {
+    display: block;
+    width: max-content;
+    margin-left: auto;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 9px;
+    font-weight: 800
+}
+
+.lead-time .new {
+    background: #fff4d8;
+    color: #a66e00
+}
+
+.lead-time .contacted {
+    background: #e8f2ff;
+    color: #2c69a5
+}
+
+.lead-time .closed {
+    background: #e8f7ed;
+    color: #2c8550
+}
+
+.lead-time small {
+    font-size: 9px;
+    color: #929cab
+}
+
+.inquiry-card>button {
+    border: 1px solid #dfe5ec;
+    background: #fff;
+    padding: 8px 11px;
+    border-radius: 7px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-weight: 700;
+    font-size: 11px
+}
+
+@media(max-width:700px) {
+    .inquiry-stats {
+        grid-template-columns: 1fr
+    }
+
+    .inquiry-card {
+        align-items: flex-start
+    }
+
+    .lead-time {
+        margin-left: auto
+    }
+
+    .inquiry-card>button {
+        display: none
+    }
+
+    .lead-main>div {
+        flex-direction: column;
+        gap: 3px
+    }
+}

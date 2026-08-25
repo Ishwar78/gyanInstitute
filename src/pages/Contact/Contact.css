@@ -21,7 +21,7 @@
 .contact-form-box > span,
 .contact-title > span {
   color: var(--gold);
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: 1.5px;
 }
@@ -42,7 +42,7 @@
 .contact-hero p {
   color: #c0cdda;
   max-width: 590px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.8;
 }
 
@@ -98,23 +98,23 @@
 
 .contact-cards span {
   color: var(--gold-dark);
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 800;
 }
 
 .contact-cards b {
-  font-size: 10px;
+  font-size: 14px;
   margin: 4px 0;
 }
 
 .contact-cards small {
   color: #7a8594;
-  font-size: 8px;
+  font-size: 13px;
 }
 
 .contact-main {
-  padding-top: 70px;
-  padding-bottom: 75px;
+  padding-top: 40px;
+  padding-bottom: 45px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 25px;
@@ -134,7 +134,7 @@
 
 .contact-form-box > p {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 15px;
   line-height: 1.7;
   margin: 0 0 22px;
 }
@@ -260,7 +260,7 @@
 
 .contact-help {
   background: #f6f8fb;
-  padding: 70px 0;
+  padding: 40px 0;
 }
 
 .contact-title {
@@ -299,12 +299,12 @@
 
 .contact-help-grid h3 {
   margin: 17px 0 8px;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .contact-help-grid p {
-  color: var(--muted);
-  font-size: 10px;
+  color: black;
+  font-size: 14px;
   line-height: 1.7;
 }
 

@@ -8,6 +8,9 @@ import Gallery from "./pages/Gallery/Gallery";
 import Contact from "./pages/Contact/Contact";
 import Blog from "./pages/Blog/Blog";
 import BlogDetails from "./pages/BlogDetails/BlogDetails";
+import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions/TermsConditions";
+
 import AdminLogin from "./pages/Admin/AdminLogin/AdminLogin";
 import AdminLayout from "./pages/Admin/AdminLayout/AdminLayout";
 import AdminOverview from "./pages/Admin/AdminOverview/AdminOverview";
@@ -53,6 +56,9 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogDetails />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+<Route path="/terms-conditions" element={<TermsConditions />} />
+
           </Routes>
         </PublicLayout>
       } />

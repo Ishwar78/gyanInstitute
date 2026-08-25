@@ -222,7 +222,7 @@
 .course-results-head p {
   margin: 0;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 17px;
 }
 
 .course-results-head select {
@@ -230,8 +230,9 @@
   border: 1px solid #dfe5eb;
   border-radius: 7px;
   padding: 0 10px;
-  color: #526071;
-  font-size: 10px;
+  color: #080909;
+  font-size: 16px;
+  font-weight: 450;
 }
 
 .course-row {
@@ -260,13 +261,13 @@
 
 .course-row-main h3 {
   margin: 0 0 8px;
-  font-size: 15px;
+  font-size: 18px;
 }
 
 .course-row-main p {
   margin: 0;
   color: #0b2a4d;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.7;
   font-weight: 500;
 }
@@ -283,7 +284,7 @@
   border: 1px solid #e4e8ed;
   border-radius: 20px;
   color: #0d0e0f;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .course-benefits {
@@ -296,8 +297,9 @@
   display: flex;
   gap: 7px;
   align-items: center;
-  font-size: 14px;
-  color: #526071;
+  font-size: 16px;
+  color: #070707;
+  font-weight: 450;
 }
 
 .course-benefits svg {
@@ -314,8 +316,8 @@
   justify-content: center;
   gap: 7px;
   color: var(--navy);
-  font-size: 13px;
-  font-weight: 800;
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .no-results {
@@ -435,14 +437,14 @@
 
 .category-cards p {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 13px;
   line-height: 1.5;
   min-height: 36px;
 }
 
 .category-cards a {
   color: var(--gold-dark);
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 800;
   display: inline-flex;
   align-items: center;
@@ -548,7 +550,7 @@
     width: calc(100% - 30px);
   }
   .courses-hero h1 {
-    font-size: 40px;
+    font-size: 38px;
   }
   .courses-hero-stats {
     width: calc(100% - 30px);

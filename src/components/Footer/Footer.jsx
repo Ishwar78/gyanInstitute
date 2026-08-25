@@ -22,9 +22,12 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand">
             <Link className="footer-logo" to="/">
-              <span className="footer-logo-mark">G</span>
-              <span><b>GYAN</b><small>INSTITUTE</small></span>
-            </Link>
+  <img
+    src="/logo.png"
+    alt="Gyan Institute"
+    className="footer-logo-img"
+  />
+</Link>
             <p>Empowering students with quality education, expert guidance and holistic development.</p>
             <div className="footer-socials">
               <a href="#facebook"><FaFacebookF /></a>
@@ -60,20 +63,15 @@ export default function Footer() {
             <p><FiClock /> Mon - Sat: 8:00 AM - 6:00 PM</p>
           </div>
 
-          {/* <div className="footer-col newsletter">
-            <h3>Newsletter</h3>
-            <p>Subscribe to our newsletter for latest updates.</p>
-            <div className="newsletter-box">
-              <FiMail />
-              <input type="email" placeholder="Enter your email" aria-label="Email" />
-            </div>
-            <button>Subscribe</button>
-          </div> */}
+          
         </div>
 
         <div className="footer-bottom">
           <span>© 2026 Gyan Institute. All Rights Reserved.</span>
-          <div><a href="#privacy">Privacy Policy</a><i /> <a href="#terms">Terms & Conditions</a></div>
+          <div>
+            <a href="/privacy-policy">Privacy Policy</a><i />
+             <a href="/terms-conditions">Terms & Conditions</a>
+             </div>
         </div>
       </div>
     </footer>

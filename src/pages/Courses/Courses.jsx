@@ -92,9 +92,9 @@ export default function Courses() {
         </div>
       </section>
 
-      <section className="courses-cta">
+      {/* <section className="courses-cta">
         <div className="section-shell"><div><FaGraduationCap /><div><span>ADMISSIONS OPEN 2026</span><h2>Ready to Start Your Journey?</h2><p>Join Gyan Institute and take the next step towards your bright future.</p></div></div><Link to="/contact" className="primary-btn">Enquire Now <FiArrowRight /></Link></div>
-      </section>
+      </section> */}
     </>
   );
 }
