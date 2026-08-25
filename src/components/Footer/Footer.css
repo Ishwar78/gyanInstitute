@@ -1,0 +1,260 @@
+.footer {
+  background: var(--navy);
+  color: #fff;
+}
+
+.footer-cta {
+  background: linear-gradient(100deg, #0b2d56, #061a36);
+  border-top: 1px solid rgba(255,255,255,.08);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.footer-cta-inner {
+  width: min(1380px, calc(100% - 56px));
+  min-height: 142px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.footer-cap {
+  width: 65px;
+  height: 65px;
+  flex: 0 0 auto;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  color: var(--gold);
+  display: grid;
+  place-items: center;
+  font-size: 25px;
+}
+
+.footer-cta span {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+}
+
+.footer-cta h2 {
+  margin: 4px 0 5px;
+  font-size: 25px;
+}
+
+.footer-cta p {
+  margin: 0;
+  color: #b9c5d5;
+  font-size: 14px;
+}
+
+.footer-cta-btn {
+  margin-left: auto;
+  padding: 14px 18px;
+  background: var(--gold);
+  color: #101d2e;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-main {
+  width: min(1380px, calc(100% - 56px));
+  margin: auto;
+}
+
+.footer-grid {
+  padding: 52px 0 38px;
+  display: grid;
+  grid-template-columns: 1.45fr .8fr 1fr 1.35fr 1.15fr;
+  gap: 35px;
+}
+
+.footer-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-logo-mark {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--navy);
+  font-size: 27px;
+  font-weight: 800;
+}
+
+.footer-logo b {
+  display: block;
+  font-size: 24px;
+  letter-spacing: -1px;
+}
+
+.footer-logo small {
+  display: block;
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+.footer-brand > p {
+  color: #b6c3d5;
+  line-height: 1.8;
+  font-size: 15px;
+  max-width: 290px;
+  margin: 18px 0;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 8px;
+}
+
+.footer-socials a {
+  width: 46px;
+  height: 46px;
+  border: 1px solid #42607f;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 16px;
+}
+
+.footer-socials a:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-col h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.footer-col a,
+.footer-col p {
+  color: #b7c2d1;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.footer-col a:hover {
+  color: var(--gold);
+}
+
+.footer-contact p {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.footer-contact svg {
+  color: var(--gold);
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.newsletter p {
+  margin-bottom: 2px;
+}
+
+.newsletter-box {
+  height: 43px;
+  border: 1px solid #405b79;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding: 0 11px;
+  gap: 8px;
+}
+
+.newsletter-box svg {
+  color: var(--gold);
+}
+
+.newsletter-box input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 12px;
+}
+
+.newsletter button {
+  height: 42px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--gold);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.footer-bottom {
+  min-height: 55px;
+  border-top: 1px solid #d4e0ee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #8798ae;
+  font-size: 15px;
+}
+
+.footer-bottom div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-bottom i {
+  width: 1px;
+  height: 12px;
+  background: #52677e;
+}
+
+@media (max-width: 1000px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .footer-cta-inner,
+  .footer-main {
+    width: calc(100% - 30px);
+  }
+  .footer-cta-inner {
+    padding: 25px 0;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .footer-cta-btn {
+    margin-left: 90px;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .footer-bottom {
+    padding: 15px 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

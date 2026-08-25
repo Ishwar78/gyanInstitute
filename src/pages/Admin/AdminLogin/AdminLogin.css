@@ -1,0 +1,18 @@
+.admin-login { min-height:100vh; background:linear-gradient(135deg,#031a36,#0a315d); display:grid; place-items:center; padding:30px; font-family:"Montserrat",sans-serif; }
+.admin-login-panel { width:min(100%,510px); background:#fff; border-radius:26px; padding:42px; box-shadow:0 30px 90px rgba(0,0,0,.25); }
+.login-logo { width:58px; height:58px; border-radius:15px; background:var(--gold); display:grid; place-items:center; font-size:30px; font-weight:900; margin-bottom:20px; }
+.admin-login h1 { font-size:40px; margin:8px 0 8px; line-height:1.1; }
+.admin-login h1 span { color:var(--gold); }
+.admin-login p { color:var(--muted); font-size:16px; margin-bottom:30px; }
+.admin-login form label { display:block; font-size:13px; font-weight:800; margin:15px 0 7px; }
+.login-input { height:54px; border:1px solid #dce2ea; border-radius:10px; display:flex; align-items:center; gap:10px; padding:0 14px; }
+.login-input:focus-within { border-color:var(--gold); box-shadow:0 0 0 3px rgba(245,169,0,.12); }
+.login-input input { border:0; outline:0; width:100%; font-size:15px; }
+.login-input button { border:0; background:transparent; color:#6e7989; }
+.login-row { display:flex; justify-content:space-between; align-items:center; margin:17px 0 22px; font-size:12px; }
+.remember { display:flex!important; align-items:center; gap:6px; margin:0!important; font-weight:600!important; }
+.login-row a { color:var(--gold); font-weight:800; }
+.login-submit { width:100%; border:0; background:var(--navy); color:#fff; padding:15px; border-radius:10px; font-weight:800; display:flex; justify-content:center; align-items:center; gap:10px; }
+.login-submit:hover { background:var(--gold); color:#111; }
+.login-note { display:block; text-align:center; color:#8a94a3; margin-top:20px; font-size:11px; }
+@media(max-width:550px){ .admin-login{padding:16px}.admin-login-panel{padding:28px 22px}.admin-login h1{font-size:34px} }
