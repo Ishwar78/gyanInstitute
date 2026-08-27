@@ -127,8 +127,8 @@
   display: block;
   padding: 13px 0;
   border-bottom: 1px solid #edf0f4;
-  color: #566579;
-  font-size: 14px;
+  color: #0c0c0d;
+  font-size: 17px;
   font-weight: 600;
   transition: 0.25s ease;
 }
@@ -156,8 +156,8 @@
 
 .privacy-intro span {
   color: #e99f00;
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 15px;
+  font-weight: 700;
   letter-spacing: 1.4px;
 }
 
@@ -182,9 +182,10 @@
 
 .privacy-article p {
   margin: 0 0 16px;
-  color: #536175;
-  font-size: 17px;
+  color: #090a0b;
+  font-size: 18px;
   line-height: 1.9;
+  font-weight: 400;
 }
 
 .privacy-article ul {
@@ -200,15 +201,15 @@
   display: flex;
   align-items: center;
   gap: 11px;
-  color: #536175;
-  font-size: 16px;
+  color: #0b0c0d;
+  font-size: 17px;
   line-height: 1.6;
 }
 
 .privacy-article li svg {
   flex: 0 0 auto;
   color: #e9a300;
-  font-size: 19px;
+  font-size: 22px;
 }
 
 /* CONTACT */

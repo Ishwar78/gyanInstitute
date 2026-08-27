@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
   FiChevronDown, FiClock, FiMail, FiMapPin, FiMenu, FiPhone, FiX
@@ -9,9 +9,9 @@ import "./Header.css";
 const navItems = [
   { label: "Home", to: "/" },
   { label: "About Us", to: "/about" },
-  { label: "Courses", to: "/courses", dropdown: true },
+  { label: "Courses", to: "/courses" },
   
-  { label: "Gallery", to: "/gallery" },
+   { label: "Gallery", to: "/gallery" },
   { label: "Blog", to: "/blog" },
   { label: "Contact Us", to: "/contact" }
 ];
@@ -19,19 +19,39 @@ const navItems = [
 export default function Header() {
   const [open, setOpen] = useState(false);
   const closeMenu = () => setOpen(false);
+  
+  const [contactInfo, setContactInfo] = useState({
+    phone: "+91 92530 10028",
+    email: "info@gyantime.in",
+    addressLine: "Rohtak City",
+    cityState: "Rohtak, Haryana",
+    postalCode: "124001",
+    officeHours: "Mon - Sat: 8:00 AM - 6:00 PM",
+  });
+
+  useEffect(() => {
+    fetch("http://localhost:5005/api/contact-info")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success && json.data) {
+          setContactInfo(json.data);
+        }
+      })
+      .catch((err) => console.error("Failed to load contact info:", err));
+  }, []);
 
   return (
     <header className="site-header">
       <div className="topbar">
         <div className="topbar-inner">
-          <span><FiMapPin /> 123 Knowledge City, Hisar, Haryana</span>
+          <span><FiMapPin /> {contactInfo.addressLine}, {contactInfo.cityState}</span>
           <div className="topbar-right">
-            <span><FiMail /> info@gyaninstitute.com</span>
-            <span><FiPhone /> +91 98765 43210</span>
-            <span><FiClock /> Mon - Sat: 8:00 AM - 6:00 PM</span>
+            <span><FiMail /> {contactInfo.email}</span>
+            <span><FiPhone /> {contactInfo.phone}</span>
+            <span><FiClock /> {contactInfo.officeHours}</span>
             <div className="social-mini">
-              <a href="#facebook" aria-label="Facebook"><FaFacebookF /></a>
-              <a href="#instagram" aria-label="Instagram"><FaInstagram /></a>
+              <a href="https://www.facebook.com/Gyantimeofficial001" aria-label="Facebook"><FaFacebookF /></a>
+              <a href="https://www.instagram.com/gyantimeofficial" aria-label="Instagram"><FaInstagram /></a>
               <a href="#youtube" aria-label="YouTube"><FaYoutube /></a>
               <a href="#linkedin" aria-label="LinkedIn"><FaLinkedinIn /></a>
             </div>
@@ -44,8 +64,8 @@ export default function Header() {
          <Link className="brand" to="/" onClick={closeMenu}>
   <img
     className="brand-logo"
-    src="/logo.png"
-    alt="Gyan Institute"
+    src="/logo1.png"
+    alt="Gyan Time"
   />
 </Link>
 

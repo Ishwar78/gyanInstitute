@@ -1,31 +1,54 @@
+/* =====================================================
+   FOOTER
+===================================================== */
+
 .footer {
+  width: 100%;
   background: var(--navy);
   color: #fff;
 }
 
-/* ================================
+
+/* =====================================================
    FOOTER CTA
-================================ */
+===================================================== */
 
 .footer-cta {
-  background: linear-gradient(100deg, #0b2d56, #061a36);
+  background: linear-gradient(
+    100deg,
+    #0b2d56,
+    #061a36
+  );
+
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-cta-inner {
-  width: min(1380px, calc(100% - 56px));
+  width: min(
+    1380px,
+    calc(100% - 56px)
+  );
+
   min-height: 142px;
+
   margin: 0 auto;
 
   display: flex;
   align-items: center;
+
   gap: 25px;
 }
+
+
+/* =====================================================
+   CTA ICON
+===================================================== */
 
 .footer-cap {
   width: 65px;
   height: 65px;
+
   flex: 0 0 auto;
 
   border: 2px solid var(--gold);
@@ -39,25 +62,46 @@
   font-size: 25px;
 }
 
+
+/* =====================================================
+   CTA CONTENT
+===================================================== */
+
+.footer-cta-content {
+  min-width: 0;
+}
+
 .footer-cta span {
   color: var(--gold);
+
   font-size: 11px;
   font-weight: 800;
+
   letter-spacing: 1.3px;
 }
 
 .footer-cta h2 {
   margin: 4px 0 5px;
+
+  color: #fff;
+
   font-size: 25px;
   line-height: 1.25;
 }
 
 .footer-cta p {
   margin: 0;
+
   color: #b9c5d5;
+
   font-size: 14px;
   line-height: 1.6;
 }
+
+
+/* =====================================================
+   CTA BUTTON
+===================================================== */
 
 .footer-cta-btn {
   margin-left: auto;
@@ -74,71 +118,80 @@
 
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+
   gap: 10px;
 
   text-decoration: none;
+
   white-space: nowrap;
 
-  transition: 0.25s ease;
+  transition: all 0.25s ease;
 }
 
 .footer-cta-btn:hover {
   transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.18);
 }
 
-/* ================================
+
+/* =====================================================
    FOOTER MAIN
-================================ */
+===================================================== */
 
 .footer-main {
-  width: min(1380px, calc(100% - 56px));
+  width: min(
+    1380px,
+    calc(100% - 56px)
+  );
+
   margin: 0 auto;
 }
 
-/* ================================
+
+/* =====================================================
    FOOTER GRID
-================================ */
+===================================================== */
 
 .footer-grid {
   padding: 52px 0 38px;
 
   display: grid;
 
-  /* 4 columns because newsletter is removed */
-  grid-template-columns: 1.45fr 0.85fr 1fr 1.35fr;
+  grid-template-columns:
+    1.45fr
+    0.85fr
+    1fr
+    1.35fr;
 
   gap: 45px;
 
   align-items: start;
 }
 
-/* ================================
-   FOOTER LOGO
-================================ */
+
+/* =====================================================
+   FOOTER BRAND
+===================================================== */
 
 .footer-logo {
   display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
 
   width: fit-content;
 
   text-decoration: none;
 }
 
-/*
-  Makes the complete PNG logo white.
-  Original dark/navy parts become white.
-*/
 .footer-logo-img {
   display: block;
 
-  width: 175px;
-  height: 70px;
+  width: 205px;
+  height: 80px;
 
   object-fit: contain;
-
-  filter: brightness(0) invert(1);
 
   transition: opacity 0.25s ease;
 }
@@ -147,196 +200,254 @@
   opacity: 0.88;
 }
 
-/* ================================
-   FOOTER BRAND
-================================ */
-
 .footer-brand > p {
-  color: #b6c3d5;
-
-  line-height: 1.8;
-  font-size: 15px;
-
   max-width: 290px;
 
   margin: 18px 0;
+
+  color: #d2d8e0;
+
+  font-size: 16px;
+  line-height: 1.8;
 }
 
-/* ================================
+
+/* =====================================================
    SOCIAL ICONS
-================================ */
+===================================================== */
 
 .footer-socials {
   display: flex;
+
   gap: 8px;
 }
 
 .footer-socials a {
-  width: 46px;
-  height: 46px;
+  width: 50px;
+  height: 50px;
 
-  border: 1px solid #42607f;
+  border: 2px solid #42607f;
   border-radius: 50%;
 
   display: grid;
   place-items: center;
 
   color: #fff;
-  font-size: 16px;
+
+  font-size: 18px;
 
   text-decoration: none;
 
   transition:
     color 0.25s ease,
     border-color 0.25s ease,
-    transform 0.25s ease;
+    transform 0.25s ease,
+    background 0.25s ease;
 }
 
 .footer-socials a:hover {
   border-color: var(--gold);
+
   color: var(--gold);
+
+  background: rgba(
+    255,
+    183,
+    0,
+    0.05
+  );
+
   transform: translateY(-2px);
 }
 
-/* ================================
+
+/* =====================================================
    FOOTER COLUMNS
-================================ */
+===================================================== */
 
 .footer-col {
   display: flex;
   flex-direction: column;
+
   gap: 12px;
 }
 
-.footer-col h3 {
-  margin: 0 0 8px;
 
-  color: #fff;
+/* =====================================================
+   COLUMN TITLE
+===================================================== */
 
-  font-size: 15px;
-  font-weight: 800;
-}
+.footer-col-title {
+  width: 100%;
 
-.footer-col a,
-.footer-col p {
-  color: #b7c2d1;
-
-  font-size: 15px;
-  line-height: 1.6;
-
-  margin: 0;
-
-  text-decoration: none;
-}
-
-.footer-col a {
-  transition: color 0.2s ease;
-}
-
-.footer-col a:hover {
-  color: var(--gold);
-}
-
-/* ================================
-   CONTACT
-================================ */
-
-.footer-contact p {
-  display: flex;
-  align-items: flex-start;
-  gap: 9px;
-}
-
-.footer-contact svg {
-  color: var(--gold);
-
-  flex: 0 0 auto;
-
-  margin-top: 3px;
-
-  font-size: 17px;
-}
-
-/* ================================
-   NEWSLETTER
-   Kept for compatibility if used
-================================ */
-
-.newsletter p {
-  margin-bottom: 2px;
-}
-
-.newsletter-box {
-  height: 43px;
-
-  border: 1px solid #405b79;
-  border-radius: 6px;
-
-  display: flex;
-  align-items: center;
-
-  padding: 0 11px;
-
-  gap: 8px;
-}
-
-.newsletter-box svg {
-  color: var(--gold);
-}
-
-.newsletter-box input {
-  min-width: 0;
-  flex: 1;
-
-  border: 0;
-  outline: 0;
-
-  background: transparent;
-  color: #fff;
-
-  font-size: 12px;
-}
-
-.newsletter button {
-  height: 42px;
-
-  border: 0;
-  border-radius: 6px;
-
-  background: var(--gold);
-
-  font-size: 12px;
-  font-weight: 800;
-
-  cursor: pointer;
-}
-
-/* ================================
-   FOOTER BOTTOM
-================================ */
-
-.footer-bottom {
-  min-height: 55px;
-
-  border-top: 1px solid rgba(212, 224, 238, 0.7);
+  min-height: 28px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  color: #8798ae;
+  margin-bottom: 5px;
+}
+
+.footer-col-title h3 {
+  margin: 0;
+
+  color: #fff;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   MOBILE + / - BUTTON
+   Hidden on desktop
+===================================================== */
+
+.footer-col-toggle {
+  display: none;
+
+  width: 32px;
+  height: 32px;
+
+  padding: 0;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.18);
+
+  border-radius: 7px;
+
+  background: rgba(
+    255,
+    255,
+    255,
+    0.05
+  );
+
+  color: #fff;
+
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.footer-col-toggle svg {
+  width: 17px;
+  height: 17px;
+
+  stroke-width: 2.2;
+}
+
+.footer-col-toggle:hover {
+  border-color: var(--gold);
+
+  color: var(--gold);
+
+  background: rgba(
+    255,
+    183,
+    0,
+    0.1
+  );
+}
+
+
+/* =====================================================
+   FOOTER LINKS
+===================================================== */
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.footer-links a {
+  color: #d8dce2;
+
+  font-size: 16px;
+  line-height: 1.6;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--gold);
+
+  transform: translateX(3px);
+}
+
+
+/* =====================================================
+   CONTACT
+===================================================== */
+
+.footer-contact {
+  gap: 14px;
+}
+
+.footer-contact p {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10px;
+
+  margin: 0;
+
+  color: #d8dce2;
+
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.footer-contact p svg {
+  flex: 0 0 auto;
+
+  margin-top: 4px;
+
+  color: var(--gold);
+
+  font-size: 17px;
+}
+
+
+/* =====================================================
+   FOOTER BOTTOM
+===================================================== */
+
+.footer-bottom {
+  min-height: 55px;
+
+  border-top: 1px solid
+    rgba(212, 224, 238, 0.7);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: #d0d4d8;
 
   font-size: 15px;
 }
 
-.footer-bottom div {
+.footer-bottom > div {
   display: flex;
   align-items: center;
+
   gap: 10px;
 }
 
 .footer-bottom a {
-  color: #8798ae;
+  color: #dee2e9;
+
   text-decoration: none;
 
   transition: color 0.2s ease;
@@ -347,42 +458,54 @@
 }
 
 .footer-bottom i {
+  display: block;
+
   width: 1px;
   height: 12px;
 
   background: #52677e;
-
-  display: block;
 }
 
-/* ================================
+
+/* =====================================================
    TABLET
-================================ */
+===================================================== */
 
 @media (max-width: 1000px) {
-  .footer-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
-  }
 
-  .footer-cta-inner {
-    width: calc(100% - 40px);
-  }
-
+  .footer-cta-inner,
   .footer-main {
     width: calc(100% - 40px);
   }
+
+  .footer-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 40px;
+  }
 }
 
-/* ================================
+
+/* =====================================================
    MOBILE
-================================ */
+===================================================== */
 
 @media (max-width: 620px) {
+
+  /* ==============================================
+     MAIN WIDTH
+  ============================================== */
+
   .footer-cta-inner,
   .footer-main {
     width: calc(100% - 30px);
   }
+
+
+  /* ==============================================
+     CTA
+  ============================================== */
 
   .footer-cta-inner {
     padding: 25px 0;
@@ -397,7 +520,14 @@
   .footer-cap {
     width: 55px;
     height: 55px;
+
     font-size: 21px;
+  }
+
+  .footer-cta-content {
+    flex: 1;
+
+    min-width: 0;
   }
 
   .footer-cta h2 {
@@ -409,37 +539,195 @@
   }
 
   .footer-cta-btn {
+    width: calc(100% - 73px);
+
     margin-left: 73px;
+
+    padding: 13px 16px;
   }
+
+
+  /* ==============================================
+     GRID
+  ============================================== */
 
   .footer-grid {
     grid-template-columns: 1fr;
 
-    gap: 30px;
+    gap: 0;
 
-    padding: 40px 0 30px;
+    padding: 38px 0 25px;
   }
 
-  /* Mobile logo */
+
+  /* ==============================================
+     BRAND
+  ============================================== */
+
+  .footer-brand {
+    padding-bottom: 30px;
+  }
+
   .footer-logo-img {
     width: 160px;
     height: 65px;
 
-    filter: brightness(0) invert(1);
+    /* filter: brightness(0) invert(1); */
   }
 
   .footer-brand > p {
     max-width: 320px;
+
+    margin: 15px 0;
+
     font-size: 15px;
+
+    line-height: 1.7;
+  }
+
+  .footer-socials {
+    gap: 8px;
   }
 
   .footer-socials a {
     width: 43px;
     height: 43px;
+
+    font-size: 16px;
   }
 
+
+  /* ==============================================
+     FOOTER COLUMNS
+  ============================================== */
+
+  .footer-col {
+    width: 100%;
+
+    padding: 17px 0;
+
+    border-top: 1px solid
+      rgba(255, 255, 255, 0.10);
+
+    gap: 0;
+  }
+
+
+  /* ==============================================
+     COLUMN TITLE
+  ============================================== */
+
+  .footer-col-title {
+    min-height: 32px;
+
+    margin: 0;
+  }
+
+  .footer-col-title h3 {
+    font-size: 16px;
+  }
+
+
+  /* ==============================================
+     SHOW + / - ON MOBILE
+  ============================================== */
+
+  .footer-col-toggle {
+    display: flex;
+  }
+
+
+  /* ==============================================
+     QUICK LINKS
+     CLOSED
+  ============================================== */
+
+  .footer-quick-links .quick-links {
+    display: none;
+  }
+
+
+  /* ==============================================
+     QUICK LINKS
+     OPEN
+  ============================================== */
+
+  .footer-quick-links.quick-links-open
+    .quick-links {
+    display: flex;
+
+    margin-top: 14px;
+
+    gap: 10px;
+  }
+
+
+  /* ==============================================
+     COURSES
+     CLOSED
+  ============================================== */
+
+  .footer-courses .course-links {
+    display: none;
+  }
+
+
+  /* ==============================================
+     COURSES
+     OPEN
+  ============================================== */
+
+  .footer-courses.courses-open
+    .course-links {
+    display: flex;
+
+    margin-top: 14px;
+
+    gap: 10px;
+  }
+
+
+  /* ==============================================
+     MOBILE LINKS
+  ============================================== */
+
+  .footer-quick-links .quick-links a,
+  .footer-courses .course-links a {
+    padding: 2px 0;
+
+    font-size: 15px;
+  }
+
+
+  /* ==============================================
+     CONTACT
+  ============================================== */
+
+  .footer-contact {
+    padding-bottom: 25px;
+
+    gap: 14px;
+  }
+
+  .footer-contact .footer-col-title {
+    margin-bottom: 2px;
+  }
+
+  .footer-contact p {
+    font-size: 15px;
+
+    line-height: 1.55;
+  }
+
+
+  /* ==============================================
+     FOOTER BOTTOM
+  ============================================== */
+
   .footer-bottom {
-    padding: 15px 0;
+    min-height: auto;
+
+    padding: 18px 0;
 
     flex-direction: column;
 
@@ -447,10 +735,12 @@
 
     gap: 12px;
 
-    font-size: 14px;
+    font-size: 13px;
   }
 
-  .footer-bottom div {
+  .footer-bottom > div {
     flex-wrap: wrap;
+
+    gap: 8px;
   }
 }

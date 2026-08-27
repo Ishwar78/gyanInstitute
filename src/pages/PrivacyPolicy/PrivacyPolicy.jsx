@@ -1,8 +1,28 @@
 import { Link } from "react-router-dom";
 import { FiArrowRight, FiCheckCircle, FiShield } from "react-icons/fi";
+import { useState, useEffect } from "react";
 import "./PrivacyPolicy.css";
 
 export default function PrivacyPolicy() {
+  const [contactInfo, setContactInfo] = useState({
+    phone: "+91 98765 43210",
+    email: "info@gyantime.in",
+    addressLine: "123 Knowledge City",
+    cityState: "Hisar, Haryana",
+    postalCode: "125001",
+  });
+
+  useEffect(() => {
+    fetch("http://localhost:5005/api/contact-info")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success && json.data) {
+          setContactInfo(json.data);
+        }
+      })
+      .catch((err) => console.error("Failed to load contact info:", err));
+  }, []);
+
   return (
     <main className="privacy-page">
 
@@ -21,7 +41,7 @@ export default function PrivacyPolicy() {
             </h1>
 
             <p>
-              At Gyan Institute, we respect your privacy and are committed to
+              At Gyan Time, we respect your privacy and are committed to
               protecting the personal information you share with us.
             </p>
 
@@ -59,7 +79,7 @@ export default function PrivacyPolicy() {
                 <span>LAST UPDATED: AUGUST 2026</span>
 
                 <p>
-                  This Privacy Policy explains how Gyan Institute collects,
+                  This Privacy Policy explains how Gyan Time collects,
                   uses, stores and protects information when you visit our
                   website, contact us, register for courses, or use our
                   services.
@@ -70,7 +90,7 @@ export default function PrivacyPolicy() {
                 <h2>01. Information We Collect</h2>
                 <p>
                   We may collect information that you voluntarily provide to
-                  us when you contact Gyan Institute, submit an enquiry,
+                  us when you contact Gyan Time, submit an enquiry,
                   register for a course, or communicate with our team.
                 </p>
 
@@ -94,14 +114,14 @@ export default function PrivacyPolicy() {
                 <p>
                   We may also use your information to communicate important
                   updates related to courses, admissions, schedules and
-                  institute activities.
+                  Time activities.
                 </p>
               </section>
 
               <section id="protection">
                 <h2>03. Data Protection</h2>
                 <p>
-                  Gyan Institute takes reasonable administrative and technical
+                  Gyan Time takes reasonable administrative and technical
                   measures to protect your personal information against
                   unauthorized access, misuse, alteration or disclosure.
                 </p>
@@ -128,7 +148,7 @@ export default function PrivacyPolicy() {
               <section id="rights">
                 <h2>06. Your Rights</h2>
                 <p>
-                  You may contact Gyan Institute if you want to know what
+                  You may contact Gyan Time if you want to know what
                   personal information we hold about you or if you believe
                   information provided by you needs to be corrected or updated.
                 </p>
@@ -143,10 +163,10 @@ export default function PrivacyPolicy() {
                 </p>
 
                 <div className="privacy-contact-details">
-                  <strong>Gyan Institute</strong>
-                  <span>123 Knowledge City, Hisar, Haryana - 125001</span>
-                  <span>+91 98765 43210</span>
-                  <span>info@gyaninstitute.com</span>
+                  <strong>Gyan Time</strong>
+                  <span>{contactInfo.addressLine}, {contactInfo.cityState} - {contactInfo.postalCode}</span>
+                  <span>{contactInfo.phone}</span>
+                  <span>{contactInfo.email}</span>
                 </div>
               </section>
 

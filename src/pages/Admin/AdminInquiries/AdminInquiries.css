@@ -1,158 +1,653 @@
-.inquiry-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-bottom: 16px
+
+/* =========================================================
+   GYAN Time - PROFESSIONAL INQUIRIES
+========================================================= */
+
+.admin-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 32px;
+  box-sizing: border-box;
+  background: #f5f7fa;
 }
 
-.inquiry-stats>div {
-    background: #fff;
-    border: 1px solid #e8edf3;
-    border-radius: 12px;
-    padding: 18px;
-    display: flex;
-    align-items: center;
-    gap: 10px
+/* =========================================================
+   HEADER
+========================================================= */
+
+.admin-page-head {
+  margin-bottom: 30px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  height: 46px;
+  padding: 0 18px;
+
+  border: 1px solid #f0b323;
+  border-radius: 24px;
+
+  color: #e9a500;
+  background: rgba(255, 255, 255, 0.45);
+
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+}
+
+.admin-page-head h1 {
+  margin: 9px 0 5px;
+
+  color: #06213d;
+  font-size: 40px;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+
+.admin-page-head p {
+  margin: 0;
+
+  color: #718096;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   STAT CARDS
+========================================================= */
+
+.inquiry-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+
+  margin-bottom: 18px;
+}
+
+.inquiry-stats > div {
+  min-height: 78px;
+  padding: 0 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  background: #fff;
+  border: 1px solid #e4e9ef;
+  border-radius: 14px;
+
+  box-shadow: 0 4px 16px rgba(6, 33, 61, 0.035);
+
+  transition: 0.2s ease;
+}
+
+.inquiry-stats > div:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(6, 33, 61, 0.07);
 }
 
 .inquiry-stats svg {
-    color: var(--gold);
-    font-size: 21px
+  width: 21px;
+  height: 21px;
+
+  color: #efa900;
+  stroke-width: 2;
 }
 
 .inquiry-stats b {
-    font-size: 25px
+  color: #092541;
+  font-size: 22px;
+  font-weight: 800;
 }
 
 .inquiry-stats span {
-    color: #7b8797;
-    font-size: 12px
+  color: #8792a3;
+  font-size: 13px;
+  font-weight: 500;
 }
+
+/* =========================================================
+   INQUIRY LIST
+========================================================= */
 
 .inquiries-list {
-    display: grid;
-    gap: 10px
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
+
+/* =========================================================
+   INQUIRY CARD
+========================================================= */
 
 .inquiry-card {
-    background: #fff;
-    border: 1px solid #e8edf3;
-    border-radius: 13px;
-    padding: 17px;
-    display: flex;
-    align-items: center;
-    gap: 14px
+  position: relative;
+
+  width: 100%;
+  min-height: 142px;
+
+  padding: 22px 20px;
+
+  display: flex;
+  align-items: flex-start;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+  border: 1px solid #e3e8ee;
+  border-radius: 15px;
+
+  box-shadow: 0 4px 18px rgba(6, 33, 61, 0.035);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
+
+.inquiry-card:hover {
+  transform: translateY(-2px);
+
+  border-color: #d8dfe7;
+
+  box-shadow: 0 10px 28px rgba(6, 33, 61, 0.075);
+}
+
+/* =========================================================
+   AVATAR
+========================================================= */
 
 .lead-avatar {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--navy);
-    color: #fff;
-    display: grid;
-    place-items: center;
-    font-weight: 800
+  width: 46px;
+  height: 46px;
+
+  flex: 0 0 46px;
+
+  margin-right: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #06213d;
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: 800;
+
+  box-shadow: 0 4px 10px rgba(6, 33, 61, 0.14);
 }
+
+/* =========================================================
+   MAIN LEAD CONTENT
+========================================================= */
 
 .lead-main {
-    flex: 1
+  min-width: 0;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
 }
 
-.lead-main>b,
-.lead-main>span {
-    display: block
+/* Name */
+
+.lead-main > b {
+  margin-bottom: 4px;
+
+  color: #092541;
+
+  font-size: 15px;
+  line-height: 1.35;
+
+  font-weight: 800;
 }
 
-.lead-main>b {
-    font-size: 14px
+/* Subject */
+
+.lead-main > span {
+  margin-bottom: 13px;
+
+  color: #eaa300;
+
+  font-size: 13px;
+  line-height: 1.3;
+
+  font-weight: 700;
 }
 
-.lead-main>span {
-    font-size: 14px;
-    color: var(--gold);
-    font-weight: 800
+/* =========================================================
+   CONTACT DETAILS
+========================================================= */
+
+.lead-main > div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 10px;
 }
 
-.lead-main>div {
-    display: flex;
-    gap: 15px;
-    margin-top: 6px
-}
+/* Individual contact pill */
 
 .lead-main small {
-    display: flex;
-    gap: 5px;
-    align-items: center;
-    color: #7d8897;
-    font-size: 14px
+  min-height: 30px;
+
+  padding: 0 11px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #e7ebf0;
+  border-radius: 7px;
+
+  background: #f8fafc;
+
+  color: #070808;
+
+  font-size: 17px;
+  line-height: 1;
+
+  font-weight: 600;
+
+  white-space: nowrap;
 }
+
+/* Icons */
+
+.lead-main small svg {
+  width: 14px;
+  height: 14px;
+
+  flex-shrink: 0;
+
+  color: #efa900;
+
+  stroke-width: 2;
+}
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+/*
+  Existing JSX has inline style on <p>.
+  !important is used intentionally to make
+  this professional design override it.
+*/
+
+.lead-main p {
+  position: relative;
+
+  max-width: 92%;
+
+  margin: 13px 0 0 !important;
+  padding: 11px 14px 11px 15px;
+
+  box-sizing: border-box;
+
+  color: #080808 !important;
+
+  background: #f8fafc;
+
+  border-left: 3px solid #f1b01b;
+  border-radius: 0 8px 8px 0;
+
+  font-size: 15px !important;
+  line-height: 1.55;
+
+  font-weight: 500;
+
+  word-break: break-word;
+}
+
+/* Small message label */
+
+.lead-main p::before {
+  content: "MESSAGE";
+
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #5780ba;
+
+  font-size: 14px;
+  line-height: 1;
+
+  font-weight: 800;
+  letter-spacing: 0.7px;
+}
+
+/* =========================================================
+   RIGHT SIDE
+========================================================= */
 
 .lead-time {
-    text-align: right
+  min-width: 170px;
+
+  margin-left: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  text-align: right;
 }
 
-.lead-time span {
-    display: block;
-    width: max-content;
-    margin-left: auto;
-    padding: 4px 8px;
-    border-radius: 20px;
-    font-size: 9px;
-    font-weight: 800
+/* =========================================================
+   STATUS DROPDOWN
+========================================================= */
+
+.lead-time select {
+  min-width: 105px;
+  height: 29px;
+
+  margin-bottom: 8px !important;
+  padding: 0 25px 0 12px !important;
+
+  border: none !important;
+  outline: none !important;
+
+  border-radius: 20px !important;
+
+  font-family: inherit;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
 }
 
-.lead-time .new {
-    background: #fff4d8;
-    color: #a66e00
+/* New */
+
+.lead-time select.new {
+  background: #fff4d8;
+  color: #b47700;
 }
 
-.lead-time .contacted {
-    background: #e8f2ff;
-    color: #2c69a5
+/* Contacted */
+
+.lead-time select.contacted {
+  background: #edf4ff;
+  color: #386ca7;
 }
 
-.lead-time .closed {
-    background: #e8f7ed;
-    color: #2c8550
+/* Closed */
+
+.lead-time select.closed {
+  background: #eaf7ef;
+  color: #348052;
 }
+
+.lead-time select:hover {
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   DATE / TIME
+========================================================= */
 
 .lead-time small {
-    font-size: 9px;
-    color: #929cab
+  color: #a0a9b7;
+
+  font-size: 10px;
+  line-height: 1.4;
+
+  font-weight: 500;
+
+  white-space: nowrap;
 }
 
-.inquiry-card>button {
-    border: 1px solid #dfe5ec;
-    background: #fff;
-    padding: 8px 11px;
-    border-radius: 7px;
+/* =========================================================
+   EMPTY / LOADING
+========================================================= */
+
+.inquiries-list > p {
+  width: 100%;
+  min-height: 150px;
+
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px dashed #d6dde6;
+  border-radius: 14px;
+
+  color: #7b8798;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.inquiries-list > .error {
+  color: #d14c4c;
+  background: #fffafa;
+  border-color: #efcccc;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+  .admin-page {
+    padding: 26px;
+  }
+
+  .lead-time {
+    min-width: 145px;
+  }
+
+  .lead-main p {
+    max-width: 100%;
+  }
+}
+
+/* =========================================================
+   SMALL TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+  .admin-page-head h1 {
+    font-size: 34px;
+  }
+
+  .inquiry-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .inquiry-card {
+    align-items: flex-start;
+  }
+
+  .lead-time {
+    min-width: 125px;
+    margin-left: 12px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+  .admin-page {
+    padding: 18px;
+  }
+
+  .admin-page-head {
+    margin-bottom: 22px;
+  }
+
+  .eyebrow {
+    height: 40px;
+    padding: 0 14px;
+    font-size: 12px;
+  }
+
+  .admin-page-head h1 {
+    margin-top: 9px;
+    font-size: 30px;
+  }
+
+  .admin-page-head p {
+    font-size: 14px;
+  }
+
+  /* Stats */
+
+  .inquiry-stats {
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .inquiry-stats > div {
+    min-height: 64px;
+    padding: 0 15px;
+    border-radius: 12px;
+  }
+
+  /* Card */
+
+  .inquiry-card {
+    min-height: 0;
+
+    padding: 17px 15px;
+
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+
+    column-gap: 12px;
+    row-gap: 14px;
+
+    border-radius: 13px;
+  }
+
+  .lead-avatar {
+    width: 42px;
+    height: 42px;
+
+    margin-right: 0;
+  }
+
+  .lead-main {
+    width: 100%;
+  }
+
+  .lead-main > b {
+    font-size: 14px;
+  }
+
+  .lead-main > span {
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+
+  /* Contact details */
+
+  .lead-main > div {
+    gap: 7px;
+  }
+
+  .lead-main small {
+    min-height: 28px;
+    padding: 0 9px;
+
+    font-size: 10.5px;
+  }
+
+  .lead-main small svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  /* Message */
+
+  .lead-main p {
+    max-width: 100%;
+
+    margin-top: 11px !important;
+    padding: 10px 11px;
+
+    font-size: 11.5px !important;
+  }
+
+  /* Status section */
+
+  .lead-time {
+    grid-column: 1 / -1;
+
+    width: 100%;
+    min-width: 0;
+
+    margin-left: 0;
+    padding-top: 12px;
+
     display: flex;
-    gap: 5px;
+    flex-direction: row;
     align-items: center;
-    font-weight: 700;
-    font-size: 11px
+    justify-content: space-between;
+
+    border-top: 1px solid #edf0f3;
+
+    text-align: left;
+  }
+
+  .lead-time select {
+    margin-bottom: 0 !important;
+  }
+
+  .lead-time small {
+    font-size: 9px;
+    white-space: normal;
+    text-align: right;
+  }
 }
 
-@media(max-width:700px) {
-    .inquiry-stats {
-        grid-template-columns: 1fr
-    }
+/* =========================================================
+   VERY SMALL DEVICES
+========================================================= */
 
-    .inquiry-card {
-        align-items: flex-start
-    }
+@media (max-width: 400px) {
+  .admin-page {
+    padding: 14px;
+  }
 
-    .lead-time {
-        margin-left: auto
-    }
+  .admin-page-head h1 {
+    font-size: 27px;
+  }
 
-    .inquiry-card>button {
-        display: none
-    }
+  .inquiry-card {
+    padding: 14px 12px;
+  }
 
-    .lead-main>div {
-        flex-direction: column;
-        gap: 3px
-    }
+  .lead-main > div {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .lead-main small {
+    width: fit-content;
+  }
+
+  .lead-time {
+    align-items: center;
+  }
 }

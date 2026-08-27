@@ -24,8 +24,8 @@
 .courses-quality span,
 .center-title > span {
   color: var(--gold);
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 15px;
+  font-weight: 700;
   letter-spacing: 1.4px;
 }
 
@@ -74,8 +74,8 @@
 
 .courses-hero-stats div {
   display: grid;
-  grid-template-columns: 35px 1fr;
-  column-gap: 8px;
+  grid-template-columns: 45px 1fr;
+  column-gap: 18px;
   align-items: center;
   padding: 17px 25px;
   border-right: 1px solid #34506d;
@@ -94,6 +94,7 @@
 
 .courses-hero-stats strong {
   font-size: 20px;
+  color: #fff;
 }
 
 .courses-hero-stats span {
@@ -116,7 +117,7 @@
   padding: 19px;
   height: max-content;
   position: sticky;
-  top: 20px;
+  top: 130px; /* below fixed navbar */
 }
 
 .course-filter h3 {
@@ -255,7 +256,7 @@
 .course-row > img {
   width: 170px;
   height: 122px;
-  object-fit: cover;
+  /* object-fit: cover; */
   border-radius: 8px;
 }
 
@@ -264,12 +265,20 @@
   font-size: 18px;
 }
 
-.course-row-main p {
+.course-card-desc {
   margin: 0;
   color: #0b2a4d;
   font-size: 16px;
   line-height: 1.7;
   font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.course-card-desc p {
+  margin: 0;
 }
 
 .course-tags {
@@ -374,13 +383,13 @@
 }
 
 .quality-inner article b {
-  font-size: 13px;
+  font-size: 15px;
   margin: 8px 0 5px;
 }
 
 .quality-inner article small {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.5;
 }
 
@@ -424,20 +433,20 @@
 }
 
 .category-cards h3 {
-  font-size: 13px;
+  font-size: 15px;
   margin: 14px 0 4px;
   line-height: 1.4;
 }
 
 .category-cards small {
   color: var(--gold-dark);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
 }
 
 .category-cards p {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.5;
   min-height: 36px;
 }

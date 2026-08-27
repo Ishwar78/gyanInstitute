@@ -23,8 +23,8 @@
 .about-facilities span,
 .about-cta span {
   color: var(--gold);
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 14px;
+  font-weight: 700;
   letter-spacing: 1.5px;
 }
 
@@ -82,8 +82,9 @@
 .about-intro p,
 .facility-copy p {
   color: #0d0e10;
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.9;
+  font-weight: 500;
 }
 
 .about-intro ul {
@@ -96,7 +97,7 @@
 }
 
 .about-intro li {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   display: flex;
   gap: 8px;
@@ -157,8 +158,8 @@
 }
 
 .about-section-title p {
-  color: var(--muted);
-  font-size: 15px;
+  color: #0d0e10;
+  font-size: 17px;
   line-height: 1.7;
 }
 
@@ -176,8 +177,8 @@
 }
 
 .values-grid article > svg {
-  width: 43px;
-  height: 43px;
+  width: 53px;
+  height: 53px;
   padding: 10px;
   color: var(--gold-dark);
   background: #fff7e2;
@@ -186,12 +187,12 @@
 
 .values-grid h3 {
   margin: 20px 0 9px;
-  font-size: 15px;
+  font-size: 17px;
 }
 
 .values-grid p {
-  color: var(--muted);
-  font-size: 15px;
+  color: #0d0e10;
+  font-size: 17px;
   line-height: 1.7;
 }
 
@@ -281,7 +282,7 @@
 
 .about-stat-grid span {
   color: #aebdce;
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .about-cta {
@@ -306,8 +307,8 @@
 
 .about-cta p {
   margin: 0;
-  color: var(--muted);
-  font-size: 15px;
+  color: #0d0e10;
+  font-size: 16px;
 }
 
 @media (max-width: 850px) {

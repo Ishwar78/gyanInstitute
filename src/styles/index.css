@@ -5,11 +5,15 @@
   --navy-2: #08294f;
   --gold: #f5a900;
   --gold-2: #ffbf22;
+  --gold-dark: #c8900e;
   --ink: #0b1b34;
   --muted: #5f6877;
   --white: #fff;
   --border: #e7ebf1;
   --soft: #f7f9fc;
+  --border-color: #e7ebf1;
+  --text-dark: #0b1b34;
+  --text-light: #5f6877;
 }
 
 * { box-sizing: border-box; }

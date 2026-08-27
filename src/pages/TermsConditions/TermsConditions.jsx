@@ -4,9 +4,29 @@ import {
   FiCheckCircle,
   FiFileText
 } from "react-icons/fi";
+import { useState, useEffect } from "react";
 import "./TermsConditions.css";
 
 export default function TermsConditions() {
+  const [contactInfo, setContactInfo] = useState({
+    phone: "+91 98765 43210",
+    email: "info@gyantime.in",
+    addressLine: "123 Knowledge City",
+    cityState: "Hisar, Haryana",
+    postalCode: "125001",
+  });
+
+  useEffect(() => {
+    fetch("http://localhost:5005/api/contact-info")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success && json.data) {
+          setContactInfo(json.data);
+        }
+      })
+      .catch((err) => console.error("Failed to load contact info:", err));
+  }, []);
+
   return (
     <main className="terms-page">
 
@@ -26,7 +46,7 @@ export default function TermsConditions() {
             </h1>
 
             <p>
-              Please read these terms carefully before using the Gyan Institute
+              Please read these terms carefully before using the Gyan Time
               website, services or enrolling in our courses.
             </p>
 
@@ -67,7 +87,7 @@ export default function TermsConditions() {
                 <span>LAST UPDATED: AUGUST 2026</span>
 
                 <p>
-                  By accessing or using the Gyan Institute website, you agree
+                  By accessing or using the Gyan Time website, you agree
                   to comply with the following Terms & Conditions. If you do
                   not agree with these terms, please do not use the website.
                 </p>
@@ -77,7 +97,7 @@ export default function TermsConditions() {
                 <h2>01. Acceptance of Terms</h2>
                 <p>
                   These Terms & Conditions govern your use of the Gyan
-                  Institute website and its related services. By accessing the
+                  Time website and its related services. By accessing the
                   website, you acknowledge that you have read and understood
                   these terms.
                 </p>
@@ -111,13 +131,13 @@ export default function TermsConditions() {
                 <h2>03. Courses & Admissions</h2>
                 <p>
                   Course information, duration, eligibility, schedules and
-                  availability may vary from time to time. Gyan Institute
+                  availability may vary from time to time. Gyan Time
                   reserves the right to modify course details when required.
                 </p>
 
                 <p>
                   Admission to any course may be subject to eligibility
-                  requirements, availability and institute policies.
+                  requirements, availability and Time policies.
                 </p>
               </section>
 
@@ -145,7 +165,7 @@ export default function TermsConditions() {
                 <h2>06. Intellectual Property</h2>
                 <p>
                   Website content including text, graphics, logos, images,
-                  branding and design elements belongs to Gyan Institute or
+                  branding and design elements belongs to Gyan Time or
                   its respective content providers and should not be copied,
                   reproduced or redistributed without permission.
                 </p>
@@ -154,7 +174,7 @@ export default function TermsConditions() {
               <section id="liability">
                 <h2>07. Limitation of Liability</h2>
                 <p>
-                  Gyan Institute will make reasonable efforts to maintain the
+                  Gyan Time will make reasonable efforts to maintain the
                   website and provide accurate information. However, we cannot
                   guarantee that the website will always be available,
                   uninterrupted or completely free from errors.
@@ -170,10 +190,10 @@ export default function TermsConditions() {
                 </p>
 
                 <div className="terms-contact-details">
-                  <strong>Gyan Institute</strong>
-                  <span>123 Knowledge City, Hisar, Haryana - 125001</span>
-                  <span>+91 98765 43210</span>
-                  <span>info@gyaninstitute.com</span>
+                  <strong>Gyan Time</strong>
+                  <span>{contactInfo.addressLine}, {contactInfo.cityState} - {contactInfo.postalCode}</span>
+                  <span>{contactInfo.phone}</span>
+                  <span>{contactInfo.email}</span>
                 </div>
               </section>
 

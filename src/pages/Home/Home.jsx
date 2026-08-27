@@ -1,22 +1,92 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FiArrowRight, FiAward, FiBookOpen, FiBriefcase, FiCheckCircle, FiChevronRight, FiPlay, FiTarget, FiUsers } from "react-icons/fi";
 import { FaGraduationCap } from "react-icons/fa";
-import { courses, galleryImages, testimonials } from "../../data/siteData";
+import { courses, testimonials } from "../../data/siteData";
 import "./Home.css";
 
 export default function Home() {
+  const [heroData, setHeroData] = useState({
+    badgeText: "Top Rated Time",
+    heading: "Empowering Minds, Shaping",
+    highlightedWord: "Futures",
+    description: "At Gyan Time, we provide quality education, expert guidance and holistic development to help students build a successful career.",
+    primaryButtonText: "Explore Courses",
+    secondaryButtonText: "Inquiry now",
+    imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1300&q=85"
+  });
+
+  const [galleryImages, setGalleryImages] = useState([]);
+
+  const [aboutData, setAboutData] = useState({
+    eyebrow: "ABOUT US",
+    heading: "Welcome to Gyan Time",
+    introduction: "Gyan Time was established with a vision to provide world-class education and create a platform where students can learn, grow and achieve their goals.",
+    highlights: ["Experienced & Dedicated Faculty", "Modern Infrastructure & Facilities", "Student-Centric Learning Approach", "Affordable Fees & Flexible Batches"]
+  });
+
+  const [apiCourses, setApiCourses] = useState([]);
+  const [apiTestimonials, setApiTestimonials] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5005/api/home-hero")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success && json.data) {
+          setHeroData(json.data);
+        }
+      })
+      .catch((err) => console.error("Failed to load hero data:", err));
+
+    fetch("http://localhost:5005/api/gallery")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success) {
+          setGalleryImages(json.data);
+        }
+      })
+      .catch((err) => console.error("Failed to load gallery data:", err));
+
+    fetch("http://localhost:5005/api/about")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success && json.data) {
+          setAboutData(json.data);
+        }
+      })
+      .catch((err) => console.error("Failed to load about data:", err));
+      
+    fetch("http://localhost:5005/api/course")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success) {
+          setApiCourses(json.data.filter(c => c.status !== "Draft").slice(0, 6));
+        }
+      })
+      .catch((err) => console.error("Failed to load courses data:", err));
+
+    fetch("http://localhost:5005/api/testimonial")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success) {
+          setApiTestimonials(json.data.filter(t => t.status !== "Draft"));
+        }
+      })
+      .catch((err) => console.error("Failed to load testimonials:", err));
+  }, []);
+
   return (
     <>
       <section className="home-hero">
         <div className="home-hero-bg" />
         <div className="home-hero-inner">
           <div className="home-hero-copy">
-            <span className="eyebrow"><FaGraduationCap /> Top Rated Institute</span>
-            <h1>Empowering Minds<br />Shaping <span>Futures</span></h1>
-            <p>At Gyan Institute, we provide quality education, expert guidance and holistic development to help students build a successful career.</p>
+            <span className="eyebrow"><FaGraduationCap /> {heroData.badgeText}</span>
+            <h1>{heroData.heading}<br /><span>{heroData.highlightedWord}</span></h1>
+            <p>{heroData.description}</p>
             <div className="hero-actions">
-              <Link to="/courses" className="primary-btn">Explore Courses <FiArrowRight /></Link>
-              <a href="#about-preview" className="outline-btn"><FiPlay /> Watch Video</a>
+              <Link to="/courses" className="primary-btn">{heroData.primaryButtonText} <FiArrowRight /></Link>
+              <a href="/contact" className="outline-btn"><FiArrowRight />{heroData.secondaryButtonText} </a>
             </div>
             <div className="hero-features">
               <span><FiUsers /><b>Expert Faculty</b><small>Industry experts</small></span>
@@ -27,7 +97,7 @@ export default function Home() {
           </div>
           <div className="home-hero-visual">
             <div className="hero-image-wrap">
-              <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1300&q=85" alt="Students learning at Gyan Institute" />
+              <img src={heroData.imageUrl} alt="Students learning at Gyan Time" />
             </div>
           </div>
         </div>
@@ -46,13 +116,13 @@ export default function Home() {
           <Link to="/courses" className="text-link">View All Courses <FiArrowRight /></Link>
         </div>
         <div className="course-grid">
-          {courses.map((course) => (
-            <article className="course-card" key={course.title}>
+          {apiCourses.map((course) => (
+            <article className="course-card" key={course._id || course.slug}>
               <div className="course-card-image"><img src={course.image} alt={course.title} /><span><FiBookOpen /></span></div>
               <div className="course-card-body">
                 <h3>{course.title}</h3>
-                <p>{course.description.slice(0, 72)}...</p>
-                <Link to="/courses">Learn More <FiArrowRight /></Link>
+                <div className="home-course-desc" dangerouslySetInnerHTML={{ __html: course.description }} />
+                <Link to={`/courses/${course.slug}`}>Learn More <FiArrowRight /></Link>
               </div>
             </article>
           ))}
@@ -61,19 +131,18 @@ export default function Home() {
 
       <section className="home-about section-shell" id="about-preview">
         <div className="about-preview-copy">
-          <span className="section-kicker">ABOUT US</span>
-          <h2>Welcome to <em>Gyan Institute</em></h2>
-          <p>Gyan Institute was established with a vision to provide world-class education and create a platform where students can learn, grow and achieve their goals.</p>
+          <span className="section-kicker">{aboutData.eyebrow}</span>
+          <h2>{aboutData.heading}</h2>
+          <p>{aboutData.introduction}</p>
           <ul>
-            <li><FiCheckCircle /> Experienced & Dedicated Faculty</li>
-            <li><FiCheckCircle /> Modern Infrastructure & Facilities</li>
-            <li><FiCheckCircle /> Student-Centric Learning Approach</li>
-            <li><FiCheckCircle /> Affordable Fees & Flexible Batches</li>
+            {aboutData.highlights && aboutData.highlights.map((highlight, index) => (
+              <li key={index}><FiCheckCircle /> {highlight}</li>
+            ))}
           </ul>
           <Link to="/about" className="primary-btn dark">Know More About Us <FiArrowRight /></Link>
         </div>
         <div className="about-preview-images">
-          <img className="about-img-main" src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1000&q=85" alt="Gyan Institute campus" />
+          <img className="about-img-main" src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1000&q=85" alt="Gyan Time campus" />
           <img className="about-img-small" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=700&q=85" alt="Students in class" />
           <div className="about-play"><FiPlay /></div>
         </div>
@@ -84,7 +153,11 @@ export default function Home() {
           <div className="why-heading">
             <span>WHY CHOOSE US</span>
             <h2>Your Success is <em>Our Mission</em></h2>
-            <p>We combine strong academics, practical learning and personal guidance to create confident, career-ready students.</p>
+            <p>We combine strong academics, practical learning and personal guidance to create confident, career-ready students.
+              We combine strong academics, practical learning and personal guidance to create confident, career-ready students.
+              We combine strong academics, practical learning and personal guidance to create confident, career-ready students.
+             
+            </p>
           </div>
           <div className="why-grid">
             {[
@@ -101,16 +174,27 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-testimonials section-shell" id="testimonials">
-        <div className="center-heading"><span>TESTIMONIALS</span><h2>What Our <em>Students Say</em></h2></div>
-        <div className="testimonial-grid">
-          {testimonials.map((item) => (
-            <article key={item.name} className="testimonial-card">
-              <div className="student"><img src={item.image} alt={item.name} /><div><b>{item.name}</b><small>{item.role}</small></div></div>
-              <p>“{item.text}”</p>
-            </article>
-          ))}
-        </div>
+      <section className="home-testimonials" id="testimonials">
+        <div className="center-heading section-shell"><span>TESTIMONIALS</span><h2>What Our <em>Students Say</em></h2></div>
+        
+        {apiTestimonials.length > 0 ? (
+          <div className="marquee-wrapper">
+            <div className="marquee-track">
+              {/* Duplicate array for seamless infinite scroll */}
+              {[...apiTestimonials, ...apiTestimonials].map((item, index) => (
+                <article className="testimonial-card" key={index}>
+                  <div className="student">
+                    <img src={item.image} alt={item.name} />
+                    <div><b>{item.name}</b><small>{item.course}</small></div>
+                  </div>
+                  <p>{item.text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <p style={{ textAlign: "center", color: "var(--muted)" }}>No testimonials available yet.</p>
+        )}
       </section>
 
       <section className="home-achievements">
@@ -128,9 +212,9 @@ export default function Home() {
       </section>
 
       <section className="home-gallery section-shell">
-        <div className="center-heading"><span>OUR CAMPUS GALLERY</span><h2>Life at <em>Gyan Institute</em></h2></div>
+        <div className="center-heading"><span>OUR CAMPUS GALLERY</span><h2>Life at <em>Gyan Time</em></h2></div>
         <div className="gallery-strip">
-          {galleryImages.slice(0, 5).map(([label, image]) => <img key={label} src={image} alt={label} />)}
+          {galleryImages.slice(0, 5).map((img) => <img key={img._id} src={img.image} alt={img.label} />)}
         </div>
         <Link to="/gallery" className="outline-dark-btn">View More Photos <FiArrowRight /></Link>
       </section>

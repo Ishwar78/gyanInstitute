@@ -1,53 +1,82 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import {
   FiBarChart2, FiBookOpen, FiChevronRight, FiFileText, FiHome,
-  FiImage, FiInfo, FiLogOut, FiMail, FiMenu, FiSettings, FiUser
+  FiImage, FiCamera, FiInfo, FiLogOut, FiMail, FiMenu, FiUser, FiX, FiStar
 } from "react-icons/fi";
 import "./AdminLayout.css";
 
 const menu = [
   ["Overview", "/admin/overview", FiBarChart2],
+  ["Categories", "/admin/categories", FiBookOpen],
   ["Courses", "/admin/courses", FiBookOpen],
   ["Contact Info", "/admin/contact-info", FiInfo],
   ["Inquiries", "/admin/inquiries", FiMail],
   ["Blog", "/admin/blog", FiFileText],
   ["Home Hero", "/admin/home-hero", FiImage],
-  ["About", "/admin/about", FiUser]
+  ["About", "/admin/about", FiUser],
+  ["Gallery", "/admin/gallery", FiCamera],
+  ["Reviews", "/admin/testimonials", FiStar]
 ];
 
 export default function AdminLayout() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const logout = () => navigate("/admin/login");
+
+  // Close sidebar on route change
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
 
   return (
     <div className="admin-shell">
-      <aside className="admin-sidebar">
-        <div className="admin-brand">
-          <div className="admin-logo">G</div>
-          <div><strong>GYAN</strong><span>ADMIN PANEL</span></div>
+
+      {/* Overlay for mobile */}
+      {sidebarOpen && (
+        <div className="admin-overlay" onClick={() => setSidebarOpen(false)} />
+      )}
+
+      <aside className={`admin-sidebar${sidebarOpen ? " open" : ""}`}>
+        <div className="admin-sidebar-header">
+          <div className="admin-brand">
+            <div className="admin-logo">G</div>
+            <div><strong>GYAN</strong><span>ADMIN PANEL</span></div>
+          </div>
+          <button className="admin-close-btn" onClick={() => setSidebarOpen(false)}>
+            <FiX />
+          </button>
         </div>
+
         <div className="admin-menu-label">MANAGEMENT</div>
         <nav>
           {menu.map(([label, to, Icon]) => (
-            <NavLink key={to} to={to} className={({isActive}) => isActive ? "active" : ""}>
+            <NavLink key={to} to={to} className={({ isActive }) => isActive ? "active" : ""}>
               <Icon /><span>{label}</span><FiChevronRight className="menu-arrow" />
             </NavLink>
           ))}
         </nav>
+
         <div className="admin-sidebar-bottom">
-          <NavLink to="/"><FiHome /> View Website</NavLink>
-          <button onClick={logout}><FiLogOut /> Logout</button>
+          {/* <NavLink to="/"><FiHome /><span>View Website</span></NavLink> */}
+          <button onClick={logout}><FiLogOut /><span>Logout</span></button>
         </div>
       </aside>
 
       <div className="admin-main">
         <header className="admin-topbar">
-          <button className="admin-mobile-menu"><FiMenu /></button>
+          <button className="admin-mobile-menu" onClick={() => setSidebarOpen(true)}>
+            <FiMenu />
+          </button>
           <div>
-            <span>GYAN INSTITUTE</span>
+            <span>GYAN Time</span>
             <strong>Administration Portal</strong>
           </div>
-          <div className="admin-user"><span className="admin-avatar"><FiUser /></span><div><b>Admin</b><small>Super Admin</small></div></div>
+          <div className="admin-user">
+            <span className="admin-avatar"><FiUser /></span>
+            <div><b>Admin</b><small>Super Admin</small></div>
+          </div>
         </header>
         <main className="admin-content"><Outlet /></main>
       </div>

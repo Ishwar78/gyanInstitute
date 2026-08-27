@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FiArrowRight, FiAward, FiBookOpen, FiCheckCircle, FiHeart, FiTarget, FiUsers } from "react-icons/fi";
 import { FaGraduationCap } from "react-icons/fa";
@@ -11,17 +12,36 @@ const values = [
 ];
 
 export default function About() {
+  const [aboutData, setAboutData] = useState({
+    eyebrow: "ABOUT US",
+    heading: "Welcome to Gyan Time",
+    introduction: "Gyan Time was established with a vision to provide world-class education and create a platform where students can learn, grow and achieve their goals.",
+    missionStatement: "We believe in empowering young minds with the right knowledge, skills and values to excel in life.",
+    highlights: ["Experienced & Dedicated Faculty", "Modern Infrastructure & Smart Classrooms", "Student-Centric Learning Approach", "Regular Assessments & Mentoring"]
+  });
+
+  useEffect(() => {
+    fetch("http://localhost:5005/api/about")
+      .then(res => res.json())
+      .then(json => {
+        if (json.success && json.data) {
+          setAboutData(json.data);
+        }
+      })
+      .catch(err => console.error("Error fetching about data:", err));
+  }, []);
+
   return (
     <>
       <section className="about-hero">
         <div className="about-hero-inner">
           <div>
-            <span>ABOUT US</span>
-            <h1>Welcome to <em>Gyan Institute</em></h1>
+            <span>{aboutData.eyebrow}</span>
+            <h1>{aboutData.heading}</h1>
             <p>Where learning meets opportunity, confidence and a clear path towards success.</p>
           </div>
           <div className="about-hero-image">
-            <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1300&q=85" alt="Gyan Institute campus" />
+            <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1300&q=85" alt="Gyan Time campus" />
           </div>
         </div>
       </section>
@@ -30,13 +50,12 @@ export default function About() {
         <div className="about-intro-copy">
           <span>WHO WE ARE</span>
           <h2>Building Strong Foundations for <em>Bright Futures</em></h2>
-          <p>Gyan Institute was established with a vision to provide world-class education and create a platform where students can learn, grow and achieve their goals.</p>
-          <p>Our approach combines experienced faculty, modern infrastructure, practical learning and individual guidance. Whether a student is preparing for an examination, learning technology or developing professional skills, our goal is to make the journey structured and meaningful.</p>
+          <p>{aboutData.introduction}</p>
+          <p>{aboutData.missionStatement}</p>
           <ul>
-            <li><FiCheckCircle /> Experienced & Dedicated Faculty</li>
-            <li><FiCheckCircle /> Modern Infrastructure & Smart Classrooms</li>
-            <li><FiCheckCircle /> Student-Centric Learning Approach</li>
-            <li><FiCheckCircle /> Regular Assessments & Mentoring</li>
+            {aboutData.highlights && aboutData.highlights.map((highlight, index) => (
+              <li key={index}><FiCheckCircle /> {highlight}</li>
+            ))}
           </ul>
         </div>
         <div className="about-intro-visual">

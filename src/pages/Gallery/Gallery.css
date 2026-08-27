@@ -124,7 +124,7 @@
 .gallery-grid-large img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  /* object-fit: cover; */
   transition: transform .35s ease;
 }
 
