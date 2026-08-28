@@ -11,6 +11,7 @@ export default function AdminHomeHero() {
     primaryButtonText: "",
     secondaryButtonText: "",
     imageUrl: "",
+    images: [],
   });
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -33,6 +34,7 @@ export default function AdminHomeHero() {
           primaryButtonText: json.data.primaryButtonText || "",
           secondaryButtonText: json.data.secondaryButtonText || "",
           imageUrl: json.data.imageUrl || "",
+          images: json.data.images && json.data.images.length > 0 ? json.data.images : (json.data.imageUrl ? [json.data.imageUrl] : []),
         });
       }
     } catch (err) {
@@ -74,14 +76,14 @@ export default function AdminHomeHero() {
     uploadData.append("image", file);
 
     try {
-      setSaving(true); // Reusing saving state for loading indication
+      setSaving(true);
       const res = await fetch("http://localhost:5005/api/upload", {
         method: "POST",
         body: uploadData,
       });
       const json = await res.json();
       if (json.success) {
-        setFormData({ ...formData, imageUrl: json.imageUrl });
+        setFormData({ ...formData, images: [...formData.images, json.imageUrl] });
       } else {
         alert("Upload failed: " + json.message);
       }
@@ -91,6 +93,12 @@ export default function AdminHomeHero() {
     } finally {
       setSaving(false);
     }
+  };
+
+  const removeImage = (index) => {
+    const newImages = [...formData.images];
+    newImages.splice(index, 1);
+    setFormData({ ...formData, images: newImages });
   };
 
   if (loading) return <div className="admin-page">Loading...</div>;
@@ -118,12 +126,21 @@ export default function AdminHomeHero() {
           <label>Hero Description
             <textarea name="description" value={formData.description} onChange={handleChange} rows="4" />
           </label>
-          <label>Image URL
-            <input name="imageUrl" value={formData.imageUrl} onChange={handleChange} placeholder="Enter URL or upload below" />
-          </label>
-          <label>Upload Image
+          <label>Images (Slider)
             <input type="file" accept="image/*" onChange={handleUpload} style={{border: 'none', padding: '10px 0'}} />
           </label>
+          <div className="hero-images-grid" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '15px' }}>
+            {formData.images.map((img, index) => (
+              <div key={index} style={{ position: 'relative', width: '100px', height: '100px' }}>
+                <img src={img} alt={`slide-${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />
+                <button 
+                  onClick={() => removeImage(index)} 
+                  style={{ position: 'absolute', top: '-5px', right: '-5px', background: 'red', color: 'white', border: 'none', borderRadius: '50%', width: '20px', height: '20px', cursor: 'pointer', fontSize: '12px', display: 'grid', placeItems: 'center' }}>
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
           <div className="form-grid">
             <label>Primary Button
               <input name="primaryButtonText" value={formData.primaryButtonText} onChange={handleChange} />
@@ -139,7 +156,11 @@ export default function AdminHomeHero() {
         <div className="hero-preview">
           <span>LIVE PREVIEW</span>
           <div>
-            {formData.imageUrl ? <img src={formData.imageUrl} alt="preview" style={{width: '100%', height: '200px', objectFit: 'cover', borderRadius: '10px'}} /> : <FiImage />}
+            {formData.images.length > 0 ? (
+              <img src={formData.images[0]} alt="preview" style={{width: '100%', height: '200px', objectFit: 'cover', borderRadius: '10px'}} />
+            ) : (
+              <FiImage />
+            )}
             <h3>{formData.heading}<br /><b>{formData.highlightedWord}</b></h3>
             <p>{formData.description}</p>
           </div>

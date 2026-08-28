@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FiArrowRight, FiAward, FiBookOpen, FiBriefcase, FiCheckCircle, FiChevronRight, FiPlay, FiTarget, FiUsers } from "react-icons/fi";
+import { FiArrowRight, FiAward, FiBookOpen, FiBriefcase, FiCheckCircle, FiChevronRight, FiPlay, FiPhone, FiTarget, FiUsers, FiSend, FiX } from "react-icons/fi";
 import { FaGraduationCap } from "react-icons/fa";
 import { courses, testimonials } from "../../data/siteData";
 import "./Home.css";
@@ -13,8 +13,20 @@ export default function Home() {
     description: "At Gyan Time, we provide quality education, expert guidance and holistic development to help students build a successful career.",
     primaryButtonText: "Explore Courses",
     secondaryButtonText: "Inquiry now",
-    imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1300&q=85"
+    imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1300&q=85",
+    images: ["https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1300&q=85"],
   });
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    if (heroData.images && heroData.images.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % heroData.images.length);
+      }, 4000);
+      return () => clearInterval(interval);
+    }
+  }, [heroData.images]);
 
   const [galleryImages, setGalleryImages] = useState([]);
 
@@ -27,13 +39,81 @@ export default function Home() {
 
   const [apiCourses, setApiCourses] = useState([]);
   const [apiTestimonials, setApiTestimonials] = useState([]);
+  const [heroFormSent, setHeroFormSent] = useState(false);
+  const [heroFormLoading, setHeroFormLoading] = useState(false);
+  const [inquiryPopup, setInquiryPopup] = useState(false);
+  const [popupCourse, setPopupCourse] = useState(null);
+  const [popupSent, setPopupSent] = useState(false);
+  const [popupLoading, setPopupLoading] = useState(false);
+  const [contactPhone, setContactPhone] = useState("+91 98765 43210");
+
+  const heroSubmit = async (e) => {
+    e.preventDefault();
+    setHeroFormLoading(true);
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    try {
+      const response = await fetch("http://localhost:5005/api/inquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (response.ok) {
+        setHeroFormSent(true);
+        e.target.reset();
+        setTimeout(() => setHeroFormSent(false), 5000);
+      }
+    } catch (err) {
+      console.error("Inquiry error:", err);
+    } finally {
+      setHeroFormLoading(false);
+    }
+  };
+
+  const openInquiryPopup = (course) => {
+    setPopupCourse(course);
+    setPopupSent(false);
+    setInquiryPopup(true);
+  };
+
+  const closePopup = () => {
+    setInquiryPopup(false);
+    setPopupCourse(null);
+    setPopupSent(false);
+  };
+
+  const popupSubmit = async (e) => {
+    e.preventDefault();
+    setPopupLoading(true);
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    try {
+      const response = await fetch("http://localhost:5005/api/inquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (response.ok) {
+        setPopupSent(true);
+        e.target.reset();
+      }
+    } catch (err) {
+      console.error("Popup inquiry error:", err);
+    } finally {
+      setPopupLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetch("http://localhost:5005/api/home-hero")
       .then((res) => res.json())
       .then((json) => {
         if (json.success && json.data) {
-          setHeroData(json.data);
+          const fetchedData = json.data;
+          if (!fetchedData.images || fetchedData.images.length === 0) {
+            fetchedData.images = fetchedData.imageUrl ? [fetchedData.imageUrl] : [];
+          }
+          setHeroData(fetchedData);
         }
       })
       .catch((err) => console.error("Failed to load hero data:", err));
@@ -60,10 +140,17 @@ export default function Home() {
       .then((res) => res.json())
       .then((json) => {
         if (json.success) {
-          setApiCourses(json.data.filter(c => c.status !== "Draft").slice(0, 6));
+          setApiCourses(json.data.filter(c => c.status !== "Draft").slice(0, 3));
         }
       })
       .catch((err) => console.error("Failed to load courses data:", err));
+
+    fetch("http://localhost:5005/api/contact-info")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success && json.data) setContactPhone(json.data.phone);
+      })
+      .catch(() => {});
 
     fetch("http://localhost:5005/api/testimonial")
       .then((res) => res.json())
@@ -80,24 +167,63 @@ export default function Home() {
       <section className="home-hero">
         <div className="home-hero-bg" />
         <div className="home-hero-inner">
-          <div className="home-hero-copy">
-            <span className="eyebrow"><FaGraduationCap /> {heroData.badgeText}</span>
-            <h1>{heroData.heading}<br /><span>{heroData.highlightedWord}</span></h1>
-            <p>{heroData.description}</p>
-            <div className="hero-actions">
-              <Link to="/courses" className="primary-btn">{heroData.primaryButtonText} <FiArrowRight /></Link>
-              <a href="/contact" className="outline-btn"><FiArrowRight />{heroData.secondaryButtonText} </a>
-            </div>
-            <div className="hero-features">
-              <span><FiUsers /><b>Expert Faculty</b><small>Industry experts</small></span>
-              <span><FiBookOpen /><b>Smart Learning</b><small>Modern classrooms</small></span>
-              <span><FiBriefcase /><b>Placement Support</b><small>Career assistance</small></span>
-              <span><FiTarget /><b>Holistic Growth</b><small>Personality & skills</small></span>
+          <div className="home-hero-copy hero-inquiry-wrap">
+            <div className="hero-inquiry-card">
+              <div className="hero-inquiry-header">
+                <span className="eyebrow"><FaGraduationCap /> Quick Inquiry</span>
+                <h2>Get in Touch <span>With Us</span></h2>
+                <p>Fill in your details and our team will reach out to you shortly.</p>
+              </div>
+              <form className="hero-inquiry-form" onSubmit={heroSubmit}>
+                <div className="hero-form-row">
+                  <div className="hero-form-group">
+                    <label>Full Name</label>
+                    <input name="name" required placeholder="Enter your name" />
+                  </div>
+                  <div className="hero-form-group">
+                    <label>Mobile Number</label>
+                    <input name="phone" required placeholder="Enter mobile number" type="tel" />
+                  </div>
+                </div>
+                <div className="hero-form-row">
+                  <div className="hero-form-group">
+                    <label>Email Address</label>
+                    <input name="email" required type="email" placeholder="Enter your email" />
+                  </div>
+                  <div className="hero-form-group">
+                    <label>Subject</label>
+                    <input name="subject" required placeholder="e.g. Course Inquiry" />
+                  </div>
+                </div>
+                <div className="hero-form-group">
+                  <label>Message</label>
+                  <textarea name="message" required rows="3" placeholder="Write your message here..." />
+                </div>
+                <button className="hero-inquiry-btn" type="submit" disabled={heroFormLoading}>
+                  {heroFormLoading ? "Sending..." : "Send Inquiry"} <FiSend />
+                </button>
+                {heroFormSent && (
+                  <div className="hero-success-msg">
+                    ✅ Thank you! We'll contact you soon.
+                  </div>
+                )}
+              </form>
             </div>
           </div>
           <div className="home-hero-visual">
-            <div className="hero-image-wrap">
-              <img src={heroData.imageUrl} alt="Students learning at Gyan Time" />
+            <div className="hero-image-wrap slider-wrap">
+              {heroData.images && heroData.images.length > 0 ? (
+                heroData.images.map((img, idx) => (
+                  <img 
+                    key={idx}
+                    src={img} 
+                    alt={`Gyan Time - Slide ${idx + 1}`} 
+                    className={`slider-img ${idx === currentSlide ? 'active' : ''}`}
+                  />
+                ))
+              ) : (
+                <img src={heroData.imageUrl} alt="Students learning at Gyan Time" className="slider-img active" />
+              )}
             </div>
           </div>
         </div>
@@ -115,19 +241,78 @@ export default function Home() {
           <div><span>OUR COURSES</span><h2>Explore Our <em>Popular Courses</em></h2></div>
           <Link to="/courses" className="text-link">View All Courses <FiArrowRight /></Link>
         </div>
-        <div className="course-grid">
+        <div className="course-grid home-course-grid-3">
           {apiCourses.map((course) => (
             <article className="course-card" key={course._id || course.slug}>
               <div className="course-card-image"><img src={course.image} alt={course.title} /><span><FiBookOpen /></span></div>
               <div className="course-card-body">
                 <h3>{course.title}</h3>
                 <div className="home-course-desc" dangerouslySetInnerHTML={{ __html: course.description }} />
-                <Link to={`/courses/${course.slug}`}>Learn More <FiArrowRight /></Link>
+                <div className="course-card-actions">
+                  <a href={`tel:${contactPhone.replace(/\s/g, "")}`} className="cc-btn cc-call">
+                    <FiPhone /> Call Now
+                  </a>
+                  <button className="cc-btn cc-inquiry" onClick={() => openInquiryPopup(course)}>
+                    Inquiry
+                  </button>
+                  <Link to={`/courses/${course.slug}`} className="cc-btn cc-read">
+                    Read More <FiArrowRight />
+                  </Link>
+                </div>
               </div>
             </article>
           ))}
         </div>
       </section>
+
+      {/* ── Inquiry Popup Modal ── */}
+      {inquiryPopup && (
+        <div className="inq-overlay" onClick={closePopup}>
+          <div className="inq-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="inq-close" onClick={closePopup}><FiX /></button>
+            <div className="inq-modal-header">
+              <span className="inq-badge"><FaGraduationCap /> Quick Inquiry</span>
+              <h3>Interested in <span>{popupCourse?.title}</span>?</h3>
+              <p>Fill in your details and our counsellor will call you back shortly.</p>
+            </div>
+            {popupSent ? (
+              <div className="inq-success">
+                ✅ Thank you! Our team will reach out to you soon.
+              </div>
+            ) : (
+              <form className="inq-form" onSubmit={popupSubmit}>
+                <input type="hidden" name="subject" value={`Inquiry: ${popupCourse?.title}`} />
+                <div className="inq-row">
+                  <div className="inq-group">
+                    <label>Full Name</label>
+                    <input name="name" required placeholder="Enter your name" />
+                  </div>
+                  <div className="inq-group">
+                    <label>Mobile Number</label>
+                    <input name="phone" required type="tel" placeholder="Enter mobile number" />
+                  </div>
+                </div>
+                <div className="inq-group">
+                  <label>Email Address</label>
+                  <input name="email" required type="email" placeholder="Enter your email" />
+                </div>
+                <div className="inq-group">
+                  <label>Message (Optional)</label>
+                  <textarea name="message" rows="3" placeholder="Any specific questions?" />
+                </div>
+                <div className="inq-footer">
+                  <button type="submit" className="inq-submit" disabled={popupLoading}>
+                    {popupLoading ? "Sending..." : "Send Inquiry"} <FiSend />
+                  </button>
+                  <a href={`tel:${contactPhone.replace(/\s/g, "")}`} className="inq-call-btn">
+                    <FiPhone /> {contactPhone}
+                  </a>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
 
       <section className="home-about section-shell" id="about-preview">
         <div className="about-preview-copy">
