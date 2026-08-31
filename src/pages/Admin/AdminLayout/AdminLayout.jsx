@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import {
   FiBarChart2, FiBookOpen, FiChevronRight, FiFileText, FiHome,
-  FiImage, FiCamera, FiInfo, FiLogOut, FiMail, FiMenu, FiUser, FiX, FiStar
+  FiImage, FiCamera, FiInfo, FiLogOut, FiMail, FiMenu, FiUser, FiX, FiStar, FiVideo,
+  FiBriefcase, FiUsers, FiAward, FiUserCheck
 } from "react-icons/fi";
 import "./AdminLayout.css";
 
@@ -10,13 +11,18 @@ const menu = [
   ["Overview", "/admin/overview", FiBarChart2],
   ["Categories", "/admin/categories", FiBookOpen],
   ["Courses", "/admin/courses", FiBookOpen],
+  ["Placed Students", "/admin/placed-students", FiAward],
+  ["Mentors", "/admin/mentors", FiUserCheck],
+  ["Jobs", "/admin/jobs", FiBriefcase],
+  ["User Details", "/admin/user-details", FiUsers],
   ["Contact Info", "/admin/contact-info", FiInfo],
   ["Inquiries", "/admin/inquiries", FiMail],
   ["Blog", "/admin/blog", FiFileText],
   ["Home Hero", "/admin/home-hero", FiImage],
   ["About", "/admin/about", FiUser],
   ["Gallery", "/admin/gallery", FiCamera],
-  ["Reviews", "/admin/testimonials", FiStar]
+  ["Reviews", "/admin/testimonials", FiStar],
+  ["Video Stories", "/admin/video-testimonials", FiVideo]
 ];
 
 export default function AdminLayout() {

@@ -197,36 +197,27 @@
 
 .hero-image-frame {
   position: relative;
-
   width: 100%;
-  height: 455px;
-
+  height: 460px;
   overflow: hidden;
-
-  border-radius: 30px 0 0 30px;
-
+  border-radius: 26px;
   border-left: 6px solid #eeb016;
-
   box-shadow:
     0 30px 70px rgba(0, 0, 0, 0.28),
     0 0 0 1px rgba(255, 255, 255, 0.08);
-
   background: #102b47;
 }
 
 .hero-image-frame::after {
   content: "";
-
   position: absolute;
   inset: 0;
-
   background:
     linear-gradient(
       90deg,
       rgba(7, 24, 45, 0.12),
       transparent 35%
     );
-
   pointer-events: none;
 }
 
@@ -234,7 +225,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-
+  object-position: center;
   transition: transform 0.7s ease;
 }
 
@@ -304,8 +295,8 @@
 .about-intro {
   position: relative;
 
-  padding-top: 115px;
-  padding-bottom: 115px;
+  padding-top: 35px;
+  padding-bottom: 35px;
 
   display: grid;
   grid-template-columns: 0.95fr 1.05fr;
@@ -532,7 +523,7 @@
 .about-values {
   position: relative;
 
-  padding: 105px 0 110px;
+  padding: 35px 0 40px;
 
   background:
     radial-gradient(
@@ -694,8 +685,8 @@
    ========================================================= */
 
 .about-facilities {
-  padding-top: 115px;
-  padding-bottom: 115px;
+  padding-top: 45px;
+  padding-bottom: 45px;
 
   display: grid;
 

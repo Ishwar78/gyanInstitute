@@ -3,14 +3,14 @@ import Inquiry from "../module/Inquiry.js";
 // Create a new inquiry
 export const createInquiry = async (req, res) => {
   try {
-    const { name, email, phone, subject, message } = req.body;
+    const { name, email, phone, city, subject, message } = req.body;
     
     if (!name || !email || !message) {
       return res.status(400).json({ success: false, message: "Name, email and message are required" });
     }
 
     const newInquiry = new Inquiry({
-      name, email, phone, subject, message
+      name, email, phone, city: city || "", subject, message
     });
 
     await newInquiry.save();

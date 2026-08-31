@@ -26,7 +26,15 @@ import AdminHomeHero from "./pages/Admin/AdminHomeHero/AdminHomeHero";
 import AdminAbout from "./pages/Admin/AdminAbout/AdminAbout";
 import AdminGallery from "./pages/Admin/AdminGallery/AdminGallery";
 import AdminTestimonials from "./pages/Admin/AdminTestimonials/AdminTestimonials";
+import AdminVideoTestimonials from "./pages/Admin/AdminVideoTestimonials/AdminVideoTestimonials";
 import AdminCategories from "./pages/Admin/AdminCategories/AdminCategories";
+import AdminJobs from "./pages/Admin/AdminJobs/AdminJobs";
+import AdminUserDetails from "./pages/Admin/AdminUserDetails/AdminUserDetails";
+import AdminPlacedStudents from "./pages/Admin/AdminPlacedStudents/AdminPlacedStudents";
+import AdminMentors from "./pages/Admin/AdminMentors/AdminMentors";
+
+import Jobs from "./pages/Jobs/Jobs";
+import PlacementCell from "./pages/PlacementCell/PlacementCell";
 
 // ===============================
 // Scroll To Top
@@ -133,8 +141,32 @@ export default function App() {
             element={<AdminTestimonials />}
           />
           <Route
+            path="video-testimonials"
+            element={<AdminVideoTestimonials />}
+          />
+          <Route
             path="categories"
             element={<AdminCategories />}
+          />
+          <Route
+            path="placed-students"
+            element={<AdminPlacedStudents />}
+          />
+          <Route
+            path="mentors"
+            element={<AdminMentors />}
+          />
+          <Route
+            path="jobs"
+            element={<AdminJobs />}
+          />
+          <Route
+            path="user-details"
+            element={<AdminUserDetails />}
+          />
+          <Route
+            path="job-applications"
+            element={<AdminUserDetails />}
           />
         </Route>
 
@@ -165,6 +197,26 @@ export default function App() {
                 <Route
                   path="/courses/:slug"
                   element={<CourseDetails />}
+                />
+
+                <Route
+                  path="/jobs"
+                  element={<Jobs />}
+                />
+
+                <Route
+                  path="/careers/jobs"
+                  element={<Jobs />}
+                />
+
+                <Route
+                  path="/placement-cell"
+                  element={<PlacementCell />}
+                />
+
+                <Route
+                  path="/careers/placement-cell"
+                  element={<PlacementCell />}
                 />
 
                 <Route

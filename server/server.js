@@ -29,6 +29,11 @@ import courseRoutes from "./route/course.route.js";
 import testimonialRoutes from "./route/testimonial.route.js";
 import blogRoutes from "./route/blog.route.js";
 import categoryRoutes from "./route/category.route.js";
+import videoTestimonialRoutes from "./route/videoTestimonial.route.js";
+import jobRoutes from "./route/job.route.js";
+import jobApplicationRoutes from "./route/jobApplication.route.js";
+import placedStudentRoutes from "./route/placedStudent.route.js";
+import mentorRoutes from "./route/mentor.route.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -42,8 +47,14 @@ app.use("/api/gallery", galleryRoutes);
 app.use("/api/about", aboutRoutes);
 app.use("/api/course", courseRoutes);
 app.use("/api/testimonial", testimonialRoutes);
+app.use("/api/video-testimonial", videoTestimonialRoutes);
 app.use("/api/blog", blogRoutes);
 app.use("/api/category", categoryRoutes);
+app.use("/api/job", jobRoutes);
+app.use("/api/job-application", jobApplicationRoutes);
+app.use("/api/user-details", jobApplicationRoutes);
+app.use("/api/placed-student", placedStudentRoutes);
+app.use("/api/mentor", mentorRoutes);
 
 const PORT = process.env.PORT || 5005;
 

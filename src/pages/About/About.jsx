@@ -114,14 +114,14 @@ export default function About() {
           <div className="about-hero-image-wrap">
             <div className="hero-image-frame">
               <img
-                src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1300&q=90"
+                src={aboutData.heroImage || aboutData.image || "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1300&q=90"}
                 alt="Gyan Time campus"
               />
             </div>
 
             <div className="hero-badge">
-              <strong>15+</strong>
-              <span>Years of Excellence</span>
+              <strong>{aboutData.experienceBadgeNumber || "15+"}</strong>
+              <span>{aboutData.experienceBadgeText || "Years of Excellence"}</span>
             </div>
           </div>
 
@@ -135,7 +135,7 @@ export default function About() {
         <div className="about-intro-visual">
           <div className="intro-image-main">
             <img
-              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=90"
+              src={aboutData.introImage || "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=90"}
               alt="Students learning together"
             />
           </div>
@@ -192,10 +192,10 @@ export default function About() {
               What Makes <em>Gyan Different?</em>
             </h2>
 
-            <p>
+            {/* <p>
               A learning environment built around quality, consistency,
               personal attention and student success.
-            </p>
+            </p> */}
           </div>
 
           <div className="values-grid">
@@ -234,7 +234,7 @@ export default function About() {
           <div className="facility-main-wrap">
             <img
               className="facility-main"
-              src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1000&q=90"
+              src={aboutData.facilityMainImage || "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1000&q=90"}
               alt="Computer lab"
             />
           </div>
@@ -242,7 +242,7 @@ export default function About() {
           <div className="facility-small-wrap">
             <img
               className="facility-small"
-              src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=700&q=90"
+              src={aboutData.facilitySmallImage || "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=700&q=90"}
               alt="Modern classroom"
             />
           </div>
@@ -250,8 +250,8 @@ export default function About() {
           <div className="facility-experience">
             <FiAward />
             <div>
-              <strong>15+</strong>
-              <span>Years Experience</span>
+              <strong>{aboutData.experienceBadgeNumber || "15+"}</strong>
+              <span>{aboutData.experienceBadgeText || "Years Experience"}</span>
             </div>
           </div>
 

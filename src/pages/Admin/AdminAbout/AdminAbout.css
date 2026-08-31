@@ -1,1 +1,47 @@
-/* All admin page styles are in AdminOverview.css (shared) */
+.about-image-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.about-image-card h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.about-img-preview-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 12px 0 16px;
+  background: #ffffff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.about-admin-preview-img {
+  width: 140px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1.5px solid #cbd5e1;
+}
+
+.about-img-preview-row b {
+  display: block;
+  font-size: 13px;
+  color: var(--navy);
+}
+
+.about-img-preview-row small {
+  color: #64748b;
+  font-size: 12px;
+}

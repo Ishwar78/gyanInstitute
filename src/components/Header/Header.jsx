@@ -18,7 +18,11 @@ const navItems = [
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-  const closeMenu = () => setOpen(false);
+  const [careerOpen, setCareerOpen] = useState(false);
+  const closeMenu = () => {
+    setOpen(false);
+    setCareerOpen(false);
+  };
   
   const [contactInfo, setContactInfo] = useState({
     phone: "+91 92530 10028",
@@ -61,27 +65,59 @@ export default function Header() {
 
       <div className="navbar">
         <div className="navbar-inner">
-         <Link className="brand" to="/" onClick={closeMenu}>
-  <img
-    className="brand-logo"
-    src="/logo1.png"
-    alt="Gyan Time"
-  />
-</Link>
+          <Link className="brand" to="/" onClick={closeMenu}>
+            <img
+              className="brand-logo"
+              src="/logo1.png"
+              alt="Gyan Time"
+            />
+          </Link>
 
           <nav className={`main-nav ${open ? "open" : ""}`}>
-            {navItems.map((item) => (
-              <NavLink
-                key={item.label}
-                to={item.to}
-                onClick={closeMenu}
-                className={({ isActive }) => isActive ? "active" : ""}
+            <NavLink to="/" onClick={closeMenu} className={({ isActive }) => isActive ? "active" : ""}>
+              Home
+            </NavLink>
+            <NavLink to="/about" onClick={closeMenu} className={({ isActive }) => isActive ? "active" : ""}>
+              About Us
+            </NavLink>
+            <NavLink to="/courses" onClick={closeMenu} className={({ isActive }) => isActive ? "active" : ""}>
+              Courses
+            </NavLink>
+
+            {/* Career Dropdown */}
+            <div 
+              className={`nav-dropdown-wrap ${careerOpen ? "open" : ""}`}
+              onMouseEnter={() => setCareerOpen(true)}
+              onMouseLeave={() => setCareerOpen(false)}
+            >
+              <button 
+                type="button"
+                className="nav-dropdown-btn" 
+                onClick={() => setCareerOpen(!careerOpen)}
               >
-                {item.label}
-                {item.dropdown && <FiChevronDown />}
-              </NavLink>
-            ))}
-            
+                Career <FiChevronDown className={`dropdown-icon ${careerOpen ? "rotate" : ""}`} />
+              </button>
+              <div className="nav-dropdown-menu">
+                <Link to="/jobs" onClick={closeMenu} className="dropdown-item">
+                  <span className="dropdown-item-title">Jobs</span>
+                  {/* <span className="dropdown-item-sub">Explore career opportunities</span> */}
+                </Link>
+                <Link to="/placement-cell" onClick={closeMenu} className="dropdown-item">
+                  <span className="dropdown-item-title">Placement Cell</span>
+                  {/* <span className="dropdown-item-sub">Our placement assistance & drives</span> */}
+                </Link>
+              </div>
+            </div>
+
+            <NavLink to="/gallery" onClick={closeMenu} className={({ isActive }) => isActive ? "active" : ""}>
+              Gallery
+            </NavLink>
+            <NavLink to="/blog" onClick={closeMenu} className={({ isActive }) => isActive ? "active" : ""}>
+              Blog
+            </NavLink>
+            <NavLink to="/contact" onClick={closeMenu} className={({ isActive }) => isActive ? "active" : ""}>
+              Contact Us
+            </NavLink>
           </nav>
 
           <Link className="admission-btn desktop-admission" to="/contact">

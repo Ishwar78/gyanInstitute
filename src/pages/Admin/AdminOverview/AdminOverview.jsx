@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FiArrowUpRight, FiBookOpen, FiEdit3, FiMail, FiMessageSquare, FiUsers, FiStar } from "react-icons/fi";
+import { FiArrowUpRight, FiBookOpen, FiEdit3, FiMail, FiMessageSquare, FiUsers, FiStar, FiVideo } from "react-icons/fi";
 import "./AdminOverview.css";
 
 export default function AdminOverview() {
@@ -8,6 +8,7 @@ export default function AdminOverview() {
   const [inquiries, setInquiries] = useState([]);
   const [blogsCount, setBlogsCount] = useState(0);
   const [testimonialsCount, setTestimonialsCount] = useState(0);
+  const [videosCount, setVideosCount] = useState(0);
 
   useEffect(() => {
     // Fetch counts and recent data
@@ -15,20 +16,22 @@ export default function AdminOverview() {
       fetch("http://localhost:5005/api/course").then(res => res.json()),
       fetch("http://localhost:5005/api/inquiry").then(res => res.json()),
       fetch("http://localhost:5005/api/blog").then(res => res.json()),
-      fetch("http://localhost:5005/api/testimonial").then(res => res.json())
-    ]).then(([coursesRes, inquiriesRes, blogsRes, testimonialsRes]) => {
+      fetch("http://localhost:5005/api/testimonial").then(res => res.json()),
+      fetch("http://localhost:5005/api/video-testimonial").then(res => res.json())
+    ]).then(([coursesRes, inquiriesRes, blogsRes, testimonialsRes, videosRes]) => {
       if (coursesRes.success) setCoursesCount(coursesRes.data.length);
       if (inquiriesRes.success) setInquiries(inquiriesRes.data);
       if (blogsRes.success) setBlogsCount(blogsRes.data.length);
       if (testimonialsRes.success) setTestimonialsCount(testimonialsRes.data.length);
+      if (videosRes.success) setVideosCount(videosRes.data.length);
     }).catch(err => console.error("Error fetching overview data:", err));
   }, []);
 
   const stats = [
+    [videosCount, "Video Stories", FiVideo, "Student video reviews"],
     [testimonialsCount, "Total Reviews", FiStar, "From active students"],
     [coursesCount, "Courses", FiBookOpen, "Active & Drafts"],
     [inquiries.length, "Inquiries", FiMail, "Total received"],
-    [blogsCount, "Blog Articles", FiEdit3, "Published & Drafts"]
   ];
 
   return (
@@ -77,9 +80,10 @@ export default function AdminOverview() {
           </div>
           <div className="quick-grid">
             {[
+              ["Video Stories", "/admin/video-testimonials", FiVideo],
               ["Manage Courses", "/admin/courses", FiBookOpen],
-              ["Reviews", "/admin/testimonials", FiStar],
-              ["Blog Manager", "/admin/blog", FiEdit3],
+              ["Student Reviews", "/admin/testimonials", FiStar],
+              ["About Section", "/admin/about", FiUsers],
               ["Contact Details", "/admin/contact-info", FiMessageSquare]
             ].map(([a, b, I]) => (
               <Link to={b} key={a}><I/><span>{a}</span><FiArrowUpRight/></Link>

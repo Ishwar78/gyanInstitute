@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 60" fill="none">
+  <g transform="translate(185, 8)">
+    <path d="M0 0 L14 14 L0 28 L6 28 L20 14 L6 0 Z" fill="#012169"/>
+    <path d="M12 0 L26 14 L12 28 L18 28 L32 14 L18 0 Z" fill="#e31837"/>
+    <path d="M24 0 L38 14 L24 28 L30 28 L44 14 L30 0 Z" fill="#e31837"/>
+  </g>
+  <text x="5" y="40" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="16" fill="#012169" letter-spacing="1">BANK OF AMERICA</text>
+</svg>

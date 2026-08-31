@@ -5,7 +5,7 @@ import "./PrivacyPolicy.css";
 
 export default function PrivacyPolicy() {
   const [contactInfo, setContactInfo] = useState({
-    phone: "+91 98765 43210",
+    phone: "+91 92530 10028",
     email: "info@gyantime.in",
     addressLine: "123 Knowledge City",
     cityState: "Hisar, Haryana",

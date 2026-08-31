@@ -1,0 +1,436 @@
+/* =========================================
+   ADMIN USER DETAILS & CVS STYLING
+========================================= */
+
+.user-details-admin .user-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+@media (max-width: 900px) {
+  .user-details-admin .user-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .user-details-admin .user-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stat-box {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.stat-box svg {
+  font-size: 32px;
+  color: var(--navy);
+  background: #f1f5f9;
+  padding: 8px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.stat-box strong {
+  display: block;
+  font-size: 24px;
+  color: var(--navy);
+  line-height: 1;
+}
+
+.stat-box span {
+  display: block;
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.stat-box.stat-new svg {
+  color: #d97706;
+  background: #fef3c7;
+}
+
+.stat-box.stat-shortlisted svg {
+  color: #2563eb;
+  background: #dbeafe;
+}
+
+.stat-box.stat-hired svg {
+  color: #16a34a;
+  background: #dcfce7;
+}
+
+.candidate-col {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.candidate-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--gold);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.candidate-col small {
+  display: block;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.job-applied-tag {
+  background: #f1f5f9;
+  color: #1e293b;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.contact-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-col small {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: #475569;
+}
+
+.btn-view-resume {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-view-resume:hover {
+  background: #1d4ed8;
+  color: #fff;
+}
+
+.app-status-badge {
+  border: none;
+  outline: none;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 5px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.status-new {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.status-reviewed {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.status-shortlisted {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-rejected {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.status-hired {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* Detail Modal */
+.app-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(3px);
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.app-detail-modal {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 680px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.app-detail-modal .modal-head {
+  background: var(--navy);
+  color: #fff;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-detail-modal .modal-head h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #fff;
+}
+
+.app-detail-modal .modal-head button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.app-detail-modal .modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.detail-info-grid label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.detail-info-grid strong,
+.detail-info-grid span {
+  font-size: 14px;
+  color: #1e293b;
+}
+
+.cover-note-box {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.cover-note-box label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+
+.cover-note-box p {
+  margin: 0;
+  font-size: 13.5px;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.cv-download-cta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 16px 20px;
+  border-radius: 12px;
+}
+
+.cv-download-cta svg {
+  font-size: 32px;
+  color: #1d4ed8;
+  flex-shrink: 0;
+}
+
+.cv-download-cta div {
+  flex: 1;
+}
+
+.cv-download-cta strong {
+  display: block;
+  font-size: 14px;
+  color: #1e3a8a;
+}
+
+.cv-download-cta span {
+  font-size: 12px;
+  color: #3b82f6;
+}
+
+.btn-download-resume {
+  background: #1d4ed8;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.btn-download-resume:hover {
+  background: #1e40af;
+}
+
+/* =========================================
+   IN-PAGE CV / RESUME PREVIEW MODAL
+========================================= */
+
+.cv-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 25, 45, 0.82);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.cv-modal-box {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 960px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  animation: cvFadeIn 0.2s ease-out;
+}
+
+@keyframes cvFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.cv-modal-head {
+  background: var(--navy);
+  color: #fff;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.cv-modal-head h3 {
+  margin: 0;
+  font-size: 17px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.btn-view-direct {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.btn-view-direct:hover {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.cv-modal-viewer {
+  flex: 1;
+  width: 100%;
+  background: #2d3748;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+.cv-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #fff;
+}
+
+.cv-image-scroll {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.cv-image-scroll img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FiCheckCircle, FiClock, FiEye, FiMail, FiPhone } from "react-icons/fi";
+import { FiCheckCircle, FiClock, FiEye, FiMail, FiMapPin, FiPhone } from "react-icons/fi";
 import "./AdminInquiries.css";
 
 export default function AdminInquiries() {
@@ -104,6 +104,7 @@ export default function AdminInquiries() {
                 <div>
                   <small><FiPhone/> {x.phone || "N/A"}</small>
                   <small><FiMail/> {x.email}</small>
+                  {x.city && <small><FiMapPin/> {x.city}</small>}
                 </div>
                 <MessageText text={x.message} />
               </div>

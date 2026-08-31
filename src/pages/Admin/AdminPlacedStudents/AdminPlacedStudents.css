@@ -1,0 +1,124 @@
+/* =========================================
+   ADMIN PLACED STUDENTS STYLING
+========================================= */
+
+.placed-students-admin .admin-page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.st-info-col {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.st-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--gold);
+}
+
+.company-col {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.company-thumb {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.student-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.student-modal {
+  background: #fff;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 700px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.student-modal .modal-head {
+  padding: 18px 24px;
+  background: var(--navy);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.student-modal .modal-head h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #fff;
+}
+
+.student-modal .modal-head button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.student-modal .modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.file-upload-block {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.preview-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid #cbd5e1;
+}
+
+.logo-preview {
+  object-fit: contain;
+  background: #fff;
+}
+
+.student-modal .modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid #e2e8f0;
+}

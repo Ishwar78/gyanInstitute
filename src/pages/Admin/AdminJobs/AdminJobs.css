@@ -1,0 +1,203 @@
+/* =========================================
+   ADMIN JOBS STYLING
+========================================= */
+
+.jobs-admin .admin-page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.jobs-admin .primary-btn-add {
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.jobs-admin .primary-btn-add:hover {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.job-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.job-modal {
+  background: #fff;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.job-modal .modal-head {
+  padding: 20px 24px;
+  background: var(--navy);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job-modal .modal-head h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #fff;
+}
+
+.job-modal .modal-head button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.job-modal .modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-row-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media (max-width: 600px) {
+  .form-row,
+  .form-row-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.job-modal label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.job-modal input,
+.job-modal select {
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+}
+
+.job-modal input:focus,
+.job-modal select:focus {
+  border-color: var(--navy);
+}
+
+.requirements-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #f8fafc;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.req-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.req-input-group input {
+  flex: 1;
+}
+
+.req-input-group button {
+  background: #fee2e2;
+  border: none;
+  color: #dc2626;
+  padding: 0 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-req-btn {
+  background: #e2e8f0;
+  border: none;
+  color: #334155;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 12.5px;
+  cursor: pointer;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.job-modal .modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid #e2e8f0;
+  margin-top: 10px;
+}
+
+.job-modal .cancel-btn {
+  background: #f1f5f9;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.job-modal .save-btn {
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.job-modal .save-btn:hover {
+  background: var(--gold);
+  color: var(--navy);
+}

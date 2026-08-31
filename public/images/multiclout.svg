@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 65" fill="none">
+  <path d="M15 12 L30 18 L22 36 Z" fill="#0284c7" />
+  <circle cx="120" cy="12" r="4.5" fill="#00b4d8" />
+  <path d="M116 19 L124 19 L122 34 L120 37 L118 34 Z" fill="#00b4d8" />
+  <text x="120" y="36" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="28" fill="#0284c7" letter-spacing="1">MULTICLOUT</text>
+  <rect x="15" y="44" width="210" height="15" rx="3" fill="#0369a1" />
+  <text x="120" y="55" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="8.5" fill="#ffffff" letter-spacing="1.2">Business | Affiliate | Network | Services</text>
+</svg>

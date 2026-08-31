@@ -40,7 +40,7 @@ const courseSchema = new mongoose.Schema(
       required: true,
     },
     syllabus: {
-      type: [String],
+      type: mongoose.Schema.Types.Mixed,
       default: [],
     },
     highlights: {
@@ -51,6 +51,16 @@ const courseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    video: {
+      type: String,
+      default: "",
+    },
+    faqs: [
+      {
+        question: { type: String, default: "" },
+        answer: { type: String, default: "" },
+      },
+    ],
     status: {
       type: String,
       enum: ["Active", "Draft"],

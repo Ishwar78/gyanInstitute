@@ -285,6 +285,14 @@ export default function Contact() {
               </div>
 
               <div className="input-group">
+                <label>City</label>
+                <input
+                  name="city"
+                  placeholder="Enter your city (e.g. Rohtak)"
+                />
+              </div>
+
+              <div className="input-group">
                 <label>Subject</label>
                 <input
                   name="subject"

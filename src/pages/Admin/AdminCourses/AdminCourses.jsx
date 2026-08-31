@@ -21,14 +21,18 @@ export default function AdminCourses() {
     fee: "",
     description: "",
     longDescription: "",
-    syllabus: [""],
+    syllabus: [{ title: "", topics: [""] }],
     highlights: [""],
+    faqs: [{ question: "", answer: "" }],
     image: "",
+    video: "",
     status: "Active"
   });
   
   const [selectedFile, setSelectedFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [selectedVideoFile, setSelectedVideoFile] = useState(null);
+  const [videoPreview, setVideoPreview] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [categories, setCategories] = useState([]);
 
@@ -59,6 +63,16 @@ export default function AdminCourses() {
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
 
+  useEffect(() => {
+    if (!selectedVideoFile) {
+      setVideoPreview(null);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(selectedVideoFile);
+    setVideoPreview(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedVideoFile]);
+
   const handleArrayChange = (field, index, value) => {
     const newArray = [...formData[field]];
     newArray[index] = value;
@@ -72,6 +86,76 @@ export default function AdminCourses() {
   const removeArrayItem = (field, index) => {
     const newArray = formData[field].filter((_, i) => i !== index);
     setFormData({ ...formData, [field]: newArray });
+  };
+
+  // Syllabus Module & Topic Handlers
+  const normalizeSyllabus = (syl) => {
+    if (!syl || syl.length === 0) return [{ title: "", topics: [""] }];
+    return syl.map((item) => {
+      if (typeof item === "string") {
+        return { title: item, topics: [] };
+      }
+      return {
+        title: item.title || "",
+        topics: Array.isArray(item.topics) && item.topics.length > 0 ? item.topics : [""],
+      };
+    });
+  };
+
+  const handleModuleTitleChange = (modIdx, title) => {
+    const updated = [...formData.syllabus];
+    updated[modIdx] = { ...updated[modIdx], title };
+    setFormData({ ...formData, syllabus: updated });
+  };
+
+  const handleTopicChange = (modIdx, topicIdx, value) => {
+    const updated = [...formData.syllabus];
+    const updatedTopics = [...(updated[modIdx].topics || [])];
+    updatedTopics[topicIdx] = value;
+    updated[modIdx] = { ...updated[modIdx], topics: updatedTopics };
+    setFormData({ ...formData, syllabus: updated });
+  };
+
+  const addTopic = (modIdx) => {
+    const updated = [...formData.syllabus];
+    const updatedTopics = [...(updated[modIdx].topics || []), ""];
+    updated[modIdx] = { ...updated[modIdx], topics: updatedTopics };
+    setFormData({ ...formData, syllabus: updated });
+  };
+
+  const removeTopic = (modIdx, topicIdx) => {
+    const updated = [...formData.syllabus];
+    const updatedTopics = (updated[modIdx].topics || []).filter((_, i) => i !== topicIdx);
+    updated[modIdx] = { ...updated[modIdx], topics: updatedTopics.length > 0 ? updatedTopics : [""] };
+    setFormData({ ...formData, syllabus: updated });
+  };
+
+  const addModule = () => {
+    setFormData({
+      ...formData,
+      syllabus: [...formData.syllabus, { title: "", topics: [""] }],
+    });
+  };
+
+  const removeModule = (modIdx) => {
+    const updated = formData.syllabus.filter((_, i) => i !== modIdx);
+    setFormData({ ...formData, syllabus: updated.length > 0 ? updated : [{ title: "", topics: [""] }] });
+  };
+
+  // FAQ Handlers
+  const handleFaqChange = (index, field, value) => {
+    const updatedFaqs = [...formData.faqs];
+    updatedFaqs[index] = { ...updatedFaqs[index], [field]: value };
+    setFormData({ ...formData, faqs: updatedFaqs });
+  };
+
+  const addFaq = () => {
+    setFormData({ ...formData, faqs: [...formData.faqs, { question: "", answer: "" }] });
+  };
+
+  const removeFaq = (index) => {
+    const updatedFaqs = formData.faqs.filter((_, i) => i !== index);
+    setFormData({ ...formData, faqs: updatedFaqs });
   };
 
   const fetchCourses = async () => {
@@ -101,12 +185,15 @@ export default function AdminCourses() {
       fee: "",
       description: "",
       longDescription: "",
-      syllabus: [""],
+      syllabus: [{ title: "", topics: [""] }],
       highlights: [""],
+      faqs: [{ question: "", answer: "" }],
       image: "",
+      video: "",
       status: "Active"
     });
     setSelectedFile(null);
+    setSelectedVideoFile(null);
     setModalOpen(true);
   };
 
@@ -122,38 +209,63 @@ export default function AdminCourses() {
       fee: course.fee || "",
       description: course.description || "",
       longDescription: course.longDescription || "",
-      syllabus: course.syllabus?.length ? course.syllabus : [""],
+      syllabus: normalizeSyllabus(course.syllabus),
       highlights: course.highlights?.length ? course.highlights : [""],
+      faqs: course.faqs?.length ? course.faqs : [{ question: "", answer: "" }],
       image: course.image || "",
+      video: course.video || "",
       status: course.status || "Active"
     });
     setSelectedFile(null);
+    setSelectedVideoFile(null);
     setModalOpen(true);
   };
 
   const handleUpload = async () => {
-    if (!selectedFile) return formData.image;
+    let finalImageUrl = formData.image;
+    let finalVideoUrl = formData.video;
     
     try {
       setUploading(true);
-      const uploadData = new FormData();
-      uploadData.append("image", selectedFile);
-      
-      const uploadRes = await fetch("http://localhost:5005/api/upload", {
-        method: "POST",
-        body: uploadData,
-      });
-      const uploadJson = await uploadRes.json();
-      
-      if (uploadJson.success) {
-        return uploadJson.imageUrl;
-      } else {
-        alert("Upload failed: " + uploadJson.message);
-        return null;
+
+      // Upload image if selected
+      if (selectedFile) {
+        const uploadData = new FormData();
+        uploadData.append("image", selectedFile);
+        const uploadRes = await fetch("http://localhost:5005/api/upload", {
+          method: "POST",
+          body: uploadData,
+        });
+        const uploadJson = await uploadRes.json();
+        if (uploadJson.success) {
+          finalImageUrl = uploadJson.imageUrl;
+        } else {
+          alert("Image upload failed: " + uploadJson.message);
+          return null;
+        }
       }
+
+      // Upload video if selected
+      if (selectedVideoFile) {
+        const videoData = new FormData();
+        videoData.append("video", selectedVideoFile);
+        const videoRes = await fetch("http://localhost:5005/api/upload", {
+          method: "POST",
+          body: videoData,
+        });
+        const videoJson = await videoRes.json();
+        if (videoJson.success) {
+          finalVideoUrl = videoJson.videoUrl;
+        } else {
+          alert("Video upload failed: " + videoJson.message);
+          return null;
+        }
+      }
+
+      return { imageUrl: finalImageUrl, videoUrl: finalVideoUrl };
     } catch (err) {
-      console.error("Error uploading image:", err);
-      alert("Error uploading image");
+      console.error("Error uploading media:", err);
+      alert("Error uploading media");
       return null;
     } finally {
       setUploading(false);
@@ -163,7 +275,10 @@ export default function AdminCourses() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const imageUrl = await handleUpload();
+    const mediaResult = await handleUpload();
+    if (!mediaResult) return;
+    
+    const { imageUrl, videoUrl } = mediaResult;
     if (!imageUrl && !formData.image) {
       alert("Please upload or provide an image URL.");
       return;
@@ -172,8 +287,17 @@ export default function AdminCourses() {
     const payload = {
       ...formData,
       image: imageUrl || formData.image,
-      syllabus: formData.syllabus.filter(i => i.trim() !== ""),
-      highlights: formData.highlights.filter(i => i.trim() !== ""),
+      video: videoUrl || formData.video,
+      syllabus: (formData.syllabus || [])
+        .map((mod) => ({
+          title: (typeof mod === "string" ? mod : mod.title || "").trim(),
+          topics: Array.isArray(mod.topics)
+            ? mod.topics.map((t) => t.trim()).filter(Boolean)
+            : [],
+        }))
+        .filter((mod) => mod.title || (mod.topics && mod.topics.length > 0)),
+      highlights: formData.highlights.filter((i) => i.trim() !== ""),
+      faqs: (formData.faqs || []).filter((f) => f.question && f.question.trim() !== ""),
     };
 
     try {
@@ -334,41 +458,133 @@ export default function AdminCourses() {
                 />
               </label>
 
-              <div className="form-row array-row">
-                <div className="array-field">
-                  <label>Syllabus</label>
-                  {formData.syllabus.map((item, index) => (
-                    <div key={`syl-${index}`} className="array-input-group">
-                      <input 
-                        value={item} 
-                        onChange={(e) => handleArrayChange("syllabus", index, e.target.value)} 
-                        placeholder={`Syllabus item ${index + 1}`}
-                      />
-                      <button type="button" onClick={() => removeArrayItem("syllabus", index)}><FiTrash2 /></button>
-                    </div>
-                  ))}
-                  <button type="button" className="add-array-btn" onClick={() => addArrayItem("syllabus")}><FiPlus /> Add Item</button>
+              {/* Structured Course Syllabus (Modules & Topics) */}
+              <div className="syllabus-admin-section" style={{ background: "#f8fafc", padding: "16px", borderRadius: "10px", border: "1px solid #e2e8f0", marginBottom: "16px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+                  <div>
+                    <label style={{ fontWeight: "700", color: "var(--navy)", margin: 0, display: "block" }}>
+                      Course Syllabus (Modules & Topics)
+                    </label>
+                    <small style={{ color: "#64748b" }}>Add chapters/modules with expandable sub-topics.</small>
+                  </div>
+                  <button type="button" className="add-array-btn" onClick={addModule} style={{ margin: 0 }}>
+                    <FiPlus /> Add Module
+                  </button>
                 </div>
 
-                <div className="array-field">
-                  <label>Highlights</label>
-                  {formData.highlights.map((item, index) => (
-                    <div key={`hl-${index}`} className="array-input-group">
-                      <input 
-                        value={item} 
-                        onChange={(e) => handleArrayChange("highlights", index, e.target.value)} 
-                        placeholder={`Highlight item ${index + 1}`}
+                {formData.syllabus.map((mod, modIdx) => (
+                  <div key={`mod-${modIdx}`} style={{ background: "#fff", padding: "14px", borderRadius: "8px", border: "1px solid #cbd5e1", marginBottom: "12px" }}>
+                    <div style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "10px" }}>
+                      <span style={{ fontWeight: "800", color: "var(--gold-dark)", fontSize: "13px", minWidth: "75px" }}>
+                        Module {modIdx + 1}:
+                      </span>
+                      <input
+                        value={mod.title}
+                        onChange={(e) => handleModuleTitleChange(modIdx, e.target.value)}
+                        placeholder="Module Title (e.g. Introduction to HTML5 & Responsive Design)"
+                        style={{ flex: 1, padding: "8px 12px", border: "1px solid #e2e8f0", borderRadius: "6px", fontWeight: "600" }}
                       />
-                      <button type="button" onClick={() => removeArrayItem("highlights", index)}><FiTrash2 /></button>
+                      {formData.syllabus.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => removeModule(modIdx)}
+                          style={{ background: "#fee2e2", border: "none", color: "#dc2626", padding: "8px 12px", borderRadius: "6px", cursor: "pointer" }}
+                          title="Delete Module"
+                        >
+                          <FiTrash2 />
+                        </button>
+                      )}
                     </div>
-                  ))}
-                  <button type="button" className="add-array-btn" onClick={() => addArrayItem("highlights")}><FiPlus /> Add Item</button>
-                </div>
+
+                    {/* Sub-topics list */}
+                    <div style={{ paddingLeft: "24px", borderLeft: "2px solid #e2e8f0", marginTop: "10px" }}>
+                      <label style={{ fontSize: "11.5px", fontWeight: "700", color: "#64748b", textTransform: "uppercase", marginBottom: "6px", display: "block" }}>
+                        Sub-topics / Chapters inside Module {modIdx + 1}
+                      </label>
+                      {(mod.topics || [""]).map((topic, topicIdx) => (
+                        <div key={`top-${modIdx}-${topicIdx}`} style={{ display: "flex", gap: "8px", marginBottom: "6px" }}>
+                          <input
+                            value={topic}
+                            onChange={(e) => handleTopicChange(modIdx, topicIdx, e.target.value)}
+                            placeholder={`Topic ${topicIdx + 1} (e.g. Semantic HTML, Forms & Validation)`}
+                            style={{ flex: 1, padding: "6px 10px", fontSize: "13px", border: "1px solid #e2e8f0", borderRadius: "5px" }}
+                          />
+                          {(mod.topics || []).length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => removeTopic(modIdx, topicIdx)}
+                              style={{ background: "#f1f5f9", border: "none", color: "#64748b", padding: "4px 8px", borderRadius: "4px", cursor: "pointer" }}
+                            >
+                              <FiTrash2 />
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={() => addTopic(modIdx)}
+                        style={{ background: "#e2e8f0", border: "none", color: "#334155", padding: "4px 10px", borderRadius: "4px", fontSize: "12px", fontWeight: "600", cursor: "pointer", marginTop: "4px" }}
+                      >
+                        <FiPlus /> Add Topic
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="array-field" style={{ marginBottom: "16px" }}>
+                <label>Highlights</label>
+                {formData.highlights.map((item, index) => (
+                  <div key={`hl-${index}`} className="array-input-group">
+                    <input 
+                      value={item} 
+                      onChange={(e) => handleArrayChange("highlights", index, e.target.value)} 
+                      placeholder={`Highlight item ${index + 1}`}
+                    />
+                    <button type="button" onClick={() => removeArrayItem("highlights", index)}><FiTrash2 /></button>
+                  </div>
+                ))}
+                <button type="button" className="add-array-btn" onClick={() => addArrayItem("highlights")}><FiPlus /> Add Item</button>
+              </div>
+
+              {/* Course-Wise FAQs Section */}
+              <div className="faqs-admin-section" style={{ background: "#f8fafc", padding: "16px", borderRadius: "10px", border: "1px solid #e2e8f0" }}>
+                <label style={{ fontWeight: "700", color: "var(--navy)", marginBottom: "10px", display: "block" }}>
+                  Course FAQs (Frequently Asked Questions)
+                </label>
+                {formData.faqs.map((faq, index) => (
+                  <div key={`faq-${index}`} className="faq-admin-item" style={{ background: "#fff", padding: "12px", borderRadius: "8px", border: "1px solid #cbd5e1", marginBottom: "10px" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+                      <span style={{ fontSize: "12px", fontWeight: "700", color: "#64748b" }}>FAQ #{index + 1}</span>
+                      {formData.faqs.length > 1 && (
+                        <button type="button" onClick={() => removeFaq(index)} style={{ background: "#fee2e2", border: "none", color: "#dc2626", padding: "3px 8px", borderRadius: "4px", cursor: "pointer", fontSize: "12px" }}>
+                          <FiTrash2 style={{ verticalAlign: "middle" }} /> Remove
+                        </button>
+                      )}
+                    </div>
+                    <input
+                      value={faq.question}
+                      onChange={(e) => handleFaqChange(index, "question", e.target.value)}
+                      placeholder="Question (e.g. What are the prerequisites for this course?)"
+                      style={{ width: "100%", padding: "8px 10px", marginBottom: "8px", border: "1px solid #e2e8f0", borderRadius: "6px" }}
+                    />
+                    <textarea
+                      rows="2"
+                      value={faq.answer}
+                      onChange={(e) => handleFaqChange(index, "answer", e.target.value)}
+                      placeholder="Answer to this question..."
+                      style={{ width: "100%", padding: "8px 10px", border: "1px solid #e2e8f0", borderRadius: "6px", fontFamily: "inherit", fontSize: "13px" }}
+                    />
+                  </div>
+                ))}
+                <button type="button" className="add-array-btn" onClick={addFaq} style={{ marginTop: "6px" }}>
+                  <FiPlus /> Add FAQ
+                </button>
               </div>
 
               <div className="image-upload-row">
                 <label className="file-label">
-                  Course Image
+                  Course Image (Thumbnail)
                   <input type="file" accept="image/*" onChange={e => setSelectedFile(e.target.files[0])} />
                 </label>
                 {(imagePreview || formData.image) && (
@@ -377,6 +593,28 @@ export default function AdminCourses() {
                   </div>
                 )}
               </div>
+
+              <div className="image-upload-row">
+                <label className="file-label">
+                  Course Video (Upload MP4 / WebM video)
+                  <input type="file" accept="video/*" onChange={e => setSelectedVideoFile(e.target.files[0])} />
+                </label>
+                {(videoPreview || formData.video) && (
+                  <div className="image-preview" style={{ maxHeight: "70px", overflow: "hidden" }}>
+                    <small style={{ display: "block", color: "#1a5c20", fontWeight: "600" }}>✓ Video selected</small>
+                    <span style={{ fontSize: "11px", color: "#666" }}>{formData.video || "Local file selected"}</span>
+                  </div>
+                )}
+              </div>
+
+              <label>Or Video / YouTube URL
+                <input 
+                  type="text"
+                  value={formData.video} 
+                  onChange={e => setFormData({ ...formData, video: e.target.value })} 
+                  placeholder="e.g. https://www.youtube.com/watch?v=... or direct video link" 
+                />
+              </label>
 
               <label>Status
                 <select value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})}>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 60" fill="none">
+  <defs>
+    <linearGradient id="tcsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff7900"/>
+      <stop offset="35%" stop-color="#ff007f"/>
+      <stop offset="70%" stop-color="#8a2be2"/>
+      <stop offset="100%" stop-color="#0070ba"/>
+    </linearGradient>
+  </defs>
+  <text x="10" y="46" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="52" fill="url(#tcsGrad)" letter-spacing="-2">tcs</text>
+</svg>

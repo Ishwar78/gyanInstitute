@@ -352,8 +352,8 @@
 ========================================================= */
 
 .contact-main {
-  padding-top: 75px;
-  padding-bottom: 85px;
+  padding-top: 55px;
+  padding-bottom: 55px;
   display: grid;
   grid-template-columns: 1.04fr .96fr;
   gap: 28px;
@@ -592,8 +592,8 @@
 .connect-top p {
   max-width: 510px;
   margin: 0;
-  color: #b8c7d8;
-  font-size: 14px;
+  color: #d5d9dd;
+  font-size: 16px;
   line-height: 1.8;
 }
 
@@ -634,7 +634,7 @@
 .connect-highlight span {
   margin-top: 4px;
   color: #9eafc2;
-  font-size: 10px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -676,14 +676,14 @@
 .connect-details span {
   margin-bottom: 4px;
   color: #8296ad;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 1px;
 }
 
 .connect-details strong {
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 670;
 }
 
 .connect-details a:hover .connect-detail-icon {
@@ -716,8 +716,8 @@
 
 .contact-help {
   position: relative;
-  padding: 85px 0;
-  background: #f7f9fc;
+  padding: 35px 0;
+  background: #edf2f9;
 }
 
 .contact-title {
@@ -794,8 +794,8 @@
 
 .contact-help-grid p {
   margin: 0;
-  color: #68778a;
-  font-size: 13px;
+  color: #101011;
+  font-size: 15px;
   line-height: 1.75;
 }
 

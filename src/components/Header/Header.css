@@ -228,6 +228,134 @@
   color: var(--navy);
 }
 
+/* =========================================
+   NAV DROPDOWN (CAREER)
+========================================= */
+
+.nav-dropdown-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 76px;
+}
+
+.nav-dropdown-btn {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: #16243a;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 0;
+  min-height: 76px;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.nav-dropdown-btn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 15px;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.nav-dropdown-wrap:hover .nav-dropdown-btn,
+.nav-dropdown-wrap.open .nav-dropdown-btn {
+  color: var(--navy);
+}
+
+.nav-dropdown-wrap:hover .nav-dropdown-btn::after,
+.nav-dropdown-wrap.open .nav-dropdown-btn::after {
+  transform: scaleX(1);
+}
+
+.dropdown-icon {
+  font-size: 14px;
+  transition: transform 0.25s ease;
+}
+
+.dropdown-icon.rotate {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% - 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: #ffffff;
+  min-width: 240px;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(16, 29, 46, 0.14);
+  border: 1px solid #eef2f6;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 1000;
+}
+
+.nav-dropdown-wrap:hover .nav-dropdown-menu,
+.nav-dropdown-wrap.open .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-item {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  padding: 10px 14px !important;
+  min-height: auto !important;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.15s ease;
+  gap: 2px !important;
+}
+
+.dropdown-item::after {
+  display: none !important;
+}
+
+.dropdown-item:hover {
+  background: #f4f7fb !important;
+}
+
+.dropdown-item-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.2;
+}
+
+.dropdown-item-sub {
+  font-size: 11.5px;
+  color: #6c7e93;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.dropdown-item:hover .dropdown-item-title {
+  color: var(--gold-dark);
+}
+
 
 /* =========================================
    ADMISSION BUTTON
@@ -394,6 +522,51 @@
 
   .main-nav a::after {
     display: none;
+  }
+
+  .nav-dropdown-wrap {
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    border-bottom: 1px solid #eef1f5;
+  }
+
+  .nav-dropdown-btn {
+    min-height: 48px;
+    padding: 0 12px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 15px;
+  }
+
+  .nav-dropdown-btn::after {
+    display: none;
+  }
+
+  .nav-dropdown-menu {
+    position: static;
+    transform: none !important;
+    box-shadow: none;
+    border: none;
+    background: #f8fafc;
+    border-radius: 8px;
+    margin: 4px 8px 8px;
+    padding: 6px;
+    display: none;
+  }
+
+  .nav-dropdown-wrap.open .nav-dropdown-menu {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .dropdown-item {
+    padding: 8px 10px !important;
+    border-bottom: none !important;
   }
 
   .mobile-admission {

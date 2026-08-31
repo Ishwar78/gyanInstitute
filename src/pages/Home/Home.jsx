@@ -1,11 +1,84 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { FiArrowRight, FiAward, FiBookOpen, FiBriefcase, FiCheckCircle, FiChevronRight, FiPlay, FiPhone, FiTarget, FiUsers, FiSend, FiX } from "react-icons/fi";
+import { Link, useNavigate } from "react-router-dom";
+import { 
+  FiArrowRight, FiAward, FiBookOpen, FiBriefcase, FiCheckCircle, 
+  FiChevronRight, FiPlay, FiPhone, FiTarget, FiUsers, FiSend, FiX, FiVideo 
+} from "react-icons/fi";
 import { FaGraduationCap } from "react-icons/fa";
 import { courses, testimonials } from "../../data/siteData";
 import "./Home.css";
 
+const companyLogos = [
+  { name: "HCLTech", src: "/images/hcl.png" },
+  { name: "Zomato", src: "/images/zom.png" },
+  { name: "Under Armour", src: "/images/under.svg" },
+  { name: "MultiClout", src: "/images/multi.png" },
+  { name: "ThinkCentre", src: "/images/thin.webp" },
+  { name: "TCS", src: "/images/tc.png" },
+  { name: "Bank of America", src: "/images/bankof.png" },
+  { name: "Redbull", src: "/images/redbull.png" },
+  {name: "Indigo" , src: "/images/indigo.png"},
+  {name: "Dell" , src: "/images/dell.png"}
+];
+
+const defaultVideoStories = [
+  {
+    _id: "def-1",
+    title: "Advanced Digital Marketing With AI Training Company",
+    studentName: "Rahul Sharma",
+    courseOrRole: "Digital Marketing Specialist",
+    subText: "Web Mok - Experience",
+    badgeText: "WEB MOK - STORY",
+    tagPill: "Student Testimonial",
+    callLine: "Call Now - 8684031003",
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    thumbnailUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
+    status: "Active"
+  },
+  {
+    _id: "def-2",
+    title: "Advanced Digital Marketing With AI Training Company",
+    studentName: "Aman Verma",
+    courseOrRole: "Full Stack Developer",
+    subText: "Web Mok - Experience",
+    badgeText: "WEB MOK - STORY",
+    tagPill: "Student Testimonial",
+    callLine: "Call Now - 8684031003",
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    thumbnailUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
+    status: "Active"
+  },
+  {
+    _id: "def-3",
+    title: "Advanced Digital Marketing With AI Training Company",
+    studentName: "Sunny Kumar",
+    courseOrRole: "UI/UX Designer",
+    subText: "Web Mok - Experience",
+    badgeText: "WEB MOK - STORY",
+    tagPill: "Student Testimonial",
+    callLine: "Call Now - 8684031003",
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    thumbnailUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
+    status: "Active"
+  },
+  {
+    _id: "def-4",
+    title: "Advanced Digital Marketing With AI Training Company",
+    studentName: "Priya Singh",
+    courseOrRole: "Digital Marketer",
+    subText: "Web Mok - Experience",
+    badgeText: "WEB MOK - STORY",
+    tagPill: "Student Testimonial",
+    callLine: "Call Now - 8684031003",
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4",
+    thumbnailUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80",
+    status: "Active"
+  }
+];
+
 export default function Home() {
+  const navigate = useNavigate();
+
   const [heroData, setHeroData] = useState({
     badgeText: "Top Rated Time",
     heading: "Empowering Minds, Shaping",
@@ -34,11 +107,20 @@ export default function Home() {
     eyebrow: "ABOUT US",
     heading: "Welcome to Gyan Time",
     introduction: "Gyan Time was established with a vision to provide world-class education and create a platform where students can learn, grow and achieve their goals.",
-    highlights: ["Experienced & Dedicated Faculty", "Modern Infrastructure & Facilities", "Student-Centric Learning Approach", "Affordable Fees & Flexible Batches"]
+    highlights: ["Experienced & Dedicated Faculty", "Modern Infrastructure & Facilities", "Student-Centric Learning Approach", "Affordable Fees & Flexible Batches"],
+    image: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1000&q=85",
+    imageCaption: "Gyan Institute of Professional Studies",
+    imageSubLine: "Empowering Students Since 2011",
+    experienceBadgeNumber: "15+",
+    experienceBadgeText: "Years of Excellence"
   });
 
   const [apiCourses, setApiCourses] = useState([]);
   const [apiTestimonials, setApiTestimonials] = useState([]);
+  const [videoStories, setVideoStories] = useState([]);
+  const [showAllVideos, setShowAllVideos] = useState(false);
+  const [activeVideoModal, setActiveVideoModal] = useState(null);
+
   const [heroFormSent, setHeroFormSent] = useState(false);
   const [heroFormLoading, setHeroFormLoading] = useState(false);
   const [inquiryPopup, setInquiryPopup] = useState(false);
@@ -160,7 +242,19 @@ export default function Home() {
         }
       })
       .catch((err) => console.error("Failed to load testimonials:", err));
+
+    fetch("http://localhost:5005/api/video-testimonial?status=Active")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success && json.data && json.data.length > 0) {
+          setVideoStories(json.data);
+        }
+      })
+      .catch((err) => console.error("Failed to load video testimonials:", err));
   }, []);
+
+  // Displayed video list: API videos if available, otherwise fallback default cards
+  const displayedVideos = videoStories.length > 0 ? videoStories : defaultVideoStories;
 
   return (
     <>
@@ -236,6 +330,7 @@ export default function Home() {
         <div><span className="stat-icon gold"><FaGraduationCap /></span><strong>15+</strong><b>Years of Excellence</b><small>In education</small></div>
       </section>
 
+      {/* ── Popular Courses Section (Clickable Cards) ── */}
       <section className="home-courses section-shell">
         <div className="section-heading">
           <div><span>OUR COURSES</span><h2>Explore Our <em>Popular Courses</em></h2></div>
@@ -243,19 +338,41 @@ export default function Home() {
         </div>
         <div className="course-grid home-course-grid-3">
           {apiCourses.map((course) => (
-            <article className="course-card" key={course._id || course.slug}>
-              <div className="course-card-image"><img src={course.image} alt={course.title} /><span><FiBookOpen /></span></div>
+            <article 
+              className="course-card" 
+              key={course._id || course.slug}
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate(`/courses/${course.slug}`)}
+            >
+              <div className="course-card-image">
+                <img src={course.image} alt={course.title} />
+                <span><FiBookOpen /></span>
+              </div>
               <div className="course-card-body">
                 <h3>{course.title}</h3>
                 <div className="home-course-desc" dangerouslySetInnerHTML={{ __html: course.description }} />
                 <div className="course-card-actions">
-                  <a href={`tel:${contactPhone.replace(/\s/g, "")}`} className="cc-btn cc-call">
+                  <a 
+                    href={`tel:${contactPhone.replace(/\s/g, "")}`} 
+                    className="cc-btn cc-call"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <FiPhone /> Call Now
                   </a>
-                  <button className="cc-btn cc-inquiry" onClick={() => openInquiryPopup(course)}>
+                  <button 
+                    className="cc-btn cc-inquiry" 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openInquiryPopup(course);
+                    }}
+                  >
                     Inquiry
                   </button>
-                  <Link to={`/courses/${course.slug}`} className="cc-btn cc-read">
+                  <Link 
+                    to={`/courses/${course.slug}`} 
+                    className="cc-btn cc-read"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     Read More <FiArrowRight />
                   </Link>
                 </div>
@@ -314,22 +431,78 @@ export default function Home() {
         </div>
       )}
 
-      <section className="home-about section-shell" id="about-preview">
-        <div className="about-preview-copy">
-          <span className="section-kicker">{aboutData.eyebrow}</span>
-          <h2>{aboutData.heading}</h2>
-          <p>{aboutData.introduction}</p>
-          <ul>
-            {aboutData.highlights && aboutData.highlights.map((highlight, index) => (
-              <li key={index}><FiCheckCircle /> {highlight}</li>
-            ))}
-          </ul>
-          <Link to="/about" className="primary-btn dark">Know More About Us <FiArrowRight /></Link>
-        </div>
-        <div className="about-preview-images">
-          <img className="about-img-main" src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1000&q=85" alt="Gyan Time campus" />
-          <img className="about-img-small" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=700&q=85" alt="Students in class" />
-          <div className="about-play"><FiPlay /></div>
+      {/* ── About Section with Main Image & Bottom Button Line ── */}
+      <section className="ha-about" id="about-preview">
+        <div className="ha-about-inner section-shell">
+
+          {/* Left — Single Main Image with Badge & Bottom Button-style Line */}
+          <div className="ha-img-col">
+            <div className="ha-img-main-wrap">
+              <img
+                src={aboutData.image || "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1000&q=85"}
+                alt="Gyan Institute campus"
+                className="ha-img-main"
+              />
+              {/* floating years badge */}
+              <div className="ha-exp-badge">
+                <strong>{aboutData.experienceBadgeNumber || "15+"}</strong>
+                <span>{aboutData.experienceBadgeText || "Years of\nExcellence"}</span>
+              </div>
+
+              {/* Bottom Button-type Caption Line */}
+              <div className="ha-img-bottom-btn-pill">
+                <span className="ha-pill-icon"><FaGraduationCap /></span>
+                <div className="ha-pill-text">
+                  <strong>{aboutData.imageCaption || "Gyan Institute of Professional Studies"}</strong>
+                  {aboutData.imageSubLine && <small>{aboutData.imageSubLine}</small>}
+                </div>
+              </div>
+            </div>
+
+            {/* decorative gold ring */}
+            <div className="ha-deco-ring" />
+            <div className="ha-deco-dots" />
+          </div>
+
+          {/* Right — Content */}
+          <div className="ha-content-col">
+            <span className="ha-eyebrow">
+              <FiAward /> About Us
+            </span>
+            <h2 className="ha-heading">
+              {aboutData.heading}<br />
+              <em>Empowering Every Student</em>
+            </h2>
+            <p className="ha-desc">{aboutData.introduction}</p>
+
+            {/* highlights */}
+            <div className="ha-highlights">
+              {aboutData.highlights && aboutData.highlights.map((h, i) => (
+                <div className="ha-highlight-item" key={i}>
+                  <span className="ha-hl-icon"><FiCheckCircle /></span>
+                  <span>{h}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* mini stats row */}
+            <div className="ha-mini-stats">
+              {[
+                { val: "5000+", label: "Students" },
+                { val: "20+",   label: "Courses" },
+                { val: "100%",  label: "Practical" },
+              ].map(s => (
+                <div className="ha-mini-stat" key={s.label}>
+                  <strong>{s.val}</strong>
+                  <span>{s.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <Link to="/about" className="ha-cta-btn">
+              Know More About Us <FiArrowRight />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -338,11 +511,7 @@ export default function Home() {
           <div className="why-heading">
             <span>WHY CHOOSE US</span>
             <h2>Your Success is <em>Our Mission</em></h2>
-            <p>We combine strong academics, practical learning and personal guidance to create confident, career-ready students.
-              We combine strong academics, practical learning and personal guidance to create confident, career-ready students.
-              We combine strong academics, practical learning and personal guidance to create confident, career-ready students.
-             
-            </p>
+            <p>We combine strong academics, practical learning and personal guidance to create confident, career-ready students.</p>
           </div>
           <div className="why-grid">
             {[
@@ -365,7 +534,6 @@ export default function Home() {
         {apiTestimonials.length > 0 ? (
           <div className="marquee-wrapper">
             <div className="marquee-track">
-              {/* Duplicate array for seamless infinite scroll */}
               {[...apiTestimonials, ...apiTestimonials].map((item, index) => (
                 <article className="testimonial-card" key={index}>
                   <div className="student">
@@ -396,20 +564,148 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-gallery section-shell">
-        <div className="center-heading"><span>OUR CAMPUS GALLERY</span><h2>Life at <em>Gyan Time</em></h2></div>
-        <div className="gallery-strip">
-          {galleryImages.slice(0, 5).map((img) => <img key={img._id} src={img.image} alt={img.label} />)}
+      {/* ── COMPANY LOGO MARQUEE (Above Video Testimonials) ── */}
+      <section className="home-company-marquee">
+        <div className="section-shell">
+          <h3 className="company-marquee-title">OUR STUDENTS ARE PLACED IN TOP COMPANIES</h3>
         </div>
-        <Link to="/gallery" className="outline-dark-btn">View More Photos <FiArrowRight /></Link>
+        <div className="company-marquee-wrapper">
+          <div className="company-marquee-track">
+            {[...companyLogos, ...companyLogos, ...companyLogos].map((logo, idx) => (
+              <div className="company-logo-item" key={idx}>
+                <img src={logo.src} alt={logo.name} />
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
-      {/* <section className="home-final-cta">
-        <div className="home-final-inner section-shell">
-          <div><FaGraduationCap /><div><span>ADMISSIONS OPEN 2026</span><h2>Take the First Step Towards Your Bright Future</h2></div></div>
-          <Link to="/contact" className="primary-btn">Enquire Now <FiArrowRight /></Link>
+      {/* ── VIDEO TESTIMONIALS / STORIES SECTION ── */}
+      <section className="home-video-testimonials section-shell" id="video-testimonials">
+        <div className="center-heading">
+          <span>VIDEO TESTIMONIALS</span>
+          <h2>Real Stories, <em>Real Success</em></h2>
+          {/* <p>Watch authentic experiences and reviews shared by our proud students.</p> */}
         </div>
-      </section> */}
+
+        <div className="video-stories-grid">
+          {(showAllVideos ? displayedVideos : displayedVideos.slice(0, 4)).map((video) => (
+            <article 
+              className="video-story-card" 
+              key={video._id} 
+              onClick={() => setActiveVideoModal(video)}
+            >
+              <div className="video-card-inner">
+                {/* Background media */}
+                <div className="video-card-bg">
+                  {video.thumbnailUrl ? (
+                    <img src={video.thumbnailUrl} alt={video.studentName} />
+                  ) : (
+                    <video src={video.videoUrl} preload="metadata" muted />
+                  )}
+                  <div className="video-card-gradient-top" />
+                  <div className="video-card-gradient-bottom" />
+                </div>
+
+                {/* Top Badge & Watermark */}
+                <div className="video-card-top">
+                  {video.badgeText ? (
+                    <span className="story-badge-pill">{video.badgeText}</span>
+                  ) : (
+                    <span className="story-badge-pill">GYAN INSTITUTE - STORY</span>
+                  )}
+                  <span className="story-watermark">Gyan Institute</span>
+                </div>
+
+                {/* Center Frosted Play Button & Testimonial Tag */}
+                <div className="video-card-center">
+                  {video.tagPill && (
+                    <div className="story-center-pill">
+                      <span>{video.tagPill}</span>
+                    </div>
+                  )}
+                  <button className="story-play-btn" aria-label="Play video review">
+                    <FiPlay />
+                  </button>
+                </div>
+
+                {/* Bottom Overlay Card */}
+                <div className="video-card-bottom">
+                  {(video.title || video.callLine) && (
+                    <div className="story-bottom-info-pill">
+                      {video.title && <h4>{video.title}</h4>}
+                      {video.callLine && <span className="story-call-line">{video.callLine}</span>}
+                    </div>
+                  )}
+
+                  <div className="story-review-footer">
+                    <div className="story-student-review-label">Student Review</div>
+                    <div className="story-student-sub">{video.subText || `${video.studentName} · Story`}</div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* Expand / See More Action Button */}
+        {displayedVideos.length > 4 && (
+          <div className="video-stories-actions">
+            <button 
+              className="see-more-video-btn" 
+              onClick={() => setShowAllVideos(!showAllVideos)}
+            >
+              <span>{showAllVideos ? "− Show Less" : "+ See More"}</span>
+              <span className="see-more-count">
+                {showAllVideos ? "collapse" : `+${displayedVideos.length - 4} videos`}
+              </span>
+            </button>
+          </div>
+        )}
+      </section>
+
+      {/* ── Video Player Modal ── */}
+      {activeVideoModal && (
+        <div className="vt-modal-overlay" onClick={() => setActiveVideoModal(null)}>
+          <div className="vt-modal-dialog" onClick={(e) => e.stopPropagation()}>
+            <button className="vt-modal-close" onClick={() => setActiveVideoModal(null)} aria-label="Close video player">
+              <FiX />
+            </button>
+            <div className="vt-modal-player-wrap">
+              {activeVideoModal.videoUrl.includes("youtube.com") || activeVideoModal.videoUrl.includes("youtu.be") ? (
+                <iframe
+                  src={
+                    activeVideoModal.videoUrl.includes("watch?v=")
+                      ? activeVideoModal.videoUrl.replace("watch?v=", "embed/") + "?autoplay=1"
+                      : activeVideoModal.videoUrl + "?autoplay=1"
+                  }
+                  title={activeVideoModal.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="vt-modal-video"
+                />
+              ) : (
+                <video
+                  src={activeVideoModal.videoUrl}
+                  controls
+                  autoPlay
+                  playsInline
+                  className="vt-modal-video"
+                />
+              )}
+            </div>
+            <div className="vt-modal-info">
+              <span className="vt-modal-badge">{activeVideoModal.badgeText || "WEB MOK - STORY"}</span>
+              <h3>{activeVideoModal.title}</h3>
+              <div className="vt-modal-meta">
+                <b>{activeVideoModal.studentName}</b>
+                {activeVideoModal.courseOrRole && <span> · {activeVideoModal.courseOrRole}</span>}
+                {activeVideoModal.callLine && <span className="vt-modal-phone"> · {activeVideoModal.callLine}</span>}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

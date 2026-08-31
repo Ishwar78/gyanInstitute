@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 65" fill="none">
+  <g transform="translate(70, 2) scale(0.6)">
+    <path d="M50 0 C30 0 15 15 15 35 C15 45 20 53 28 60 C20 67 15 75 15 85 C15 105 30 120 50 120 C70 120 85 105 85 85 C85 75 80 67 72 60 C80 53 85 45 85 35 C85 15 70 0 50 0 Z M50 20 C60 20 68 27 68 36 C68 44 61 51 51 52 L49 52 C39 51 32 44 32 36 C32 27 40 20 50 20 Z M50 100 C40 100 32 93 32 84 C32 76 39 69 49 68 L51 68 C61 69 68 76 68 84 C68 93 60 100 50 100 Z" fill="#000000"/>
+  </g>
+  <text x="100" y="58" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="11" fill="#000000" letter-spacing="2.5">UNDER ARMOUR</text>
+</svg>
