@@ -3,7 +3,15 @@ import { FiX, FiCheckCircle, FiSend, FiUser, FiPhone, FiMail, FiBookOpen, FiCloc
 import { FaGraduationCap } from "react-icons/fa";
 import "./DemoInquiryModal.css";
 
-export default function DemoInquiryModal({ isOpen, onClose }) {
+export default function DemoInquiryModal({ 
+  isOpen, 
+  onClose, 
+  modalTitle = "Book a Free Demo Class",
+  modalBadge = "100% Free Demo Session",
+  modalSubtitle = "Experience our live classroom & expert mentor guidance before enrolling.",
+  inquiryType = "Free Demo Inquiry",
+  submitBtnText = "Book Free Demo Class"
+}) {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -54,11 +62,11 @@ export default function DemoInquiryModal({ isOpen, onClose }) {
         name: formData.name,
         phone: formData.phone,
         email: formData.email || `${formData.phone}@lead.in`,
-        courseName: formData.courseName || "General Course Demo",
+        courseName: formData.courseName || "General Course",
         programMode: formData.programMode,
-        type: "Free Demo Inquiry",
-        subject: `Free Demo Request: ${formData.courseName || "Course"} (${formData.programMode})`,
-        message: `Student booked a FREE Demo Class.\nCourse: ${formData.courseName}\nMode: ${formData.programMode}\nPreferred Slot: ${formData.preferredTime}\nNotes: ${formData.message || "None"}`,
+        type: inquiryType,
+        subject: `${inquiryType}: ${formData.courseName || "Course"} (${formData.programMode})`,
+        message: `Student registration / inquiry for ${formData.courseName}.\nMode: ${formData.programMode}\nPreferred Slot: ${formData.preferredTime}\nNotes: ${formData.message || "None"}`,
       };
 
       const res = await fetch("http://localhost:5005/api/inquiry", {
@@ -71,10 +79,10 @@ export default function DemoInquiryModal({ isOpen, onClose }) {
       if (json.success) {
         setSubmitted(true);
       } else {
-        setErrorMsg(json.message || "Failed to submit demo request. Please try again.");
+        setErrorMsg(json.message || "Failed to submit request. Please try again.");
       }
     } catch (err) {
-      console.error("Demo submission error:", err);
+      console.error("Submission error:", err);
       setErrorMsg("Network error. Please try again.");
     } finally {
       setLoading(false);
@@ -93,11 +101,11 @@ export default function DemoInquiryModal({ isOpen, onClose }) {
             <div className="demo-success-icon-wrap">
               <FiCheckCircle />
             </div>
-            <h3>Demo Class Booked!</h3>
+            <h3>Registration Submitted!</h3>
             <p>
-              Thank you, <strong>{formData.name}</strong>! Your request for a Free Demo Class in{" "}
+              Thank you, <strong>{formData.name}</strong>! Your registration request for{" "}
               <strong>{formData.courseName}</strong> has been received. Our team will contact you shortly on{" "}
-              <strong>{formData.phone}</strong> with the demo schedule.
+              <strong>{formData.phone}</strong> to guide you further.
             </p>
             <button className="demo-done-btn" onClick={onClose}>
               Done
@@ -107,10 +115,10 @@ export default function DemoInquiryModal({ isOpen, onClose }) {
           <div className="demo-modal-content">
             <div className="demo-modal-header">
               <div className="demo-badge-wrap">
-                <FaGraduationCap /> <span>100% Free Demo Session</span>
+                <FaGraduationCap /> <span>{modalBadge}</span>
               </div>
-              <h2>Book a <em>Free Demo Class</em></h2>
-              <p>Experience our live classroom & expert mentor guidance before enrolling.</p>
+              <h2>{modalTitle}</h2>
+              <p>{modalSubtitle}</p>
             </div>
 
             {errorMsg && <div className="demo-error-banner">{errorMsg}</div>}

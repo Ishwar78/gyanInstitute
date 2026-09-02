@@ -1,5 +1,5 @@
 /* =========================================
-   MOBILE ACTION BOTTOM BAR (CALL & WHATSAPP)
+   MOBILE ACTION BOTTOM BAR (CALL, REGISTER, WHATSAPP)
    ========================================= */
 
 .mobile-bottom-bar {
@@ -12,42 +12,44 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 60px;
+    height: 66px;
     background: #061930;
     background: linear-gradient(180deg, #071e3b 0%, #041224 100%);
-    border-top: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.35);
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.4);
     z-index: 9999;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     padding: 0 16px;
     box-sizing: border-box;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
   }
 
+  /* Call & WhatsApp Action Items */
   .mobile-action-item {
-    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 3px;
     text-decoration: none;
-    padding: 4px 0;
+    padding: 2px 8px;
     transition: transform 0.15s ease, opacity 0.15s ease;
     -webkit-tap-highlight-color: transparent;
+    min-width: 60px;
   }
 
   .mobile-action-item:active {
-    transform: scale(0.94);
+    transform: scale(0.92);
     opacity: 0.9;
   }
 
+  /* Bigger Icon Boxes */
   .action-icon-box {
-    width: 32px;
-    height: 32px;
-    border-radius: 9px;
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,23 +58,23 @@
 
   .call-icon-box {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    box-shadow: 0 3px 10px rgba(16, 185, 129, 0.45);
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.5);
   }
 
   .whatsapp-icon-box {
     background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-    box-shadow: 0 3px 12px rgba(37, 211, 102, 0.45);
+    box-shadow: 0 4px 16px rgba(37, 211, 102, 0.5);
   }
 
   .action-icon {
     color: #ffffff;
-    font-size: 16px;
+    font-size: 19px;
   }
 
   .action-label {
-    font-size: 10px;
+    font-size: 10.5px;
     font-weight: 800;
-    letter-spacing: 0.6px;
+    letter-spacing: 0.7px;
     text-transform: uppercase;
   }
 
@@ -84,14 +86,75 @@
     color: #4ade80;
   }
 
-  .mobile-action-divider {
-    width: 1px;
-    height: 24px;
-    background: rgba(255, 255, 255, 0.12);
+  /* ── Center Register Now Button ── */
+  .mobile-register-center-btn {
+    flex: 1;
+    max-width: 155px;
+    margin: 0 10px;
+    height: 42px;
+    background: linear-gradient(135deg, #f5a900 0%, #d98800 100%);
+    color: #061930;
+    border: none;
+    border-radius: 25px;
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(245, 169, 0, 0.45);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+    white-space: nowrap;
+    padding: 0 12px;
   }
 
-  /* Add extra padding at the bottom of the public site content on mobile */
+  .mobile-register-center-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(245, 169, 0, 0.3);
+  }
+
+  .register-btn-icon {
+    font-size: 15px;
+    color: #061930;
+  }
+
+  /* Content offset on mobile */
   .app {
-    padding-bottom: 64px !important;
+    padding-bottom: 74px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .mobile-bottom-bar {
+    padding: 0 10px;
+  }
+
+  .mobile-action-item {
+    min-width: 50px;
+    padding: 2px 4px;
+  }
+
+  .action-icon-box {
+    width: 35px;
+    height: 35px;
+  }
+
+  .action-icon {
+    font-size: 17px;
+  }
+
+  .mobile-register-center-btn {
+    height: 40px;
+    font-size: 12px;
+    gap: 5px;
+    margin: 0 6px;
+    padding: 0 8px;
+  }
+
+  .register-btn-icon {
+    font-size: 13px;
   }
 }

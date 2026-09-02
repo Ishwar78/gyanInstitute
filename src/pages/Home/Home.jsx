@@ -365,10 +365,49 @@ export default function Home() {
       </section>
 
       <section className="home-stats">
-        <div><span className="stat-icon navy"><FiUsers /></span><strong>2500+</strong><b>Happy Students</b><small>Growing every day</small></div>
-        <div><span className="stat-icon gold"><FiBookOpen /></span><strong>50+</strong><b>Courses Offered</b><small>For bright careers</small></div>
-        <div><span className="stat-icon navy"><FiAward /></span><strong>98%</strong><b>Success Rate</b><small>Proven track record</small></div>
-        <div><span className="stat-icon gold"><FaGraduationCap /></span><strong>15+</strong><b>Years of Excellence</b><small>In education</small></div>
+        <div className="home-stat-item">
+          <div className="stat-head">
+            <span className="stat-icon navy"><FiUsers /></span>
+            <strong>2500+</strong>
+          </div>
+          <div className="stat-info">
+            <b>Happy Students</b>
+            <small>Growing every day</small>
+          </div>
+        </div>
+
+        <div className="home-stat-item">
+          <div className="stat-head">
+            <span className="stat-icon gold"><FiBookOpen /></span>
+            <strong>50+</strong>
+          </div>
+          <div className="stat-info">
+            <b>Courses Offered</b>
+            <small>For bright careers</small>
+          </div>
+        </div>
+
+        <div className="home-stat-item">
+          <div className="stat-head">
+            <span className="stat-icon navy"><FiAward /></span>
+            <strong>98%</strong>
+          </div>
+          <div className="stat-info">
+            <b>Success Rate</b>
+            <small>Proven track record</small>
+          </div>
+        </div>
+
+        <div className="home-stat-item">
+          <div className="stat-head">
+            <span className="stat-icon gold"><FaGraduationCap /></span>
+            <strong>15+</strong>
+          </div>
+          <div className="stat-info">
+            <b>Years of Excellence</b>
+            <small>In education</small>
+          </div>
+        </div>
       </section>
 
       {/* ── Quick Inquiry Form on Mobile (Below Stats Strip) ── */}
