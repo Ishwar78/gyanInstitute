@@ -61,6 +61,22 @@ const courseSchema = new mongoose.Schema(
         answer: { type: String, default: "" },
       },
     ],
+    programModes: {
+      heading: { type: String, default: "" },
+      subheading: { type: String, default: "" },
+      offline: {
+        title: { type: String, default: "" },
+        image: { type: String, default: "" },
+        points: { type: [String], default: [] },
+        brochureUrl: { type: String, default: "" },
+      },
+      online: {
+        title: { type: String, default: "" },
+        image: { type: String, default: "" },
+        points: { type: [String], default: [] },
+        brochureUrl: { type: String, default: "" },
+      },
+    },
     status: {
       type: String,
       enum: ["Active", "Draft"],

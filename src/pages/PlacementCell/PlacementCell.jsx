@@ -14,6 +14,19 @@ import {
 import { FaGraduationCap, FaHandshake, FaChalkboardTeacher } from "react-icons/fa";
 import "./PlacementCell.css";
 
+const companyLogos = [
+  { name: "HCLTech", src: "/images/hcl.png" },
+  { name: "Zomato", src: "/images/zom.png" },
+  { name: "Under Armour", src: "/images/under.svg" },
+  { name: "MultiClout", src: "/images/multi.png" },
+  { name: "ThinkCentre", src: "/images/thin.webp" },
+  { name: "TCS", src: "/images/tc.png" },
+  { name: "Bank of America", src: "/images/bankof.png" },
+  { name: "Redbull", src: "/images/redbull.png" },
+  { name: "Indigo", src: "/images/indigo.png" },
+  { name: "Dell", src: "/images/dell.png" }
+];
+
 export default function PlacementCell() {
   const stats = [
     { number: "95%+", label: "Placement Rate", sub: "For Job-Oriented Batches" },
@@ -109,21 +122,22 @@ export default function PlacementCell() {
         </div>
       </section>
 
-      {/* Hiring Partners */}
-      <section className="placement-partners section-shell">
-        <div className="center-heading">
+      {/* Hiring Partners & Marquee Section */}
+      <section className="placement-partners-marquee">
+        <div className="center-heading section-shell">
           <span className="eyebrow">RECRUITMENT NETWORK</span>
-          <h2>Top Companies <em>Hiring Our Graduates</em></h2>
-          <p>Our students are placed in prestigious startups, MNCs, and corporate leaders.</p>
+          <h2>OUR STUDENTS ARE PLACED IN <em>TOP COMPANIES</em></h2>
+          
         </div>
 
-        <div className="partners-grid">
-          {partners.map((partner, idx) => (
-            <div key={idx} className="partner-badge">
-              <FaGraduationCap />
-              <span>{partner}</span>
-            </div>
-          ))}
+        <div className="placement-marquee-wrapper">
+          <div className="placement-marquee-track">
+            {companyLogos.concat(companyLogos).map((logo, idx) => (
+              <div className="placement-marquee-item" key={idx}>
+                <img src={logo.src} alt={logo.name} />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

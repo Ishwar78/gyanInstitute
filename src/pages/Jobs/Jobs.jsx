@@ -25,6 +25,15 @@ export default function Jobs() {
   // Selected Job for Applying
   const [activeJob, setActiveJob] = useState(null);
   const [applyModalOpen, setApplyModalOpen] = useState(false);
+  const [expandedJobs, setExpandedJobs] = useState([]);
+
+  const toggleJobExpand = (jobId) => {
+    if (expandedJobs.includes(jobId)) {
+      setExpandedJobs(expandedJobs.filter(id => id !== jobId));
+    } else {
+      setExpandedJobs([...expandedJobs, jobId]);
+    }
+  };
   
   // Application Form State
   const [applicant, setApplicant] = useState({
@@ -238,10 +247,27 @@ export default function Jobs() {
                   <span><FiDollarSign /> {job.salary || "Best in Industry"}</span>
                 </div>
 
-                <div
-                  className="job-description-preview"
-                  dangerouslySetInnerHTML={{ __html: job.description }}
-                />
+                {(() => {
+                  const isExpanded = expandedJobs.includes(job._id);
+                  const isLong = (job.description || "").length > 220;
+                  return (
+                    <div className="job-description-box">
+                      <div
+                        className={`job-description-preview ${isLong && !isExpanded ? "collapsed" : "expanded"}`}
+                        dangerouslySetInnerHTML={{ __html: job.description }}
+                      />
+                      {isLong && (
+                        <button
+                          type="button"
+                          className="job-desc-toggle-btn"
+                          onClick={() => toggleJobExpand(job._id)}
+                        >
+                          {isExpanded ? "Read Less ↑" : "Read More Description ↓"}
+                        </button>
+                      )}
+                    </div>
+                  );
+                })()}
 
                 {job.requirements && job.requirements.length > 0 && (
                   <div className="job-skills-wrap">

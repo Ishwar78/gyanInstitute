@@ -1,0 +1,97 @@
+/* =========================================
+   MOBILE ACTION BOTTOM BAR (CALL & WHATSAPP)
+   ========================================= */
+
+.mobile-bottom-bar {
+  display: none;
+}
+
+@media (max-width: 820px) {
+  .mobile-bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #061930;
+    background: linear-gradient(180deg, #071e3b 0%, #041224 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.35);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 16px;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+  }
+
+  .mobile-action-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    text-decoration: none;
+    padding: 4px 0;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-action-item:active {
+    transform: scale(0.94);
+    opacity: 0.9;
+  }
+
+  .action-icon-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .call-icon-box {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 3px 10px rgba(16, 185, 129, 0.45);
+  }
+
+  .whatsapp-icon-box {
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+    box-shadow: 0 3px 12px rgba(37, 211, 102, 0.45);
+  }
+
+  .action-icon {
+    color: #ffffff;
+    font-size: 16px;
+  }
+
+  .action-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+
+  .call-action .action-label {
+    color: #34d399;
+  }
+
+  .whatsapp-action .action-label {
+    color: #4ade80;
+  }
+
+  .mobile-action-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  /* Add extra padding at the bottom of the public site content on mobile */
+  .app {
+    padding-bottom: 64px !important;
+  }
+}

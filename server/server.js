@@ -40,6 +40,7 @@ const __dirname = path.dirname(__filename);
 
 app.use("/upload", express.static(path.join(__dirname, "upload")));
 app.use("/api/inquiry", inquiryRoutes);
+app.use("/api/contact", inquiryRoutes);
 app.use("/api/home-hero", homeHeroRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/contact-info", contactInfoRoutes);

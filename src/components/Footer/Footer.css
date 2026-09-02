@@ -515,6 +515,7 @@
     flex-wrap: wrap;
 
     gap: 18px;
+    display: none;
   }
 
   .footer-cap {

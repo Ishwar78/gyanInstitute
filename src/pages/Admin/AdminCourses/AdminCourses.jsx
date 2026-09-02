@@ -24,6 +24,22 @@ export default function AdminCourses() {
     syllabus: [{ title: "", topics: [""] }],
     highlights: [""],
     faqs: [{ question: "", answer: "" }],
+    programModes: {
+      heading: "",
+      subheading: "",
+      offline: {
+        title: "",
+        image: "",
+        points: [""],
+        brochureUrl: ""
+      },
+      online: {
+        title: "",
+        image: "",
+        points: [""],
+        brochureUrl: ""
+      }
+    },
     image: "",
     video: "",
     status: "Active"
@@ -33,6 +49,10 @@ export default function AdminCourses() {
   const [imagePreview, setImagePreview] = useState(null);
   const [selectedVideoFile, setSelectedVideoFile] = useState(null);
   const [videoPreview, setVideoPreview] = useState(null);
+  const [selectedOfflineImgFile, setSelectedOfflineImgFile] = useState(null);
+  const [offlineImgPreview, setOfflineImgPreview] = useState(null);
+  const [selectedOnlineImgFile, setSelectedOnlineImgFile] = useState(null);
+  const [onlineImgPreview, setOnlineImgPreview] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [categories, setCategories] = useState([]);
 
@@ -72,6 +92,26 @@ export default function AdminCourses() {
     setVideoPreview(objectUrl);
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedVideoFile]);
+
+  useEffect(() => {
+    if (!selectedOfflineImgFile) {
+      setOfflineImgPreview(null);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(selectedOfflineImgFile);
+    setOfflineImgPreview(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedOfflineImgFile]);
+
+  useEffect(() => {
+    if (!selectedOnlineImgFile) {
+      setOnlineImgPreview(null);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(selectedOnlineImgFile);
+    setOnlineImgPreview(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedOnlineImgFile]);
 
   const handleArrayChange = (field, index, value) => {
     const newArray = [...formData[field]];
@@ -173,6 +213,92 @@ export default function AdminCourses() {
     }
   };
 
+  // Program Modes Handlers (Offline & Online)
+  const normalizeProgramModes = (pm, title = "Course") => {
+    return {
+      heading: pm?.heading || `Explore Our Certified ${title} Programs`,
+      subheading: pm?.subheading || `With over 35,000+ job openings in the industry, this domain is a hotbed for career opportunities. Gyan Time provides the Best ${title} Programs, equipping you with Core industry skills to land your dream job.`,
+      offline: {
+        title: pm?.offline?.title || `Offline ${title} & Industry Bootcamp`,
+        image: pm?.offline?.image || "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80",
+        points: Array.isArray(pm?.offline?.points) && pm.offline.points.length > 0 ? pm.offline.points : [
+          "Duration: 6-11 Months",
+          "MBA / Advanced Post-Graduate Certification",
+          "100% Internship & Job Assistance Guarantee",
+          "Preferred by: Fresh graduates, Working professionals (0-3 years work ex)"
+        ],
+        brochureUrl: pm?.offline?.brochureUrl || ""
+      },
+      online: {
+        title: pm?.online?.title || `Live & Online ${title} Programs`,
+        image: pm?.online?.image || "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
+        points: Array.isArray(pm?.online?.points) && pm.online.points.length > 0 ? pm.online.points : [
+          "Duration: 4-6 Months",
+          "Advanced / Professional Industry Certification",
+          "Dedicated Placement support & mock interview drills",
+          "Preferred by: College students, Working professionals (3+ years work ex)"
+        ],
+        brochureUrl: pm?.online?.brochureUrl || ""
+      }
+    };
+  };
+
+  const handleProgramModeChange = (modeKey, field, value) => {
+    setFormData({
+      ...formData,
+      programModes: {
+        ...formData.programModes,
+        [modeKey]: {
+          ...formData.programModes?.[modeKey],
+          [field]: value
+        }
+      }
+    });
+  };
+
+  const handleProgramPointChange = (modeKey, pointIdx, value) => {
+    const points = [...(formData.programModes?.[modeKey]?.points || [""])];
+    points[pointIdx] = value;
+    setFormData({
+      ...formData,
+      programModes: {
+        ...formData.programModes,
+        [modeKey]: {
+          ...formData.programModes?.[modeKey],
+          points
+        }
+      }
+    });
+  };
+
+  const addProgramPoint = (modeKey) => {
+    const points = [...(formData.programModes?.[modeKey]?.points || []), ""];
+    setFormData({
+      ...formData,
+      programModes: {
+        ...formData.programModes,
+        [modeKey]: {
+          ...formData.programModes?.[modeKey],
+          points
+        }
+      }
+    });
+  };
+
+  const removeProgramPoint = (modeKey, pointIdx) => {
+    const points = (formData.programModes?.[modeKey]?.points || []).filter((_, i) => i !== pointIdx);
+    setFormData({
+      ...formData,
+      programModes: {
+        ...formData.programModes,
+        [modeKey]: {
+          ...formData.programModes?.[modeKey],
+          points: points.length > 0 ? points : [""]
+        }
+      }
+    });
+  };
+
   const openAddModal = () => {
     setEditingId(null);
     setFormData({
@@ -188,12 +314,15 @@ export default function AdminCourses() {
       syllabus: [{ title: "", topics: [""] }],
       highlights: [""],
       faqs: [{ question: "", answer: "" }],
+      programModes: normalizeProgramModes({}, "Course"),
       image: "",
       video: "",
       status: "Active"
     });
     setSelectedFile(null);
     setSelectedVideoFile(null);
+    setSelectedOfflineImgFile(null);
+    setSelectedOnlineImgFile(null);
     setModalOpen(true);
   };
 
@@ -212,23 +341,28 @@ export default function AdminCourses() {
       syllabus: normalizeSyllabus(course.syllabus),
       highlights: course.highlights?.length ? course.highlights : [""],
       faqs: course.faqs?.length ? course.faqs : [{ question: "", answer: "" }],
+      programModes: normalizeProgramModes(course.programModes, course.title),
       image: course.image || "",
       video: course.video || "",
       status: course.status || "Active"
     });
     setSelectedFile(null);
     setSelectedVideoFile(null);
+    setSelectedOfflineImgFile(null);
+    setSelectedOnlineImgFile(null);
     setModalOpen(true);
   };
 
   const handleUpload = async () => {
     let finalImageUrl = formData.image;
     let finalVideoUrl = formData.video;
+    let finalOfflineImg = formData.programModes?.offline?.image || "";
+    let finalOnlineImg = formData.programModes?.online?.image || "";
     
     try {
       setUploading(true);
 
-      // Upload image if selected
+      // Upload main image if selected
       if (selectedFile) {
         const uploadData = new FormData();
         uploadData.append("image", selectedFile);
@@ -262,7 +396,40 @@ export default function AdminCourses() {
         }
       }
 
-      return { imageUrl: finalImageUrl, videoUrl: finalVideoUrl };
+      // Upload offline program card image if selected
+      if (selectedOfflineImgFile) {
+        const offData = new FormData();
+        offData.append("image", selectedOfflineImgFile);
+        const offRes = await fetch("http://localhost:5005/api/upload", {
+          method: "POST",
+          body: offData,
+        });
+        const offJson = await offRes.json();
+        if (offJson.success) {
+          finalOfflineImg = offJson.imageUrl;
+        }
+      }
+
+      // Upload online program card image if selected
+      if (selectedOnlineImgFile) {
+        const onData = new FormData();
+        onData.append("image", selectedOnlineImgFile);
+        const onRes = await fetch("http://localhost:5005/api/upload", {
+          method: "POST",
+          body: onData,
+        });
+        const onJson = await onRes.json();
+        if (onJson.success) {
+          finalOnlineImg = onJson.imageUrl;
+        }
+      }
+
+      return {
+        imageUrl: finalImageUrl,
+        videoUrl: finalVideoUrl,
+        offlineImgUrl: finalOfflineImg,
+        onlineImgUrl: finalOnlineImg
+      };
     } catch (err) {
       console.error("Error uploading media:", err);
       alert("Error uploading media");
@@ -278,7 +445,7 @@ export default function AdminCourses() {
     const mediaResult = await handleUpload();
     if (!mediaResult) return;
     
-    const { imageUrl, videoUrl } = mediaResult;
+    const { imageUrl, videoUrl, offlineImgUrl, onlineImgUrl } = mediaResult;
     if (!imageUrl && !formData.image) {
       alert("Please upload or provide an image URL.");
       return;
@@ -298,6 +465,22 @@ export default function AdminCourses() {
         .filter((mod) => mod.title || (mod.topics && mod.topics.length > 0)),
       highlights: formData.highlights.filter((i) => i.trim() !== ""),
       faqs: (formData.faqs || []).filter((f) => f.question && f.question.trim() !== ""),
+      programModes: {
+        heading: formData.programModes?.heading || "",
+        subheading: formData.programModes?.subheading || "",
+        offline: {
+          title: formData.programModes?.offline?.title || "",
+          image: offlineImgUrl || formData.programModes?.offline?.image || "",
+          points: (formData.programModes?.offline?.points || []).map((p) => p.trim()).filter(Boolean),
+          brochureUrl: formData.programModes?.offline?.brochureUrl || "",
+        },
+        online: {
+          title: formData.programModes?.online?.title || "",
+          image: onlineImgUrl || formData.programModes?.online?.image || "",
+          points: (formData.programModes?.online?.points || []).map((p) => p.trim()).filter(Boolean),
+          brochureUrl: formData.programModes?.online?.brochureUrl || "",
+        },
+      },
     };
 
     try {
@@ -580,6 +763,159 @@ export default function AdminCourses() {
                 <button type="button" className="add-array-btn" onClick={addFaq} style={{ marginTop: "6px" }}>
                   <FiPlus /> Add FAQ
                 </button>
+              </div>
+
+              {/* Program Formats (Offline & Online Programs) */}
+              <div className="programs-admin-section" style={{ background: "#f8fafc", padding: "16px", borderRadius: "10px", border: "1px solid #e2e8f0", marginBottom: "16px" }}>
+                <div style={{ marginBottom: "12px" }}>
+                  <label style={{ fontWeight: "700", color: "var(--navy)", margin: 0, display: "block", fontSize: "15px" }}>
+                    Program Formats (Offline & Online 2-Cards Section)
+                  </label>
+                  <small style={{ color: "#64748b" }}>
+                    Customize the 2 program cards (Offline and Live & Online) displayed on the course details page below the company logos.
+                  </small>
+                </div>
+
+                <div style={{ marginBottom: "14px" }}>
+                  <label style={{ fontSize: "12px", fontWeight: "700", color: "#475569", display: "block", marginBottom: "4px" }}>Section Main Heading</label>
+                  <input
+                    value={formData.programModes?.heading || ""}
+                    onChange={(e) => setFormData({ ...formData, programModes: { ...formData.programModes, heading: e.target.value } })}
+                    placeholder={`e.g. Explore Our Certified ${formData.title || "Course"} Programs`}
+                    style={{ width: "100%", padding: "8px 10px", border: "1px solid #cbd5e1", borderRadius: "6px", marginBottom: "8px" }}
+                  />
+
+                  <label style={{ fontSize: "12px", fontWeight: "700", color: "#475569", display: "block", marginBottom: "4px" }}>Section Subtitle / Description</label>
+                  <textarea
+                    rows="2"
+                    value={formData.programModes?.subheading || ""}
+                    onChange={(e) => setFormData({ ...formData, programModes: { ...formData.programModes, subheading: e.target.value } })}
+                    placeholder="e.g. With over 35,000+ job openings in the market, this domain is a hotbed for career opportunities..."
+                    style={{ width: "100%", padding: "8px 10px", border: "1px solid #cbd5e1", borderRadius: "6px", fontFamily: "inherit", fontSize: "13px" }}
+                  />
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
+                  {/* 1. Offline Program Card */}
+                  <div style={{ background: "#fff", padding: "14px", borderRadius: "8px", border: "1px solid #cbd5e1" }}>
+                    <h4 style={{ margin: "0 0 10px", color: "var(--navy)", fontSize: "14px", fontWeight: "800" }}>
+                      Card 1: Offline Program
+                    </h4>
+
+                    <label style={{ fontSize: "12px", fontWeight: "600", color: "#64748b", display: "block", marginBottom: "3px" }}>Program Title</label>
+                    <input
+                      value={formData.programModes?.offline?.title || ""}
+                      onChange={(e) => handleProgramModeChange("offline", "title", e.target.value)}
+                      placeholder="e.g. Offline Program & Industry Bootcamp"
+                      style={{ width: "100%", padding: "6px 8px", border: "1px solid #e2e8f0", borderRadius: "6px", marginBottom: "8px", fontSize: "13px" }}
+                    />
+
+                    <label style={{ fontSize: "12px", fontWeight: "600", color: "#64748b", display: "block", marginBottom: "3px" }}>Card Image</label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => setSelectedOfflineImgFile(e.target.files[0])}
+                      style={{ width: "100%", marginBottom: "6px", fontSize: "12px" }}
+                    />
+                    {(offlineImgPreview || formData.programModes?.offline?.image) && (
+                      <img
+                        src={offlineImgPreview || formData.programModes?.offline?.image}
+                        alt="Offline Preview"
+                        style={{ height: "60px", width: "100%", objectFit: "cover", borderRadius: "6px", marginBottom: "8px" }}
+                      />
+                    )}
+
+                    <label style={{ fontSize: "12px", fontWeight: "700", color: "#64748b", display: "block", marginBottom: "4px" }}>
+                      Bullet Points
+                    </label>
+                    {(formData.programModes?.offline?.points || [""]).map((pt, pIdx) => (
+                      <div key={`off-pt-${pIdx}`} style={{ display: "flex", gap: "6px", marginBottom: "6px" }}>
+                        <input
+                          value={pt}
+                          onChange={(e) => handleProgramPointChange("offline", pIdx, e.target.value)}
+                          placeholder={`Point ${pIdx + 1} (e.g. Duration: 11 Months)`}
+                          style={{ flex: 1, padding: "5px 8px", fontSize: "12.5px", border: "1px solid #e2e8f0", borderRadius: "5px" }}
+                        />
+                        {(formData.programModes?.offline?.points || []).length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => removeProgramPoint("offline", pIdx)}
+                            style={{ background: "#fee2e2", border: "none", color: "#dc2626", padding: "3px 6px", borderRadius: "4px", cursor: "pointer" }}
+                          >
+                            <FiTrash2 />
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => addProgramPoint("offline")}
+                      style={{ background: "#e2e8f0", border: "none", color: "#334155", padding: "4px 8px", borderRadius: "4px", fontSize: "11px", fontWeight: "600", cursor: "pointer" }}
+                    >
+                      <FiPlus /> Add Point
+                    </button>
+                  </div>
+
+                  {/* 2. Live & Online Program Card */}
+                  <div style={{ background: "#fff", padding: "14px", borderRadius: "8px", border: "1px solid #cbd5e1" }}>
+                    <h4 style={{ margin: "0 0 10px", color: "var(--navy)", fontSize: "14px", fontWeight: "800" }}>
+                      Card 2: Live & Online Program
+                    </h4>
+
+                    <label style={{ fontSize: "12px", fontWeight: "600", color: "#64748b", display: "block", marginBottom: "3px" }}>Program Title</label>
+                    <input
+                      value={formData.programModes?.online?.title || ""}
+                      onChange={(e) => handleProgramModeChange("online", "title", e.target.value)}
+                      placeholder="e.g. Live & Online Programs"
+                      style={{ width: "100%", padding: "6px 8px", border: "1px solid #e2e8f0", borderRadius: "6px", marginBottom: "8px", fontSize: "13px" }}
+                    />
+
+                    <label style={{ fontSize: "12px", fontWeight: "600", color: "#64748b", display: "block", marginBottom: "3px" }}>Card Image</label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => setSelectedOnlineImgFile(e.target.files[0])}
+                      style={{ width: "100%", marginBottom: "6px", fontSize: "12px" }}
+                    />
+                    {(onlineImgPreview || formData.programModes?.online?.image) && (
+                      <img
+                        src={onlineImgPreview || formData.programModes?.online?.image}
+                        alt="Online Preview"
+                        style={{ height: "60px", width: "100%", objectFit: "cover", borderRadius: "6px", marginBottom: "8px" }}
+                      />
+                    )}
+
+                    <label style={{ fontSize: "12px", fontWeight: "700", color: "#64748b", display: "block", marginBottom: "4px" }}>
+                      Bullet Points
+                    </label>
+                    {(formData.programModes?.online?.points || [""]).map((pt, pIdx) => (
+                      <div key={`on-pt-${pIdx}`} style={{ display: "flex", gap: "6px", marginBottom: "6px" }}>
+                        <input
+                          value={pt}
+                          onChange={(e) => handleProgramPointChange("online", pIdx, e.target.value)}
+                          placeholder={`Point ${pIdx + 1} (e.g. Duration: 4-6 Months)`}
+                          style={{ flex: 1, padding: "5px 8px", fontSize: "12.5px", border: "1px solid #e2e8f0", borderRadius: "5px" }}
+                        />
+                        {(formData.programModes?.online?.points || []).length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => removeProgramPoint("online", pIdx)}
+                            style={{ background: "#fee2e2", border: "none", color: "#dc2626", padding: "3px 6px", borderRadius: "4px", cursor: "pointer" }}
+                          >
+                            <FiTrash2 />
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => addProgramPoint("online")}
+                      style={{ background: "#e2e8f0", border: "none", color: "#334155", padding: "4px 8px", borderRadius: "4px", fontSize: "11px", fontWeight: "600", cursor: "pointer" }}
+                    >
+                      <FiPlus /> Add Point
+                    </button>
+                  </div>
+                </div>
               </div>
 
               <div className="image-upload-row">

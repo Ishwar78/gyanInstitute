@@ -61,20 +61,21 @@ export default function Blog() {
           ) : (
             <div className="blog-grid">
               {posts.map(post => (
-                <article className="blog-card" key={post.slug}>
+                <Link to={`/blog/${post.slug}`} className="blog-card" key={post.slug}>
                   <div className="blog-card-image">
                     <img src={post.image} alt={post.title} />
+                    {post.category && <span className="blog-cat-badge">{post.category}</span>}
                   </div>
                   <div className="blog-card-body">
                     <div className="blog-meta">
-                      <span><FiCalendar /> {new Date(post.publishDate).toLocaleDateString()}</span>
-                      <span><FiUser /> {post.author}</span>
+                      <span><FiCalendar /> {new Date(post.publishDate || post.createdAt).toLocaleDateString()}</span>
+                      <span><FiUser /> {post.author || "Admin"}</span>
                     </div>
-                    <h3>{post.title}</h3>
-                    <p>{post.summary}</p>
-                    <Link to={`/blog/${post.slug}`}>Read Article <FiArrowRight /></Link>
+                    <h3 className="blog-card-title">{post.title}</h3>
+                    <p className="blog-card-summary">{post.summary}</p>
+                    <span className="blog-card-action">Read Article <FiArrowRight /></span>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
           )}

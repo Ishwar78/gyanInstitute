@@ -3,7 +3,8 @@ import { Link, NavLink } from "react-router-dom";
 import {
   FiChevronDown, FiClock, FiMail, FiMapPin, FiMenu, FiPhone, FiX
 } from "react-icons/fi";
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube, FaGraduationCap } from "react-icons/fa";
+import DemoInquiryModal from "../DemoInquiryModal/DemoInquiryModal";
 import "./Header.css";
 
 const navItems = [
@@ -19,6 +20,7 @@ const navItems = [
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [careerOpen, setCareerOpen] = useState(false);
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
   const closeMenu = () => {
     setOpen(false);
     setCareerOpen(false);
@@ -87,24 +89,31 @@ export default function Header() {
             {/* Career Dropdown */}
             <div 
               className={`nav-dropdown-wrap ${careerOpen ? "open" : ""}`}
-              onMouseEnter={() => setCareerOpen(true)}
-              onMouseLeave={() => setCareerOpen(false)}
+              onMouseEnter={() => {
+                if (window.innerWidth > 820) setCareerOpen(true);
+              }}
+              onMouseLeave={() => {
+                if (window.innerWidth > 820) setCareerOpen(false);
+              }}
             >
               <button 
                 type="button"
                 className="nav-dropdown-btn" 
-                onClick={() => setCareerOpen(!careerOpen)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCareerOpen((prev) => !prev);
+                }}
+                aria-expanded={careerOpen}
               >
-                Career <FiChevronDown className={`dropdown-icon ${careerOpen ? "rotate" : ""}`} />
+                <span>Career</span>
+                <FiChevronDown className={`dropdown-icon ${careerOpen ? "rotate" : ""}`} />
               </button>
               <div className="nav-dropdown-menu">
                 <Link to="/jobs" onClick={closeMenu} className="dropdown-item">
                   <span className="dropdown-item-title">Jobs</span>
-                  {/* <span className="dropdown-item-sub">Explore career opportunities</span> */}
                 </Link>
                 <Link to="/placement-cell" onClick={closeMenu} className="dropdown-item">
                   <span className="dropdown-item-title">Placement Cell</span>
-                  {/* <span className="dropdown-item-sub">Our placement assistance & drives</span> */}
                 </Link>
               </div>
             </div>
@@ -118,17 +127,44 @@ export default function Header() {
             <NavLink to="/contact" onClick={closeMenu} className={({ isActive }) => isActive ? "active" : ""}>
               Contact Us
             </NavLink>
+
+            {/* Mobile Drawer Demo Class CTA Button */}
+            <div className="mobile-drawer-cta-wrap">
+              <button 
+                type="button" 
+                className="mobile-drawer-demo-btn" 
+                onClick={() => { 
+                  closeMenu(); 
+                  setDemoModalOpen(true); 
+                }}
+              >
+                <FaGraduationCap /> Book Free Demo Class <span>→</span>
+              </button>
+            </div>
           </nav>
 
           <Link className="admission-btn desktop-admission" to="/contact">
             Admissions Open <span>→</span>
           </Link>
 
-          <button className="menu-btn" onClick={() => setOpen(!open)} aria-label="Toggle menu">
-            {open ? <FiX /> : <FiMenu />}
-          </button>
+          <div className="mobile-header-actions">
+            <button 
+              type="button" 
+              className="mobile-demo-btn" 
+              onClick={() => setDemoModalOpen(true)}
+              aria-label="Book Free Demo"
+            >
+              <FaGraduationCap /> Free Demo
+            </button>
+
+            <button className="menu-btn" onClick={() => setOpen(!open)} aria-label="Toggle menu">
+              {open ? <FiX /> : <FiMenu />}
+            </button>
+          </div>
         </div>
       </div>
+
+      <DemoInquiryModal isOpen={demoModalOpen} onClose={() => setDemoModalOpen(false)} />
     </header>
   );
 }

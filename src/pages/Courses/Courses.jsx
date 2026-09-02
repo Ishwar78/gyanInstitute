@@ -144,6 +144,103 @@ export default function Courses() {
     }
   };
 
+  const renderSidebarWidgets = () => (
+    <>
+      <div className="cp-sidebar-cta">
+        <MdOutlineSchool />
+        <p>Need help choosing a course?</p>
+        <Link to="/contact">Get Free Counselling</Link>
+      </div>
+
+      {/* ── Sidebar Quick Inquiry Form ── */}
+      <div className="cp-sidebar-inquiry-card">
+        <div className="cp-sb-inq-header">
+          <div className="cp-sb-inq-icon-wrap">
+            <FaGraduationCap />
+          </div>
+          <div>
+            <span className="cp-sb-inq-badge">Free Guidance</span>
+            <h4>Need Course Advice?</h4>
+          </div>
+        </div>
+
+        {sidebarSent ? (
+          <div className="cp-sb-inq-success">
+            <FiCheckCircle className="cp-success-icon" />
+            <h5>Inquiry Submitted!</h5>
+            <p>Our counsellor will call you shortly to assist you.</p>
+          </div>
+        ) : (
+          <form className="cp-sb-inq-form" onSubmit={handleSidebarInquirySubmit}>
+            <div className="cp-sb-group">
+              <label><FiUser /> Full Name *</label>
+              <input 
+                name="name" 
+                required 
+                placeholder="Enter your full name" 
+              />
+            </div>
+
+            <div className="cp-sb-group">
+              <label><FiPhone /> Mobile Number *</label>
+              <input 
+                name="phone" 
+                required 
+                type="tel" 
+                placeholder="Enter mobile number" 
+              />
+            </div>
+
+            <div className="cp-sb-group">
+              <label><FiMail /> Email Address</label>
+              <input 
+                name="email" 
+                type="email" 
+                placeholder="Your email (optional)" 
+              />
+            </div>
+
+            <div className="cp-sb-group">
+              <label><FiBookOpen /> Interested Course</label>
+              <input 
+                type="text"
+                name="subject"
+                list="course-suggestions-list"
+                placeholder="Type or select course name..."
+                autoComplete="off"
+              />
+              <datalist id="course-suggestions-list">
+                {courses.map((c) => (
+                  <option key={c._id || c.slug} value={c.title} />
+                ))}
+                <option value="Full Stack Web Development" />
+                <option value="Digital Marketing with AI" />
+                <option value="Python Data Science" />
+                <option value="Graphic Designing" />
+                <option value="Basic Computer Course" />
+                <option value="Tally Prime with GST" />
+                <option value="General Course Counselling" />
+              </datalist>
+            </div>
+
+            <div className="cp-sb-group">
+              <label><FiMessageSquare /> Message / Query</label>
+              <textarea 
+                name="message" 
+                rows="2" 
+                placeholder="Any query or preferred batch timing..." 
+              />
+            </div>
+
+            <button type="submit" className="cp-sb-inq-btn" disabled={sidebarLoading}>
+              {sidebarLoading ? "Sending..." : "Request Call"} <FiSend />
+            </button>
+          </form>
+        )}
+      </div>
+    </>
+  );
+
   const navigate = useNavigate();
 
   return (
@@ -232,98 +329,9 @@ export default function Courses() {
               ))}
             </nav>
 
-            <div className="cp-sidebar-cta">
-              <MdOutlineSchool />
-              <p>Need help choosing a course?</p>
-              <Link to="/contact">Get Free Counselling</Link>
-            </div>
-
             {/* ── Sidebar Quick Inquiry Form ── */}
-            <div className="cp-sidebar-inquiry-card">
-              <div className="cp-sb-inq-header">
-                <div className="cp-sb-inq-icon-wrap">
-                  <FaGraduationCap />
-                </div>
-                <div>
-                  <span className="cp-sb-inq-badge">Free Guidance</span>
-                  <h4>Need Course Advice?</h4>
-                  
-                </div>
-              </div>
-
-              {sidebarSent ? (
-                <div className="cp-sb-inq-success">
-                  <FiCheckCircle className="cp-success-icon" />
-                  <h5>Inquiry Submitted!</h5>
-                  <p>Our counsellor will call you shortly to assist you.</p>
-                </div>
-              ) : (
-                <form className="cp-sb-inq-form" onSubmit={handleSidebarInquirySubmit}>
-                  <div className="cp-sb-group">
-                    <label><FiUser /> Full Name *</label>
-                    <input 
-                      name="name" 
-                      required 
-                      placeholder="Enter your full name" 
-                    />
-                  </div>
-
-                  <div className="cp-sb-group">
-                    <label><FiPhone /> Mobile Number *</label>
-                    <input 
-                      name="phone" 
-                      required 
-                      type="tel" 
-                      placeholder="Enter mobile number" 
-                    />
-                  </div>
-
-                  <div className="cp-sb-group">
-                    <label><FiMail /> Email Address</label>
-                    <input 
-                      name="email" 
-                      type="email" 
-                      placeholder="Your email (optional)" 
-                    />
-                  </div>
-
-                  <div className="cp-sb-group">
-                    <label><FiBookOpen /> Interested Course</label>
-                    <input 
-                      type="text"
-                      name="subject"
-                      list="course-suggestions-list"
-                      placeholder="Type or select course name..."
-                      autoComplete="off"
-                    />
-                    <datalist id="course-suggestions-list">
-                      {courses.map((c) => (
-                        <option key={c._id || c.slug} value={c.title} />
-                      ))}
-                      <option value="Full Stack Web Development" />
-                      <option value="Digital Marketing with AI" />
-                      <option value="Python Data Science" />
-                      <option value="Graphic Designing" />
-                      <option value="Basic Computer Course" />
-                      <option value="Tally Prime with GST" />
-                      <option value="General Course Counselling" />
-                    </datalist>
-                  </div>
-
-                  <div className="cp-sb-group">
-                    <label><FiMessageSquare /> Message / Query</label>
-                    <textarea 
-                      name="message" 
-                      rows="2" 
-                      placeholder="Any query or preferred batch timing..." 
-                    />
-                  </div>
-
-                  <button type="submit" className="cp-sb-inq-btn" disabled={sidebarLoading}>
-                    {sidebarLoading ? "Sending..." : "Request Call"} <FiSend />
-                  </button>
-                </form>
-              )}
+            <div className="cp-desktop-sidebar-widgets">
+              {renderSidebarWidgets()}
             </div>
           </div>
         </aside>
@@ -447,6 +455,11 @@ export default function Courses() {
               )}
             </>
           )}
+        </div>
+
+        {/* ── Mobile View Bottom Widgets (Appears below Courses Grid on Mobile) ── */}
+        <div className="cp-mobile-bottom-widgets">
+          {renderSidebarWidgets()}
         </div>
       </section>
 

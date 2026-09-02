@@ -405,11 +405,6 @@ export default function Gallery() {
           </div>
 
           <div className="gallery-stat">
-            <strong>100<span>+</span></strong>
-            <small>Expert Faculty</small>
-          </div>
-
-          <div className="gallery-stat">
             <strong>50<span>+</span></strong>
             <small>Courses Offered</small>
           </div>

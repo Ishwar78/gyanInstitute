@@ -55,6 +55,118 @@
 }
 
 /* =========================================================
+   CATEGORY & BROCHURE TABS
+========================================================= */
+
+.inquiry-type-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 10px 18px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab-btn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.tab-btn.active {
+  background: var(--navy, #06213d);
+  color: #ffffff;
+  border-color: var(--navy, #06213d);
+  box-shadow: 0 4px 14px rgba(6, 33, 61, 0.2);
+}
+
+.tab-btn.demo-tab.active {
+  background: linear-gradient(135deg, #06213d 0%, #1e3a8a 100%);
+  border-color: #f59e0b;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+}
+
+.tab-btn.brochure-tab.active {
+  background: #1e3a8a;
+  border-color: #1e3a8a;
+  color: #ffffff;
+}
+
+.badge-demo-tag {
+  background: #fffbeb;
+  color: #b45309;
+  border: 1.5px solid #fde68a;
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-brochure-tag {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.demo-lead-card {
+  border-left: 4px solid #f59e0b !important;
+  background: #fffdfa !important;
+}
+
+.avatar-demo {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  color: #ffffff !important;
+}
+
+.badge-course-name {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.badge-mode-name {
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.avatar-brochure {
+  background: #1e3a8a !important;
+  font-size: 20px !important;
+}
+
+.brochure-lead-card {
+  border-left: 4px solid #1e3a8a;
+}
+
+/* =========================================================
    STAT CARDS
 ========================================================= */
 

@@ -3,14 +3,22 @@ import Inquiry from "../module/Inquiry.js";
 // Create a new inquiry
 export const createInquiry = async (req, res) => {
   try {
-    const { name, email, phone, city, subject, message } = req.body;
+    const { name, email, phone, city, subject, message, type, courseName, programMode } = req.body;
     
-    if (!name || !email || !message) {
-      return res.status(400).json({ success: false, message: "Name, email and message are required" });
+    if (!name || (!email && !phone)) {
+      return res.status(400).json({ success: false, message: "Name and contact number/email are required" });
     }
 
     const newInquiry = new Inquiry({
-      name, email, phone, city: city || "", subject, message
+      name,
+      email: email || `${phone || "user"}@lead.in`,
+      phone: phone || "",
+      city: city || "",
+      subject: subject || (type === "Brochure Download" ? `Brochure Request for ${courseName || "Course"}` : "General Inquiry"),
+      message: message || `Brochure download request for ${courseName || "Course"} (${programMode || "General"} Mode)`,
+      type: type || (message?.toLowerCase().includes("brochure") ? "Brochure Download" : "General Inquiry"),
+      courseName: courseName || "",
+      programMode: programMode || ""
     });
 
     await newInquiry.save();

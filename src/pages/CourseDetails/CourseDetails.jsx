@@ -14,7 +14,8 @@ import {
   FiUsers,
   FiHelpCircle,
   FiChevronDown,
-  FiExternalLink
+  FiExternalLink,
+  FiPhone
 } from "react-icons/fi";
 import { FaGraduationCap } from "react-icons/fa";
 import "./CourseDetails.css";
@@ -43,6 +44,15 @@ export default function CourseDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  // Brochure Modal State
+  const [brochureModalOpen, setBrochureModalOpen] = useState(false);
+  const [selectedProgramMode, setSelectedProgramMode] = useState("Offline");
+  const [brochureForm, setBrochureForm] = useState({ name: "", phone: "", email: "", city: "" });
+  const [brochureSubmitting, setBrochureSubmitting] = useState(false);
+  const [brochureSuccess, setBrochureSuccess] = useState(false);
+
+  const [contactInfo, setContactInfo] = useState({ phone: "+91 92530 10028" });
+
   const toggleSyllabus = (index) => {
     if (openSyllabus.includes(index)) {
       setOpenSyllabus(openSyllabus.filter((i) => i !== index));
@@ -50,6 +60,57 @@ export default function CourseDetails() {
       setOpenSyllabus([...openSyllabus, index]);
     }
   };
+
+  const handleOpenBrochureModal = (modeTitle) => {
+    setSelectedProgramMode(modeTitle);
+    setBrochureSuccess(false);
+    setBrochureModalOpen(true);
+  };
+
+  const handleBrochureSubmit = async (e) => {
+    e.preventDefault();
+    setBrochureSubmitting(true);
+    try {
+      // Send brochure lead to backend inquiry API
+      await fetch("http://localhost:5005/api/inquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: brochureForm.name,
+          phone: brochureForm.phone,
+          email: brochureForm.email || `${brochureForm.phone}@prospect.com`,
+          city: brochureForm.city || "Not Provided",
+          type: "Brochure Download",
+          courseName: course?.title || "Course",
+          programMode: selectedProgramMode,
+          subject: `Brochure Request for ${course?.title || "Course"} (${selectedProgramMode})`,
+          message: `Student requested Brochure download for ${course?.title || "Course"} (${selectedProgramMode} Program). City: ${brochureForm.city || "N/A"}, Phone: ${brochureForm.phone}`
+        })
+      });
+      setBrochureSuccess(true);
+      setTimeout(() => {
+        setBrochureModalOpen(false);
+        setBrochureForm({ name: "", phone: "", email: "", city: "" });
+        setBrochureSuccess(false);
+      }, 2500);
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setBrochureSubmitting(false);
+    }
+  };
+
+  useEffect(() => {
+    fetch("http://localhost:5005/api/contact-info")
+      .then(res => res.json())
+      .then(json => {
+        if (json.success && json.data) {
+          setContactInfo(json.data);
+        }
+      })
+      .catch(err => console.error(err));
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -166,6 +227,38 @@ export default function CourseDetails() {
 
   const courseFaqs = course.faqs && course.faqs.length > 0 ? course.faqs : defaultFaqs;
 
+  // Program Modes (Offline & Online 2-Cards)
+  const progModes = {
+    heading: course.programModes?.heading || `Explore Our Certified ${course.title} Programs`,
+    subheading: course.programModes?.subheading || `With over 35,000+ job openings in this sector, this domain is a hotbed for career opportunities. Gyan Time provides the Best ${course.title} Programs, equipping you with Core industry skills in demand to land your dream job.`,
+    offline: {
+      title: course.programModes?.offline?.title || `Offline ${course.title} & Business Strategy Program`,
+      image: course.programModes?.offline?.image || "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80",
+      points: Array.isArray(course.programModes?.offline?.points) && course.programModes.offline.points.length > 0
+        ? course.programModes.offline.points
+        : [
+            "Duration: 11 Months",
+            "MBA level: Post-Graduate Certification",
+            "100% Internship & Job Assistance Guarantee",
+            "Preferred by: Fresh graduates, Working professionals (0-3 years of work ex)"
+          ],
+      brochureUrl: course.programModes?.offline?.brochureUrl || ""
+    },
+    online: {
+      title: course.programModes?.online?.title || `Live & Online ${course.title} Programs`,
+      image: course.programModes?.online?.image || "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
+      points: Array.isArray(course.programModes?.online?.points) && course.programModes.online.points.length > 0
+        ? course.programModes.online.points
+        : [
+            "Duration: 4-6 Months",
+            "Advanced/Professional Industry Certification",
+            "Dedicated Placement support & mock interview assistance",
+            "Preferred by: College students, Working professionals (3+ years of work ex)"
+          ],
+      brochureUrl: course.programModes?.online?.brochureUrl || ""
+    }
+  };
+
   return (
     <>
       {/* Hero */}
@@ -191,11 +284,13 @@ export default function CourseDetails() {
             </div>
 
             <div className="cd-cta-row">
-              <Link to="/contact" className="cd-enroll-btn">Enroll Now <FiArrowRight /></Link>
               <div className="cd-fee-box">
-                <span>Course Fee</span>
-                <strong>{course.fee}</strong>
+                <span className="cd-fee-label">Course Fee</span>
+                <strong className="cd-fee-val">{course.fee}</strong>
               </div>
+              <Link to="/contact" className="cd-enroll-btn">
+                Enroll Now <FiArrowRight />
+              </Link>
             </div>
           </div>
 
@@ -458,6 +553,82 @@ export default function CourseDetails() {
         </div>
       </section>
 
+      {/* 5B. Program Formats Section (Offline & Online 2-Cards matching Screenshot 2) */}
+      <section className="cd-programs-section-wrap section-shell">
+        <div className="cd-programs-head-center">
+          <h2>{progModes.heading}</h2>
+          <p>{progModes.subheading}</p>
+        </div>
+
+        <div className="cd-programs-2col-grid">
+          {/* Card 1: Offline Program */}
+          <div className="cd-program-card-item">
+            <div className="cd-prog-card-image-box">
+              <img src={progModes.offline.image} alt={progModes.offline.title} className="cd-prog-card-img" />
+            </div>
+
+            <div className="cd-prog-card-content">
+              <h3 className="cd-prog-card-title">{progModes.offline.title}</h3>
+
+              <ul className="cd-prog-bullet-list">
+                {progModes.offline.points.map((pt, pIdx) => (
+                  <li key={pIdx}>
+                    <span className="cd-prog-bullet-dot"></span>
+                    <span>{pt}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="cd-prog-actions-row">
+                <a href={`tel:${contactInfo?.phone?.replace(/\s+/g, '') || "+919253010028"}`} className="cd-btn-prog-call">
+                  <FiPhone /> Call Now
+                </a>
+                <button
+                  type="button"
+                  onClick={() => handleOpenBrochureModal("Offline")}
+                  className="cd-btn-prog-download"
+                >
+                  Download Brochure
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 2: Live & Online Program */}
+          <div className="cd-program-card-item">
+            <div className="cd-prog-card-image-box">
+              <img src={progModes.online.image} alt={progModes.online.title} className="cd-prog-card-img" />
+            </div>
+
+            <div className="cd-prog-card-content">
+              <h3 className="cd-prog-card-title">{progModes.online.title}</h3>
+
+              <ul className="cd-prog-bullet-list">
+                {progModes.online.points.map((pt, pIdx) => (
+                  <li key={pIdx}>
+                    <span className="cd-prog-bullet-dot"></span>
+                    <span>{pt}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="cd-prog-actions-row">
+                <a href={`tel:${contactInfo?.phone?.replace(/\s+/g, '') || "+919253010028"}`} className="cd-btn-prog-call">
+                  <FiPhone /> Call Now
+                </a>
+                <button
+                  type="button"
+                  onClick={() => handleOpenBrochureModal("Online")}
+                  className="cd-btn-prog-download"
+                >
+                  Download Brochure
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 6. Mentors Section (Styled matching Screenshot 3) */}
       {mentors.length > 0 && (
         <section className="cd-mentors-section-wrap section-shell">
@@ -548,6 +719,83 @@ export default function CourseDetails() {
             ))}
           </div>
         </section>
+      )}
+
+      {/* Brochure Download Modal */}
+      {brochureModalOpen && (
+        <div className="cd-brochure-modal-backdrop" onClick={() => setBrochureModalOpen(false)}>
+          <div className="cd-brochure-modal-box" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className="cd-modal-close-btn"
+              onClick={() => setBrochureModalOpen(false)}
+            >
+              &times;
+            </button>
+
+            <div className="cd-modal-head-area">
+              <span className="cd-modal-badge">{selectedProgramMode} Program</span>
+              <h3>Download Course Brochure</h3>
+              <p>Get complete curriculum details, batch schedules, syllabus and fee prospectus directly.</p>
+            </div>
+
+            {brochureSuccess ? (
+              <div className="cd-brochure-success-box">
+                <FiCheckCircle className="success-check-icon" />
+                <h4>Thank You!</h4>
+                <p>Your request has been received. The brochure download will start shortly.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleBrochureSubmit} className="cd-brochure-form">
+                <label>
+                  Full Name *
+                  <input
+                    type="text"
+                    required
+                    value={brochureForm.name}
+                    onChange={(e) => setBrochureForm({ ...brochureForm, name: e.target.value })}
+                    placeholder="Enter your full name"
+                  />
+                </label>
+
+                <label>
+                  Mobile Number *
+                  <input
+                    type="tel"
+                    required
+                    value={brochureForm.phone}
+                    onChange={(e) => setBrochureForm({ ...brochureForm, phone: e.target.value })}
+                    placeholder="e.g. +91 98765 43210"
+                  />
+                </label>
+
+                <label>
+                  Email Address
+                  <input
+                    type="email"
+                    value={brochureForm.email}
+                    onChange={(e) => setBrochureForm({ ...brochureForm, email: e.target.value })}
+                    placeholder="name@example.com"
+                  />
+                </label>
+
+                <label>
+                  City
+                  <input
+                    type="text"
+                    value={brochureForm.city}
+                    onChange={(e) => setBrochureForm({ ...brochureForm, city: e.target.value })}
+                    placeholder="e.g. Delhi, Mumbai, Lucknow"
+                  />
+                </label>
+
+                <button type="submit" className="cd-modal-submit-btn" disabled={brochureSubmitting}>
+                  {brochureSubmitting ? "Processing..." : "Download Brochure Now"}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
       )}
     </>
   );

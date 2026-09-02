@@ -256,55 +256,62 @@ export default function Home() {
   // Displayed video list: API videos if available, otherwise fallback default cards
   const displayedVideos = videoStories.length > 0 ? videoStories : defaultVideoStories;
 
+  const renderInquiryCard = () => (
+    <div className="hero-inquiry-card">
+      <div className="hero-inquiry-header">
+        <span className="eyebrow"><FaGraduationCap /> Quick Inquiry</span>
+        <h2>Get in Touch <span>With Us</span></h2>
+        <p>Fill in your details and our team will reach out to you shortly.</p>
+      </div>
+      <form className="hero-inquiry-form" onSubmit={heroSubmit}>
+        <div className="hero-form-row">
+          <div className="hero-form-group">
+            <label>Full Name</label>
+            <input name="name" required placeholder="Enter your name" />
+          </div>
+          <div className="hero-form-group">
+            <label>Mobile Number</label>
+            <input name="phone" required placeholder="Enter mobile number" type="tel" />
+          </div>
+        </div>
+        <div className="hero-form-row">
+          <div className="hero-form-group">
+            <label>Email Address</label>
+            <input name="email" required type="email" placeholder="Enter your email" />
+          </div>
+          <div className="hero-form-group">
+            <label>Subject</label>
+            <input name="subject" required placeholder="e.g. Course Inquiry" />
+          </div>
+        </div>
+        <div className="hero-form-group">
+          <label>Message</label>
+          <textarea name="message" required rows="3" placeholder="Write your message here..." />
+        </div>
+        <button className="hero-inquiry-btn" type="submit" disabled={heroFormLoading}>
+          {heroFormLoading ? "Sending..." : "Send Inquiry"} <FiSend />
+        </button>
+        {heroFormSent && (
+          <div className="hero-success-msg">
+            ✅ Thank you! We'll contact you soon.
+          </div>
+        )}
+      </form>
+    </div>
+  );
+
   return (
     <>
       <section className="home-hero">
         <div className="home-hero-bg" />
         <div className="home-hero-inner">
-          <div className="home-hero-copy hero-inquiry-wrap">
-            <div className="hero-inquiry-card">
-              <div className="hero-inquiry-header">
-                <span className="eyebrow"><FaGraduationCap /> Quick Inquiry</span>
-                <h2>Get in Touch <span>With Us</span></h2>
-                <p>Fill in your details and our team will reach out to you shortly.</p>
-              </div>
-              <form className="hero-inquiry-form" onSubmit={heroSubmit}>
-                <div className="hero-form-row">
-                  <div className="hero-form-group">
-                    <label>Full Name</label>
-                    <input name="name" required placeholder="Enter your name" />
-                  </div>
-                  <div className="hero-form-group">
-                    <label>Mobile Number</label>
-                    <input name="phone" required placeholder="Enter mobile number" type="tel" />
-                  </div>
-                </div>
-                <div className="hero-form-row">
-                  <div className="hero-form-group">
-                    <label>Email Address</label>
-                    <input name="email" required type="email" placeholder="Enter your email" />
-                  </div>
-                  <div className="hero-form-group">
-                    <label>Subject</label>
-                    <input name="subject" required placeholder="e.g. Course Inquiry" />
-                  </div>
-                </div>
-                <div className="hero-form-group">
-                  <label>Message</label>
-                  <textarea name="message" required rows="3" placeholder="Write your message here..." />
-                </div>
-                <button className="hero-inquiry-btn" type="submit" disabled={heroFormLoading}>
-                  {heroFormLoading ? "Sending..." : "Send Inquiry"} <FiSend />
-                </button>
-                {heroFormSent && (
-                  <div className="hero-success-msg">
-                    ✅ Thank you! We'll contact you soon.
-                  </div>
-                )}
-              </form>
-            </div>
+          {/* Desktop Left: Quick Inquiry Form */}
+          <div className="home-hero-copy hero-inquiry-wrap desktop-hero-form">
+            {renderInquiryCard()}
           </div>
-          <div className="home-hero-visual">
+
+          {/* Desktop Right: Image Slider */}
+          <div className="home-hero-visual desktop-hero-slider">
             <div className="hero-image-wrap slider-wrap">
               {heroData.images && heroData.images.length > 0 ? (
                 heroData.images.map((img, idx) => (
@@ -320,6 +327,40 @@ export default function Home() {
               )}
             </div>
           </div>
+
+          {/* Mobile Hero Content (Replaces Image Slider on Mobile, Managed via Admin) */}
+          <div className="mobile-hero-content-wrap">
+            {heroData.badgeText && (
+              <span className="eyebrow mobile-hero-badge">
+                <FaGraduationCap /> {heroData.badgeText}
+              </span>
+            )}
+            <h1 className="mobile-hero-heading">
+              {heroData.heading || "Empowering Minds, Shaping"}{" "}
+              <span>{heroData.highlightedWord || "Futures"}</span>
+            </h1>
+            <p className="mobile-hero-desc">
+              {heroData.description || "At Gyan Time, we provide quality education, expert guidance and holistic development to help students build a successful career."}
+            </p>
+            <div className="mobile-hero-actions">
+              <Link to="/courses" className="primary-btn mobile-hero-btn-primary">
+                {heroData.primaryButtonText || "Explore Courses"} <FiArrowRight />
+              </Link>
+              <a 
+                href="#mobile-inquiry-box" 
+                className="outline-btn mobile-hero-btn-outline"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const target = document.getElementById("mobile-inquiry-box");
+                  if (target) {
+                    target.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+              >
+                {heroData.secondaryButtonText || "Inquiry Now"} <FiSend />
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -328,6 +369,11 @@ export default function Home() {
         <div><span className="stat-icon gold"><FiBookOpen /></span><strong>50+</strong><b>Courses Offered</b><small>For bright careers</small></div>
         <div><span className="stat-icon navy"><FiAward /></span><strong>98%</strong><b>Success Rate</b><small>Proven track record</small></div>
         <div><span className="stat-icon gold"><FaGraduationCap /></span><strong>15+</strong><b>Years of Excellence</b><small>In education</small></div>
+      </section>
+
+      {/* ── Quick Inquiry Form on Mobile (Below Stats Strip) ── */}
+      <section id="mobile-inquiry-box" className="mobile-home-inquiry-section">
+        {renderInquiryCard()}
       </section>
 
       {/* ── Popular Courses Section (Clickable Cards) ── */}
@@ -555,7 +601,6 @@ export default function Home() {
           {[
             ["15+", "Years of Excellence", FiAward],
             ["2500+", "Students Enrolled", FiUsers],
-            ["100+", "Expert Faculty", FiUsers],
             ["500+", "Successful Placements", FiBriefcase],
             ["20+", "Awards & Recognition", FiAward]
           ].map(([number, label, Icon]) => (

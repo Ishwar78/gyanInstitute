@@ -8,6 +8,7 @@ export default function BlogDetails() {
   const { slug } = useParams();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     fetch(`http://localhost:5005/api/blog/${slug}`)
@@ -41,6 +42,8 @@ export default function BlogDetails() {
     );
   }
 
+  const isContentLong = (post.content || "").length > 600;
+
   return (
     <article className="blog-details">
       <Helmet>
@@ -55,8 +58,8 @@ export default function BlogDetails() {
           <span className="eyebrow">ARTICLE</span>
           <h1>{post.title}</h1>
           <div className="details-meta">
-            <span><FiCalendar /> {new Date(post.publishDate).toLocaleDateString()}</span>
-            <span><FiUser /> {post.author}</span>
+            <span><FiCalendar /> {new Date(post.publishDate || post.createdAt).toLocaleDateString()}</span>
+            <span><FiUser /> {post.author || "Admin"}</span>
           </div>
         </div>
       </section>
@@ -66,7 +69,22 @@ export default function BlogDetails() {
           <main>
             <img className="details-cover" src={post.image} alt={post.title} />
             
-            <div className="rich-content" dangerouslySetInnerHTML={{ __html: post.content }} />
+            <div className={`rich-content-wrapper ${isContentLong && !isExpanded ? "collapsed" : "expanded"}`}>
+              <div className="rich-content" dangerouslySetInnerHTML={{ __html: post.content }} />
+              {isContentLong && !isExpanded && <div className="content-fade-overlay" />}
+            </div>
+
+            {isContentLong && (
+              <div style={{ textAlign: "center", margin: "10px 0 25px" }}>
+                <button
+                  type="button"
+                  className="btn-read-more-toggle"
+                  onClick={() => setIsExpanded(!isExpanded)}
+                >
+                  {isExpanded ? "Read Less ↑" : "Read More Articles Content ↓"}
+                </button>
+              </div>
+            )}
 
             <div className="details-bottom">
               <Link to="/courses">Explore Our Courses →</Link>

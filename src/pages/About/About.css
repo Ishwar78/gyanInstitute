@@ -1373,7 +1373,7 @@
   .about-hero h1 {
     margin: 17px 0 17px;
 
-    font-size: 43px;
+    font-size: 33px;
 
     letter-spacing: -1.8px;
 
@@ -1394,7 +1394,7 @@
   .about-hero-meta div {
     padding: 9px 12px;
 
-    font-size: 11px;
+    font-size: 14px;
   }
 
   .about-hero-image-wrap {
@@ -1492,7 +1492,7 @@
 
   .about-intro-copy > p,
   .facility-copy > p {
-    font-size: 14px;
+    font-size: 17px;
     line-height: 1.8;
   }
 
@@ -1505,7 +1505,7 @@
   }
 
   .about-intro li {
-    font-size: 12px;
+    font-size: 15px;
     min-height: 42px;
   }
 
@@ -1513,7 +1513,7 @@
   /* VALUES */
 
   .about-values {
-    padding: 70px 0 75px;
+    padding: 30px 0 35px;
   }
 
   .about-section-title {
@@ -1553,11 +1553,11 @@
   .value-card h3 {
     margin-top: 17px;
 
-    font-size: 17px;
+    font-size: 18px;
   }
 
   .value-card p {
-    font-size: 13px;
+    font-size: 16px;
   }
 
 
@@ -1626,7 +1626,7 @@
   .facility-list div {
     min-height: 36px;
 
-    font-size: 12px;
+    font-size: 15px;
   }
 
   .facility-btn {
@@ -1677,7 +1677,7 @@
   }
 
   .stat-item span {
-    font-size: 9px;
+    font-size: 13px;
   }
 
 
@@ -1702,7 +1702,7 @@
   }
 
   .about-cta p {
-    font-size: 13px;
+    font-size: 15px;
   }
 
   .about-cta .primary-btn {

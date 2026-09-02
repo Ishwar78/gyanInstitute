@@ -7,6 +7,9 @@ const inquirySchema = new mongoose.Schema({
   city: { type: String, default: "" },
   subject: { type: String },
   message: { type: String, required: true },
+  type: { type: String, default: "General Inquiry" }, // "General Inquiry" or "Brochure Download"
+  courseName: { type: String, default: "" },
+  programMode: { type: String, default: "" },
   status: { type: String, enum: ["New", "Contacted", "Closed"], default: "New" }
 }, {
   timestamps: true
